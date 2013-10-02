@@ -27,8 +27,8 @@ class Substance extends AppModel {
 		'Name' => array(
 			'className' => 'Name',
 			'joinTable' => 'names_substances',
-			'foreignKey' => 'substance_id',
-			'associationForeignKey' => 'name_id',
+			'foreignKey' => 'sid',
+			'associationForeignKey' => 'nid',
 			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',
@@ -40,8 +40,8 @@ class Substance extends AppModel {
 		'Parameter' => array(
 			'className' => 'Parameter',
 			'joinTable' => 'parameters_substances',
-			'foreignKey' => 'substance_id',
-			'associationForeignKey' => 'parameter_id',
+			'foreignKey' => 'sid',
+			'associationForeignKey' => 'pid',
 			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',

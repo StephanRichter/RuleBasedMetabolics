@@ -43,8 +43,8 @@ class Parameter extends AppModel {
 		'Substance' => array(
 			'className' => 'Substance',
 			'joinTable' => 'parameters_substances',
-			'foreignKey' => 'parameter_id',
-			'associationForeignKey' => 'substance_id',
+			'foreignKey' => 'pid',
+			'associationForeignKey' => 'sid',
 			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',

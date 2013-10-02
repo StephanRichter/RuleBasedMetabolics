@@ -43,8 +43,8 @@ class Name extends AppModel {
 		'Substance' => array(
 			'className' => 'Substance',
 			'joinTable' => 'names_substances',
-			'foreignKey' => 'name_id',
-			'associationForeignKey' => 'substance_id',
+			'foreignKey' => 'nid',
+			'associationForeignKey' => 'sid',
 			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',

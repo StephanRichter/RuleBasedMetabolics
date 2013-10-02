@@ -8,13 +8,6 @@ App::uses('AppModel', 'Model');
 class Name extends AppModel {
 
 /**
- * Primary key field
- *
- * @var string
- */
-	public $primaryKey = 'nid';
-
-/**
  * Validation rules
  *
  * @var array
@@ -43,8 +36,8 @@ class Name extends AppModel {
 		'Substance' => array(
 			'className' => 'Substance',
 			'joinTable' => 'names_substances',
-			'foreignKey' => 'nid',
-			'associationForeignKey' => 'sid',
+			'foreignKey' => 'name_id',
+			'associationForeignKey' => 'substance_id',
 			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',

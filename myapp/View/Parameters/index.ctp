@@ -2,18 +2,18 @@
 	<h2><?php echo __('Parameters'); ?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-			<th><?php echo $this->Paginator->sort('pid'); ?></th>
+			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('description'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php foreach ($parameters as $parameter): ?>
 	<tr>
-		<td><?php echo h($parameter['Parameter']['pid']); ?>&nbsp;</td>
+		<td><?php echo h($parameter['Parameter']['id']); ?>&nbsp;</td>
 		<td><?php echo h($parameter['Parameter']['description']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $parameter['Parameter']['pid'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $parameter['Parameter']['pid'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $parameter['Parameter']['pid']), null, __('Are you sure you want to delete # %s?', $parameter['Parameter']['pid'])); ?>
+			<?php echo $this->Html->link(__('View'), array('action' => 'view', $parameter['Parameter']['id'])); ?>
+			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $parameter['Parameter']['id'])); ?>
+			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $parameter['Parameter']['id']), null, __('Are you sure you want to delete # %s?', $parameter['Parameter']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

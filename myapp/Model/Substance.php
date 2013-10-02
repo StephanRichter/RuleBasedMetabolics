@@ -8,13 +8,6 @@ App::uses('AppModel', 'Model');
  */
 class Substance extends AppModel {
 
-/**
- * Primary key field
- *
- * @var string
- */
-	public $primaryKey = 'sid';
-
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -27,8 +20,8 @@ class Substance extends AppModel {
 		'Name' => array(
 			'className' => 'Name',
 			'joinTable' => 'names_substances',
-			'foreignKey' => 'sid',
-			'associationForeignKey' => 'nid',
+			'foreignKey' => 'substance_id',
+			'associationForeignKey' => 'name_id',
 			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',
@@ -40,8 +33,8 @@ class Substance extends AppModel {
 		'Parameter' => array(
 			'className' => 'Parameter',
 			'joinTable' => 'parameters_substances',
-			'foreignKey' => 'sid',
-			'associationForeignKey' => 'pid',
+			'foreignKey' => 'substance_id',
+			'associationForeignKey' => 'parameter_id',
 			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',

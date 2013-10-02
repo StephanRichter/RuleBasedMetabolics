@@ -8,13 +8,6 @@ App::uses('AppModel', 'Model');
 class Parameter extends AppModel {
 
 /**
- * Primary key field
- *
- * @var string
- */
-	public $primaryKey = 'pid';
-
-/**
  * Validation rules
  *
  * @var array
@@ -43,8 +36,8 @@ class Parameter extends AppModel {
 		'Substance' => array(
 			'className' => 'Substance',
 			'joinTable' => 'parameters_substances',
-			'foreignKey' => 'pid',
-			'associationForeignKey' => 'sid',
+			'foreignKey' => 'parameter_id',
+			'associationForeignKey' => 'substance_id',
 			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',

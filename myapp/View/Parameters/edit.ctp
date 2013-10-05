@@ -1,3 +1,6 @@
+<?php $this->extend('/Common/view');	
+	$this->assign('exclude','items');
+?>
 <div class="parameters form">
 <?php echo $this->Form->create('Parameter'); ?>
 	<fieldset>
@@ -9,14 +12,4 @@
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-
-		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Parameter.id')), null, __('Are you sure you want to delete # %s?', $this->Form->value('Parameter.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Parameters'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Substances'), array('controller' => 'substances', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Substance'), array('controller' => 'substances', 'action' => 'add')); ?> </li>
-	</ul>
 </div>

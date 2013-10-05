@@ -1,3 +1,6 @@
+<?php $this->extend('/Common/view');	
+	$this->assign('exclude','items');
+?>
 <div class="names index">
 	<h2><?php echo __('Names'); ?></h2>
 	<table cellpadding="0" cellspacing="0">
@@ -31,12 +34,4 @@
 		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
 	?>
 	</div>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New Name'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Substances'), array('controller' => 'substances', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Substance'), array('controller' => 'substances', 'action' => 'add')); ?> </li>
-	</ul>
 </div>

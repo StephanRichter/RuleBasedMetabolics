@@ -1,3 +1,6 @@
+<?php $this->extend('/Common/view');	
+	$this->assign('exclude','items');
+?>
 <div class="substances view">
 <h2><?php echo __('Substance'); ?></h2>
 	<dl>

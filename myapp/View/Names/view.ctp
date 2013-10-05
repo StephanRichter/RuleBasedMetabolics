@@ -1,3 +1,6 @@
+<?php $this->extend('/Common/view');	
+	$this->assign('exclude','items');
+?>
 <div class="names view">
 <h2><?php echo __('Name'); ?></h2>
 	<dl>
@@ -47,9 +50,4 @@
 	</table>
 <?php endif; ?>
 
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('New Substance'), array('controller' => 'substances', 'action' => 'add')); ?> </li>
-		</ul>
-	</div>
 </div>

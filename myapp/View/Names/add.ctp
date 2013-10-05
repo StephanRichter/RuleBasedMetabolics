@@ -6,7 +6,7 @@
 	<fieldset>
 		<legend><?php echo __('Add Name'); ?></legend>
 	<?php
-		echo $this->Form->input('name');
+		echo $this->Form->input('name',array('type' => 'text'));
 		echo $this->Form->input('Substance');
 	?>
 	</fieldset>

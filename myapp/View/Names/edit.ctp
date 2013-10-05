@@ -7,7 +7,7 @@
 		<legend><?php echo __('Edit Name'); ?></legend>
 	<?php
 		echo $this->Form->input('id');
-		echo $this->Form->input('name');
+		echo $this->Form->input('name',array('type' => 'text'));
 		echo $this->Form->input('Substance');
 	?>
 	</fieldset>

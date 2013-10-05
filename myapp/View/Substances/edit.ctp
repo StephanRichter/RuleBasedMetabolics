@@ -7,7 +7,7 @@
 		<legend><?php echo __('Edit Substance'); ?></legend>
 	<?php
 		echo $this->Form->input('id');
-		echo $this->Form->input('formula',array('type' => 'text'));
+		echo $this->Form->input('formula_id');
 		echo $this->Form->input('Name');
 		echo $this->Form->input('Parameter');
 	?>

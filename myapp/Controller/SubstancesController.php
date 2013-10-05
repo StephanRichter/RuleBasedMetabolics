@@ -55,9 +55,10 @@ class SubstancesController extends AppController {
 				$this->Session->setFlash(__('The substance could not be saved. Please, try again.'));
 			}
 		}
+		$formulas = $this->Substance->Formula->find('list');
 		$names = $this->Substance->Name->find('list');
 		$parameters = $this->Substance->Parameter->find('list');
-		$this->set(compact('names', 'parameters'));
+		$this->set(compact('formulas', 'names', 'parameters'));
 	}
 
 /**
@@ -82,9 +83,10 @@ class SubstancesController extends AppController {
 			$options = array('conditions' => array('Substance.' . $this->Substance->primaryKey => $id));
 			$this->request->data = $this->Substance->find('first', $options);
 		}
+		$formulas = $this->Substance->Formula->find('list');
 		$names = $this->Substance->Name->find('list');
 		$parameters = $this->Substance->Parameter->find('list');
-		$this->set(compact('names', 'parameters'));
+		$this->set(compact('formulas', 'names', 'parameters'));
 	}
 
 /**

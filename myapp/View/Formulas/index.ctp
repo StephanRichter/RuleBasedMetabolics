@@ -1,24 +1,22 @@
 <?php $this->extend('/Common/view');	
 	$this->assign('exclude','items');
 ?>
-<div class="substances index">
-	<h2><?php echo __('Substances'); ?></h2>
+<div class="formulas index">
+	<h2><?php echo __('Formulas'); ?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
-			<th><?php echo $this->Paginator->sort('formula_id'); ?></th>
+			<th><?php echo $this->Paginator->sort('formula'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
-	<?php foreach ($substances as $substance): ?>
+	<?php foreach ($formulas as $formula): ?>
 	<tr>
-		<td><?php echo h($substance['Substance']['id']); ?>&nbsp;</td>
-		<td>
-			<?php echo $this->Html->link($substance['Formula']['formula'], array('controller' => 'formulas', 'action' => 'view', $substance['Formula']['id'])); ?>
-		</td>
+		<td><?php echo h($formula['Formula']['id']); ?>&nbsp;</td>
+		<td><?php echo h($formula['Formula']['formula']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $substance['Substance']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $substance['Substance']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $substance['Substance']['id']), null, __('Are you sure you want to delete # %s?', $substance['Substance']['id'])); ?>
+			<?php echo $this->Html->link(__('View'), array('action' => 'view', $formula['Formula']['id'])); ?>
+			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $formula['Formula']['id'])); ?>
+			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $formula['Formula']['id']), null, __('Are you sure you want to delete # %s?', $formula['Formula']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

@@ -11,7 +11,7 @@
 		</dd>
 		<dt><?php echo __('Formula'); ?></dt>
 		<dd>
-			<?php echo h($substance['Substance']['formula']); ?>
+			<?php echo $this->Html->link($substance['Formula']['formula'], array('controller' => 'formulas', 'action' => 'view', $substance['Formula']['id'])); ?>
 			&nbsp;
 		</dd>
 	</dl>
@@ -23,6 +23,8 @@
 		<li><?php echo $this->Form->postLink(__('Delete Substance'), array('action' => 'delete', $substance['Substance']['id']), null, __('Are you sure you want to delete # %s?', $substance['Substance']['id'])); ?> </li>
 		<li><?php echo $this->Html->link(__('List Substances'), array('action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Substance'), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Formulas'), array('controller' => 'formulas', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Formula'), array('controller' => 'formulas', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Names'), array('controller' => 'names', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Name'), array('controller' => 'names', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Parameters'), array('controller' => 'parameters', 'action' => 'index')); ?> </li>

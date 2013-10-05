@@ -3,13 +3,36 @@ App::uses('AppModel', 'Model');
 /**
  * Substance Model
  *
+ * @property Formula $Formula
  * @property Name $Name
  * @property Parameter $Parameter
  */
 class Substance extends AppModel {
 
+/**
+ * Display field
+ *
+ * @var string
+ */
+	public $displayField = 'formula_id';
+
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
+
+/**
+ * belongsTo associations
+ *
+ * @var array
+ */
+	public $belongsTo = array(
+		'Formula' => array(
+			'className' => 'Formula',
+			'foreignKey' => 'formula_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		)
+	);
 
 /**
  * hasAndBelongsToMany associations

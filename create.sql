@@ -4,6 +4,6 @@ CREATE TABLE IF NOT EXISTS substances		(id INT NOT NULL AUTO_INCREMENT PRIMARY K
 CREATE TABLE IF NOT EXISTS parameters		(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,description TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS parameters_substances(parameter_id INT NOT NULL, substance_id INT NOT NULL, abbrevation CHAR NOT NULL, specification TEXT,selector VARCHAR(10),refered_substance_id INT);
 CREATE TABLE IF NOT EXISTS names_substances	(name_id INT NOT NULL,substance_id INT NOT NULL, PRIMARY KEY(name_id,substance_id));
-
+CREATE TABLE IF NOT EXISTS users		(id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, username VARCHAR(50), password VARCHAR(50), role VARCHAR(20), created DATETIME DEFAULT NULL, modified DATETIME DEFAULT NULL);
 
 SHOW TABLES;

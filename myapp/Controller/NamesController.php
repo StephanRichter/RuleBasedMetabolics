@@ -45,16 +45,37 @@ class NamesController extends AppController {
  *
  * @return void
  */
-	public function add($names = null) {
+	public function add($names = null) {		
 		
+		$redirect=false;
 		/* if we dont get names by parameter: check request */
 		if ($names==null && $this->request->is('post')) {
 			$names=explode("\n",$this->request->data['Name']['name']);
+			
+			/* as we got our names per post request: redirect to index after saving. */
+			$redirect=array('action' => 'index');
 		}
 		
 		/* we got names to store! */
 		if ($names != null){			
 			$entries=array();
+			$ids=array();			
+			
+			$names=array_map('trim', $names);						
+			$conditions=array('Name.name'=>$names);
+			$existing = $this->Name->find('all',array('conditions'=>$conditions));
+			
+			foreach ($existing as $entry){
+				$ids[]=$entry['Name']['id'];
+				$key=array_search($entry['Name']['name'], $names);
+				unset($names[$key]);
+			}
+			
+			if (empty($names)){
+				$this->Session->setFlash(__('All Names already existing.'));
+				if ($redirect !== false) return $this->redirect($redirect); // if called with POST data: return to index
+				return $ids;
+			}
 			
 			/* create a dataset per name */
 			foreach ($names as $name){
@@ -63,9 +84,11 @@ class NamesController extends AppController {
 			
 			/* store the data sets */
 			$this->Name->create();
-			if ($this->Name->saveMany($entries)) {
+			if ($this->Name->saveAll($entries)) {
 				$this->Session->setFlash(__('The names have been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				if ($redirect !== false) return $this->redirect($redirect); // if called with POST data: return to index				
+				
+				return array_merge($ids,$this->Name->inserted_ids); // return ids
 			} else {
 				$this->Session->setFlash(__('The names could not be saved. Please, try again.'));
 			}

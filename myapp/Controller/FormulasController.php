@@ -45,14 +45,42 @@ class FormulasController extends AppController {
  *
  * @return void
  */
-	public function add() {
-		if ($this->request->is('post')) {
+	public function add($formula = null) {		
+		
+		$redirect=false;
+		
+		/* if we dont get formulas by parameter: check request */
+		if ($formula!=null){
+			$formula=array('Formula'=>array('formula'=>$formula));
+		} else if ($this->request->is('post')) {
+			$formula=$this->request->data;
+			
+			/* as we got our formulas per post request: redirect to index after saving. */
+			$redirect=array('action' => 'index');
+		}
+		
+		/* we got formulas to store! */
+		if ($formula != null){			
+			$entries=array();
+			
+			$conditions=$formula['Formula'];
+			$entry = $this->Formula->find('first',array('conditions'=>$conditions));
+			
+			if (!empty($entry)){
+				$this->Session->setFlash('Formula already in database.');
+				if ($redirect !== false) return $this->redirect($redirect); // if called with POST data: return to index
+				return $entry['Formula']['id'];
+			}
+			
+			/* store the data sets */
 			$this->Formula->create();
-			if ($this->Formula->save($this->request->data)) {
-				$this->Session->setFlash(__('The formula has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+			if ($this->Formula->saveAll($formula)) {
+				$this->Session->setFlash(__('The formulas have been saved.'));
+				if ($redirect !== false) return $this->redirect($redirect); // if called with POST data: return to index				
+				
+				return array_merge($ids,$this->Formula->inserted_ids); // return ids
 			} else {
-				$this->Session->setFlash(__('The formula could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The formulas could not be saved. Please, try again.'));
 			}
 		}
 	}

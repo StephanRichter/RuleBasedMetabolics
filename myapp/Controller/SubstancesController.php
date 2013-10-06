@@ -1,5 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
+App::import('Controller', 'Names');
+
 /**
  * Substances Controller
  *
@@ -14,6 +16,7 @@ class SubstancesController extends AppController {
  * @var array
  */
 	public $components = array('Paginator');
+	
 
 /**
  * index method
@@ -49,8 +52,11 @@ class SubstancesController extends AppController {
 		
 		if ($this->request->is('post')) {
 			$names=explode("\n",$this->request->data['Name']['Name']);
-			print_r($this->Substance->Name->find('all',$names));			
-			die();
+			$names=array_map('trim', $names);
+			
+			$Names = new NamesController();			
+			$Names->Session=$this->Session; // needed for use in Names->add
+			$ids=$Names->add($names);
 			
 			if ($this->Substance->save($this->request->data)) {
 				$this->Session->setFlash(__('The substance has been saved.'));

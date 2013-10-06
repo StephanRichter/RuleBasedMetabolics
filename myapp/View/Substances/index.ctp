@@ -5,15 +5,13 @@
 	<h2><?php echo __('Substances'); ?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('formula_id'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php foreach ($substances as $substance): ?>
 	<tr>
-		<td><?php echo h($substance['Substance']['id']); ?>&nbsp;</td>
 		<td>
-			<?php echo $this->Html->link($substance['Formula']['formula'], array('controller' => 'formulas', 'action' => 'view', $substance['Formula']['id'])); ?>
+			<?php echo $this->Html->link($substance['Name'][0]['name'], array('controller' => 'formulas', 'action' => 'view', $substance['Formula']['id'])); ?>
 		</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $substance['Substance']['id'])); ?>

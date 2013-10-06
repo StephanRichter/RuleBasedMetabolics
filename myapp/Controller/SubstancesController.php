@@ -25,7 +25,7 @@ class SubstancesController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->Substance->recursive = 0;
+		$this->Substance->recursive = 1;
 		$this->set('substances', $this->Paginator->paginate());
 	}
 

@@ -78,7 +78,7 @@ class FormulasController extends AppController {
 				$this->Session->setFlash(__('The formulas have been saved.'));
 				if ($redirect !== false) return $this->redirect($redirect); // if called with POST data: return to index				
 				
-				return array_merge($ids,$this->Formula->inserted_ids); // return ids
+				return $this->Formula->getInsertID(); // return ids
 			} else {
 				$this->Session->setFlash(__('The formulas could not be saved. Please, try again.'));
 			}

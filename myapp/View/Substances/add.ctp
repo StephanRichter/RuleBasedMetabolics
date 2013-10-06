@@ -8,7 +8,6 @@
 	<?php
 		echo $this->Form->input('Name',array('type' => 'textarea','label' => _('Names: one per line')));
 		echo $this->Form->input('Formula',array('type'=>'text'));
-		echo $this->Form->input('Parameter');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

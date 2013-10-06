@@ -16,21 +16,6 @@
 		</dd>
 	</dl>
 </div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('Edit Substance'), array('action' => 'edit', $substance['Substance']['id'])); ?> </li>
-		<li><?php echo $this->Form->postLink(__('Delete Substance'), array('action' => 'delete', $substance['Substance']['id']), null, __('Are you sure you want to delete # %s?', $substance['Substance']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('List Substances'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Substance'), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Formulas'), array('controller' => 'formulas', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Formula'), array('controller' => 'formulas', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Names'), array('controller' => 'names', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Name'), array('controller' => 'names', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Parameters'), array('controller' => 'parameters', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Parameter'), array('controller' => 'parameters', 'action' => 'add')); ?> </li>
-	</ul>
-</div>
 <div class="related">
 	<h3><?php echo __('Related Names'); ?></h3>
 	<?php if (!empty($substance['Name'])): ?>
@@ -53,12 +38,6 @@
 	<?php endforeach; ?>
 	</table>
 <?php endif; ?>
-
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('New Name'), array('controller' => 'names', 'action' => 'add')); ?> </li>
-		</ul>
-	</div>
 </div>
 <div class="related">
 	<h3><?php echo __('Related Parameters'); ?></h3>
@@ -82,10 +61,4 @@
 	<?php endforeach; ?>
 	</table>
 <?php endif; ?>
-
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('New Parameter'), array('controller' => 'parameters', 'action' => 'add')); ?> </li>
-		</ul>
-	</div>
 </div>

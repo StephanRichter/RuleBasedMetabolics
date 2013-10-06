@@ -1,6 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
 App::import('Controller', 'Names');
+App::import('Controller', 'Formulas');
 
 /**
  * Substances Controller
@@ -51,14 +52,22 @@ class SubstancesController extends AppController {
 	public function add() {
 		
 		if ($this->request->is('post')) {
+			$formula=$this->request->data['Substance']['Formula'];
 			$names=explode("\n",$this->request->data['Name']['Name']);
-			$names=array_map('trim', $names);
-			
+			$names=array_map('trim', $names);			
 			$Names = new NamesController();			
+			$Formulas = new FormulasController();			
 			$Names->Session=$this->Session; // needed for use in Names->add
-			$ids=$Names->add($names);
+			$Formulas->Session=$this->Session; // needed for use in Names->add
+			$nids=$Names->add($names);
+			$fid=$Formulas->add($formula);
 			
-			if ($this->Substance->save($this->request->data)) {
+			$substance=array(
+					'Substance' => array('formula_id' => $fid),
+					'Name' => array('Name'=>$nids),
+					'Parameter' => array('Parameter'=>''));
+		
+			if ($this->Substance->save($substance)) {
 				$this->Session->setFlash(__('The substance has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {

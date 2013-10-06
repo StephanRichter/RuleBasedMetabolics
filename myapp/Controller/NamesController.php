@@ -48,6 +48,7 @@ class NamesController extends AppController {
 	public function add($names = null) {		
 		
 		$redirect=false;
+		
 		/* if we dont get names by parameter: check request */
 		if ($names==null && $this->request->is('post')) {
 			$names=explode("\n",$this->request->data['Name']['name']);

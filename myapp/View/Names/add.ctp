@@ -4,10 +4,9 @@
 <div class="names form">
 <?php echo $this->Form->create('Name'); ?>
 	<fieldset>
-		<legend><?php echo __('Add Name'); ?></legend>
+		<legend><?php echo __('Add Names'); ?></legend>
 	<?php
-		echo $this->Form->input('name',array('type' => 'text'));
-		echo $this->Form->input('Substance');
+		echo $this->Form->input('name',array('type' => 'textarea','label'=>__('Names: one per line')));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

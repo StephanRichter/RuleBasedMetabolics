@@ -1,5 +1,9 @@
 <?php
 class UsersController extends AppController {
+	
+/*	public function beforeFilter() {
+		$this->Auth->allow('add');
+	} */
 
 	public function login() {
 		if ($this->request->is('post')) {

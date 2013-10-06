@@ -12,7 +12,7 @@ $exclude=explode(',',$this->fetch('exclude'));
 		<?php echo __('Actions'); ?>
 	</h3>
 	<ul>
-		<li><?php if (!in_array('name', $exclude)) echo $this->Html->link(__('New Name'), array('controller' => 'names', 'action' => 'add')); ?>
+		<li><?php if (!in_array('name', $exclude)) echo $this->Html->link(__('New Names'), array('controller' => 'names', 'action' => 'add')); ?>
 		</li>
 		<li><?php if (!in_array('formula', $exclude)) echo $this->Html->link(__('New Formula'), array('controller' => 'formulas', 'action' => 'add')); ?>
 		</li>

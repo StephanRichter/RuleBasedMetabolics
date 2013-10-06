@@ -45,18 +45,31 @@ class NamesController extends AppController {
  *
  * @return void
  */
-	public function add() {
-		if ($this->request->is('post')) {
+	public function add($names = null) {
+		
+		/* if we dont get names by parameter: check request */
+		if ($names==null && $this->request->is('post')) {
+			$names=explode("\n",$this->request->data['Name']['name']);
+		}
+		
+		/* we got names to store! */
+		if ($names != null){			
+			$entries=array();
+			
+			/* create a dataset per name */
+			foreach ($names as $name){
+				$entries[]=array('Name'=>array('name'=>$name),'Substance'=>array('Substance'=>''));
+			}
+			
+			/* store the data sets */
 			$this->Name->create();
-			if ($this->Name->save($this->request->data)) {
-				$this->Session->setFlash(__('The name has been saved.'));
+			if ($this->Name->saveMany($entries)) {
+				$this->Session->setFlash(__('The names have been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The name could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The names could not be saved. Please, try again.'));
 			}
 		}
-		$substances = $this->Name->Substance->find('list');
-		$this->set(compact('substances'));
 	}
 
 /**

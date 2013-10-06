@@ -46,8 +46,12 @@ class SubstancesController extends AppController {
  * @return void
  */
 	public function add() {
+		
 		if ($this->request->is('post')) {
-			$this->Substance->create();
+			$names=explode("\n",$this->request->data['Name']['Name']);
+			print_r($this->Substance->Name->find('all',$names));			
+			die();
+			
 			if ($this->Substance->save($this->request->data)) {
 				$this->Session->setFlash(__('The substance has been saved.'));
 				return $this->redirect(array('action' => 'index'));

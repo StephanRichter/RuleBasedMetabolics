@@ -31,8 +31,8 @@ CREATE TABLE IF NOT EXISTS roles (id INT AUTO_INCREMENT PRIMARY KEY,
                                   recover BOOLEAN DEFAULT 0);
                                   
 CREATE TABLE IF NOT EXISTS users_roles (id INT AUTO_INCREMENT PRIMARY KEY,
-                                        role_id INT NOT NULL,
-                                        user_id INT NOT NULL,
+                                        role_id INT NOT NULL REFERENCES roles(id),
+                                        user_id INT NOT NULL REFERENCES users(id),
                                         UNIQUE INDEX (role_id, user_id));
                                         
 CREATE TABLE IF NOT EXISTS names (nid INT AUTO_INCREMENT PRIMARY KEY,
@@ -43,15 +43,15 @@ CREATE TABLE IF NOT EXISTS ids (id INT AUTO_INCREMENT PRIMARY KEY,
                                 type INT NOT NULL REFERENCES names(nid));
                                 
 CREATE TABLE IF NOT EXISTS id_namess (id INT AUTO_INCREMENT PRIMARY KEY,
-                                      id_id INT NOT NULL,
-                                      name_nid INT NOT NULL,
+                                      id_id INT NOT NULL REFERENCES ids(id),
+                                      name_nid INT NOT NULL REFERENCES names(nid),
                                       UNIQUE INDEX (id_id,name_nid));
             
 CREATE TABLE IF NOT EXISTS abbrevations (id INT AUTO_INCREMENT PRIMARY KEY,
                                          abbrevation TEXT NOT NULL);
                                          
 CREATE TABLE IF NOT EXISTS urns (uid INT AUTO_INCREMENT PRIMARY KEY,
-                                 id_id INT REFERENCES ids(id),
+                                 id_id INT NOT NULL REFERENCES ids(id),
                                  urn TEXT NOT NULL);                                         
                                       
 CREATE TABLE IF NOT EXISTS formulas (fid INT AUTO_INCREMENT PRIMARY KEY,
@@ -77,11 +77,11 @@ CREATE TABLE IF NOT EXISTS parameters (pid INT AUTO_INCREMENT PRIMARY KEY,
                                        description TEXT NOT NULL);
                                   
 CREATE TABLE IF NOT EXISTS parameters_use (id INT AUTO_INCREMENT PRIMARY KEY,
-                                           parameter_pid INT NOT NULL,
-                                           id_id INT NOT NULL,
+                                           parameter_pid INT NOT NULL REFERENCES parameters(pid),
+                                           id_id INT NOT NULL REFERENCES ids(id),
                                            abbrevation VARCHAR(5) NOT NULL,
                                            specification TEXT,
                                            selector VARCHAR(10),
-                                           ref_substance_id INT,
+                                           ref_substance_id INT REFERENCES substances(id),
                                            UNIQUE INDEX (parameter_pid, id_id));
 SHOW TABLES;

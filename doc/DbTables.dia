@@ -7103,6 +7103,9 @@
         <dia:attribute name="elem_height">
           <dia:real val="2"/>
         </dia:attribute>
+        <dia:attribute name="border_width">
+          <dia:real val="0.10000000149011612"/>
+        </dia:attribute>
         <dia:attribute name="show_background">
           <dia:boolean val="true"/>
         </dia:attribute>
@@ -7124,7 +7127,7 @@
               <dia:point val="18,0.195"/>
             </dia:attribute>
             <dia:attribute name="color">
-              <dia:color val="#000000"/>
+              <dia:color val="#0000ff"/>
             </dia:attribute>
             <dia:attribute name="alignment">
               <dia:enum val="1"/>
@@ -7148,6 +7151,9 @@
         <dia:attribute name="elem_height">
           <dia:real val="2"/>
         </dia:attribute>
+        <dia:attribute name="border_width">
+          <dia:real val="0.10000000149011612"/>
+        </dia:attribute>
         <dia:attribute name="show_background">
           <dia:boolean val="true"/>
         </dia:attribute>
@@ -7169,7 +7175,7 @@
               <dia:point val="18,2.195"/>
             </dia:attribute>
             <dia:attribute name="color">
-              <dia:color val="#000000"/>
+              <dia:color val="#0000ff"/>
             </dia:attribute>
             <dia:attribute name="alignment">
               <dia:enum val="1"/>
@@ -8468,5 +8474,44 @@
         </dia:attribute>
       </dia:object>
     </dia:group>
+    <dia:object type="Standard - Text" version="1" id="O198">
+      <dia:attribute name="obj_pos">
+        <dia:point val="-13,-24"/>
+      </dia:attribute>
+      <dia:attribute name="obj_bb">
+        <dia:rectangle val="-13,-24.6136;4.693,-19.0127"/>
+      </dia:attribute>
+      <dia:attribute name="text">
+        <dia:composite type="text">
+          <dia:attribute name="string">
+            <dia:string>#For every table with a nick field, there shall also
+be an old_&lt;name&gt; table with an additional oldid
+field. For every table with a nick field, (including the
+old_&lt;name&gt; tables) there shall be an additional
+old_id field, which refers to the previous version of
+the entry. This old_id field is not shown here for sake of
+simplicity.#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="font">
+            <dia:font family="sans" style="0" name="Helvetica"/>
+          </dia:attribute>
+          <dia:attribute name="height">
+            <dia:real val="0.80000000000000004"/>
+          </dia:attribute>
+          <dia:attribute name="pos">
+            <dia:point val="-13,-24"/>
+          </dia:attribute>
+          <dia:attribute name="color">
+            <dia:color val="#000000"/>
+          </dia:attribute>
+          <dia:attribute name="alignment">
+            <dia:enum val="0"/>
+          </dia:attribute>
+        </dia:composite>
+      </dia:attribute>
+      <dia:attribute name="valign">
+        <dia:enum val="3"/>
+      </dia:attribute>
+    </dia:object>
   </dia:layer>
 </dia:diagram>

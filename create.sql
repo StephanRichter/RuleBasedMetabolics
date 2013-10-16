@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS abbrevations (id INT AUTO_INCREMENT PRIMARY KEY,
                                          abbrevation TEXT NOT NULL);
                                          
 CREATE TABLE IF NOT EXISTS urns (uid INT AUTO_INCREMENT PRIMARY KEY,
-                                 id INT REFERENCES ids(id),
+                                 id_id INT REFERENCES ids(id),
                                  urn TEXT NOT NULL);                                         
                                       
 CREATE TABLE IF NOT EXISTS formulas (id INT AUTO_INCREMENT PRIMARY KEY,
@@ -62,6 +62,15 @@ CREATE TABLE IF NOT EXISTS substances (id INT AUTO_INCREMENT PRIMARY KEY,
                                        
 CREATE TABLE IF NOT EXISTS reactions (id INT AUTO_INCREMENT PRIMARY KEY,
                                       spontan BOOLEAN DEFAULT 0);
-                                       
+
+CREATE TABLE IF NOT EXISTS rhs (id INT AUTO_INCREMENT PRIMARY KEY,
+                                reaction_id INT NOT NULL REFERENCES reactions(id),
+                                substance_id INT NOT NULL REFERENCES substances(id),
+                                UNIQUE INDEX (reaction_id, substance_id));
+                                  
+CREATE TABLE IF NOT EXISTS lhs (id INT AUTO_INCREMENT PRIMARY KEY,
+                                reaction_id INT NOT NULL REFERENCES reactions(id),
+                                substance_id INT NOT NULL REFERENCES substances(id),
+                                UNIQUE INDEX (reaction_id, substance_id));
                                   
 SHOW TABLES;

@@ -6779,13 +6779,13 @@
     </dia:group>
     <dia:object type="Flowchart - Box" version="0" id="O157">
       <dia:attribute name="obj_pos">
-        <dia:point val="7,-1"/>
+        <dia:point val="7,-0.9"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="6.95,-1.05;10.05,1.05"/>
+        <dia:rectangle val="6.95,-0.95;10.05,1.15"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
-        <dia:point val="7,-1"/>
+        <dia:point val="7,-0.9"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
         <dia:real val="3"/>
@@ -6817,7 +6817,7 @@
             <dia:real val="0.80000000000000004"/>
           </dia:attribute>
           <dia:attribute name="pos">
-            <dia:point val="8.5,0.195"/>
+            <dia:point val="8.5,0.295"/>
           </dia:attribute>
           <dia:attribute name="color">
             <dia:color val="#ffffff"/>

@@ -1,19 +1,22 @@
 USE rulebased;
 
-DROP TABLE IF EXISTS names;
-DROP TABLE IF EXISTS urns;
+DROP TABLE IF EXISTS abbrevations;
 DROP TABLE IF EXISTS formulas;
-DROP TABLE IF EXISTS substances;
-DROP TABLE IF EXISTS parameters;
-DROP TABLE IF EXISTS parameters_substances;
-DROP TABLE IF EXISTS names_substances;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS names;
-DROP TABLE IF EXISTS roles;
-DROP TABLE IF EXISTS users_roles;
 DROP TABLE IF EXISTS ids;
 DROP TABLE IF EXISTS id_names;
-DROP TABLE IF EXISTS abbrevations;
+DROP TABLE IF EXISTS lhs;
+DROP TABLE IF EXISTS names;
+DROP TABLE IF EXISTS names_substances;
+DROP TABLE IF EXISTS parameters;
+DROP TABLE IF EXISTS parameters_substances;
+DROP TABLE IF EXISTS parameters_use;
+DROP TABLE IF EXISTS reactions;
+DROP TABLE IF EXISTS rhs;
+DROP TABLE IF EXISTS roles;
+DROP TABLE IF EXISTS substances;
+DROP TABLE IF EXISTS urns;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users_roles;
 
 CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY,
                                   username VARCHAR(100) NOT NULL UNIQUE,
@@ -84,4 +87,9 @@ CREATE TABLE IF NOT EXISTS parameters_use (id INT AUTO_INCREMENT PRIMARY KEY,
                                            selector VARCHAR(10),
                                            ref_substance_id INT REFERENCES substances(id),
                                            UNIQUE INDEX (parameter_pid, id_id));
+                                           
+CREATE TABLE IF NOT EXISTS enzymes (id INT AUTO_INCREMENT PRIMARY KEY,
+                                    ecnumber TEXT);
+                                           
+                                           
 SHOW TABLES;

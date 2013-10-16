@@ -40,5 +40,10 @@ CREATE TABLE IF NOT EXISTS id_namess (id INT AUTO_INCREMENT PRIMARY KEY,
                                       id_id INT NOT NULL,
                                       name_nid INT NOT NULL,
                                       UNIQUE INDEX (id_id,name_nid));
+            
+CREATE TABLE IF NOT EXISTS abbrevations (id INT AUTO_INCREMENT PRIMARY KEY,
+                                         abbrevation TEXT NOT NULL);
+                                      
+
                                   
 SHOW TABLES;

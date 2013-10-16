@@ -28,5 +28,7 @@ CREATE TABLE IF NOT EXISTS users_roles (id INT AUTO_INCREMENT PRIMARY KEY,
                                         user_id INT NOT NULL,
                                         UNIQUE INDEX (role_id, user_id));
                                         
-                                        
+CREATE TABLE IF NOT EXISTS names (nid INT AUTO_INCREMENT PRIMARY KEY,
+                                  name TEXT NOT NULL,
+                                  user_id INT NOT NULL REFERENCES users(id));
 SHOW TABLES;

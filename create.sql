@@ -6,13 +6,20 @@ DROP TABLE IF EXISTS substances;
 DROP TABLE IF EXISTS parameters;
 DROP TABLE IF EXISTS parameters_substances;
 DROP TABLE IF EXISTS names_substances;
+DROP TABLE IF EXISTS users;
 
-CREATE TABLE IF NOT EXISTS names                 (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, name TEXT NOT NULL);
-CREATE TABLE IF NOT EXISTS formulas              (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, formula TEXT NOT NULL);
-CREATE TABLE IF NOT EXISTS substances            (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, formula_id INT);
-CREATE TABLE IF NOT EXISTS parameters            (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, description TEXT NOT NULL);
-CREATE TABLE IF NOT EXISTS parameters_substances (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, parameter_id INT NOT NULL, substance_id INT NOT NULL, abbrevation CHAR NOT NULL, specification TEXT,selector VARCHAR(10),refered_substance_id INT);
-CREATE TABLE IF NOT EXISTS names_substances      (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, name_id INT NOT NULL,substance_id INT NOT NULL);
-CREATE TABLE IF NOT EXISTS users                 (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, username VARCHAR(50), password VARCHAR(50), role VARCHAR(20), created DATETIME DEFAULT NULL, modified DATETIME DEFAULT NULL);
-
+CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY,
+                                  username VARCHAR(100) NOT NULL UNIQUE,
+                                  name TEXT NOT NULL,
+                                  email VARCHAR(200) NOT NULL UNIQUE,
+                                  password TEXT NOT NULL);
+                                  
+CREATE TABLE IF NOT EXISTS roles (id INT AUTO_INCREMENT PRIMARY KEY,
+                                  role VARCHAR(100) NOT NULL UNIQUE,
+                                  description TEXT NOT NULL,
+                                  view BOOLEAN DEFAULT 0,
+                                  ins BOOLEAN DEFAULT 0,
+                                  edit BOOLEAN DEFAULT 0,
+                                  del BOOLEAN DEFAULT 0,
+                                  recover BOOLEAN DEFAULT 0);
 SHOW TABLES;

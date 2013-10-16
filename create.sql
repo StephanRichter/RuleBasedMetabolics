@@ -96,4 +96,12 @@ CREATE TABLE IF NOT EXISTS enzymes_reactions (id INT AUTO_INCREMENT PRIMARY KEY,
                                               reaction_id INT NOT NULL REFERENCES reactions(id),
                                               UNIQUE INDEX (enzyme_id, reaction_id));
                                            
+CREATE TABLE IF NOT EXISTS compartments (id INT AUTO_INCREMENT PRIMARY KEY,
+                                         comment TEXT);
+                                           
+CREATE TABLE IF NOT EXISTS compartments_enzymes (id INT AUTO_INCREMENT PRIMARY KEY,
+                                                 compartment_id INT NOT NULL REFERENCES compartments(id),
+                                                 enzyme_id INT NOT NULL REFERENCES enzymes(id),
+                                                 UNIQUE INDEX (compartment_id, enzyme_id));
+
 SHOW TABLES;

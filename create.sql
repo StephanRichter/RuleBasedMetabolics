@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS parameters;
 DROP TABLE IF EXISTS parameters_substances;
 DROP TABLE IF EXISTS names_substances;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS names;
 
 CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY,
                                   username VARCHAR(100) NOT NULL UNIQUE,
@@ -31,4 +32,8 @@ CREATE TABLE IF NOT EXISTS users_roles (id INT AUTO_INCREMENT PRIMARY KEY,
 CREATE TABLE IF NOT EXISTS names (nid INT AUTO_INCREMENT PRIMARY KEY,
                                   name TEXT NOT NULL,
                                   user_id INT NOT NULL REFERENCES users(id));
+                                  
+CREATE TABLE IF NOT EXISTS ids (id INT AUTO_INCREMENT PRIMARY KEY,
+                                type INT NOT NULL REFERENCES names(nid));
+                                  
 SHOW TABLES;

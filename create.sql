@@ -8,6 +8,11 @@ DROP TABLE IF EXISTS parameters_substances;
 DROP TABLE IF EXISTS names_substances;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS names;
+DROP TABLE IF EXISTS roles;
+DROP TABLE IF EXISTS users_roles;
+DROP TABLE IF EXISTS ids;
+DROP TABLE IF EXISTS id_names;
+DROP TABLE IF EXISTS abbrevations;
 
 CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY,
                                   username VARCHAR(100) NOT NULL UNIQUE,
@@ -44,6 +49,7 @@ CREATE TABLE IF NOT EXISTS id_namess (id INT AUTO_INCREMENT PRIMARY KEY,
 CREATE TABLE IF NOT EXISTS abbrevations (id INT AUTO_INCREMENT PRIMARY KEY,
                                          abbrevation TEXT NOT NULL);
                                       
-
+CREATE TABLE IF NOT EXISTS formulas (id INT AUTO_INCREMENT PRIMARY KEY,
+                                     formula TEXT NOT NULL);
                                   
 SHOW TABLES;

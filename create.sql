@@ -51,5 +51,8 @@ CREATE TABLE IF NOT EXISTS abbrevations (id INT AUTO_INCREMENT PRIMARY KEY,
                                       
 CREATE TABLE IF NOT EXISTS formulas (id INT AUTO_INCREMENT PRIMARY KEY,
                                      formula TEXT NOT NULL);
+                                     
+CREATE TABLE IF NOT EXISTS substances (id INT AUTO_INCREMENT PRIMARY KEY,
+                                       formula_id INT REFERENCES formula(id));
                                   
 SHOW TABLES;

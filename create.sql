@@ -54,11 +54,11 @@ CREATE TABLE IF NOT EXISTS urns (uid INT AUTO_INCREMENT PRIMARY KEY,
                                  id_id INT REFERENCES ids(id),
                                  urn TEXT NOT NULL);                                         
                                       
-CREATE TABLE IF NOT EXISTS formulas (id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS formulas (fid INT AUTO_INCREMENT PRIMARY KEY,
                                      formula TEXT NOT NULL);
                                      
 CREATE TABLE IF NOT EXISTS substances (id INT AUTO_INCREMENT PRIMARY KEY,
-                                       formula_id INT REFERENCES formula(id));
+                                       formula_fid INT REFERENCES formula(id));
                                        
 CREATE TABLE IF NOT EXISTS reactions (id INT AUTO_INCREMENT PRIMARY KEY,
                                       spontan BOOLEAN DEFAULT 0);
@@ -72,5 +72,16 @@ CREATE TABLE IF NOT EXISTS lhs (id INT AUTO_INCREMENT PRIMARY KEY,
                                 reaction_id INT NOT NULL REFERENCES reactions(id),
                                 substance_id INT NOT NULL REFERENCES substances(id),
                                 UNIQUE INDEX (reaction_id, substance_id));
+                                
+CREATE TABLE IF NOT EXISTS parameters (pid INT AUTO_INCREMENT PRIMARY KEY,
+                                       description TEXT NOT NULL);
                                   
+CREATE TABLE IF NOT EXISTS parameters_use (id INT AUTO_INCREMENT PRIMARY KEY,
+                                           parameter_pid INT NOT NULL,
+                                           id_id INT NOT NULL,
+                                           abbrevation VARCHAR(5) NOT NULL,
+                                           specification TEXT,
+                                           selector VARCHAR(10),
+                                           ref_substance_id INT,
+                                           UNIQUE INDEX (parameter_pid, id_id));
 SHOW TABLES;

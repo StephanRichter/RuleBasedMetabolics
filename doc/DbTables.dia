@@ -8479,7 +8479,7 @@
         <dia:point val="-13,-24"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="-13,-24.6136;4.693,-19.0127"/>
+        <dia:rectangle val="-13,-24.6136;6.06738,-18.2127"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -8490,7 +8490,8 @@ field. For every table with a nick field, (including the
 old_&lt;name&gt; tables) there shall be an additional
 old_id field, which refers to the previous version of
 the entry. This old_id field is not shown here for sake of
-simplicity.#</dia:string>
+simplicity. Each table, which does not have a single-column
+key shall have an id key field.#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>

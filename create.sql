@@ -91,5 +91,9 @@ CREATE TABLE IF NOT EXISTS parameters_use (id INT AUTO_INCREMENT PRIMARY KEY,
 CREATE TABLE IF NOT EXISTS enzymes (id INT AUTO_INCREMENT PRIMARY KEY,
                                     ecnumber TEXT);
                                            
+CREATE TABLE IF NOT EXISTS enzymes_reactions (id INT AUTO_INCREMENT PRIMARY KEY,
+                                              enzyme_id INT NOT NULL REFERENCES enzymes(id),
+                                              reaction_id INT NOT NULL REFERENCES reactions(id),
+                                              UNIQUE INDEX (enzyme_id, reaction_id));
                                            
 SHOW TABLES;

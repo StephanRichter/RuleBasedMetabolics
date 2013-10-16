@@ -22,4 +22,11 @@ CREATE TABLE IF NOT EXISTS roles (id INT AUTO_INCREMENT PRIMARY KEY,
                                   edit BOOLEAN DEFAULT 0,
                                   del BOOLEAN DEFAULT 0,
                                   recover BOOLEAN DEFAULT 0);
+                                  
+CREATE TABLE IF NOT EXISTS users_roles (id INT AUTO_INCREMENT PRIMARY KEY,
+                                        role_id INT NOT NULL,
+                                        user_id INT NOT NULL,
+                                        UNIQUE INDEX (role_id, user_id));
+                                        
+                                        
 SHOW TABLES;

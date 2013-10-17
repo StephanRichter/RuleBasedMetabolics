@@ -64,6 +64,7 @@ class SubstancesController extends AppController {
 			$Names = new NamesController();			
 			$Formulas = new FormulasController();			
 			$Names->Session=$this->Session; // needed for use in Names->add
+			$Names->Auth=$this->Auth;
 			$Formulas->Session=$this->Session; // needed for use in Names->add
 			$nids=$Names->add($names);
 			$fid=$Formulas->add($formula);

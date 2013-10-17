@@ -14,7 +14,7 @@ class NamesController extends AppController {
  * @var array
  */
 	public $components = array('Paginator');
-	
+
 	public function beforeFilter(){
 		$privileges=$this->Session->read('Privileges');
 		$privileges=$privileges['names'];
@@ -86,9 +86,17 @@ class NamesController extends AppController {
 				return $ids;
 			}
 			
+			$now=DboSource::expression('NOW()');
 			/* create a dataset per name */
 			foreach ($names as $name){
-				$entries[]=array('Name'=>array('name'=>$name),'Substance'=>array('Substance'=>''));
+				$entries[]=array(
+						'Name'=>array(
+								'name'=>$name,
+								'user_id'=>$this->Auth->user('id'),
+								'date'=>$now,
+								//'oldid'=>null
+						)
+				);
 			}
 			
 			/* store the data sets */
@@ -102,6 +110,8 @@ class NamesController extends AppController {
 				$this->Session->setFlash(__('The names could not be saved. Please, try again.'));
 			}
 		}
+		$users = $this->Name->User->find('list');
+		$this->set(compact('users'));
 	}
 
 /**
@@ -126,8 +136,8 @@ class NamesController extends AppController {
 			$options = array('conditions' => array('Name.' . $this->Name->primaryKey => $id));
 			$this->request->data = $this->Name->find('first', $options);
 		}
-		$substances = $this->Name->Substance->find('list');
-		$this->set(compact('substances'));
+		$users = $this->Name->User->find('list');
+		$this->set(compact('users'));
 	}
 
 /**

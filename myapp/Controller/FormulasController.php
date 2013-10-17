@@ -67,8 +67,13 @@ class FormulasController extends AppController {
 			$redirect=array('action' => 'index');
 		}
 		
+		
 		/* we got formulas to store! */
 		if ($formula != null){			
+			print_r($this->Formula->getParameters($formula['Formula']['formula']));
+			die();
+				
+			
 			$entries=array();
 		
 			$entry = $this->Formula->find('first',array('conditions'=>array('Formula.formula'=>$formula['Formula']['formula'])));

@@ -41,6 +41,12 @@ class UsersController extends AppController {
 		}
 
 		$priv=array(
+				'formulas' => array(
+						'add' => $privileges['ins'],
+						'edit' => $privileges['edit'],
+						'index'=> $privileges['view'],
+						'view' => $privileges['view'],
+				),
 				'names' => array(
 						'add' => $privileges['ins'],
 						'edit' => $privileges['edit'],

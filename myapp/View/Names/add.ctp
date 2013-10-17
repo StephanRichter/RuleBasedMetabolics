@@ -3,10 +3,7 @@
 	<fieldset>
 		<legend><?php echo __('Add Name'); ?></legend>
 	<?php
-		echo $this->Form->input('name');
-		echo $this->Form->input('user_id');
-		echo $this->Form->input('date');
-		echo $this->Form->input('oldid');
+		echo $this->Form->input('name',array('label'=>'Names: one per line'));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

@@ -53,52 +53,55 @@ class NamesController extends AppController {
  *
  * @return void
  */
-	public function add($names = null) {		
+	public function add($names=null) {
 		
 		$redirect=false;
+		
 		
 		/* if we dont get names by parameter: check request */
 		if ($names==null && $this->request->is('post')) {
 			$names=explode("\n",$this->request->data['Name']['name']);
-			
+				
 			/* as we got our names per post request: redirect to index after saving. */
 			$redirect=array('action' => 'index');
 		}
-		
+
+
 		/* we got names to store! */
-		if ($names != null){			
+		if ($names != null){
 			$entries=array();
-			$ids=array();			
-			
-			$names=array_map('trim', $names);						
+			$ids=array();
+				
+			$names=array_map('trim', $names);
 			$conditions=array('Name.name'=>$names);
 			$existing = $this->Name->find('all',array('conditions'=>$conditions));
-			
+				
 			foreach ($existing as $entry){
-				$ids[]=$entry['Name']['id'];
+				$ids[]=$entry['Name']['nid'];
 				$key=array_search($entry['Name']['name'], $names);
 				unset($names[$key]);
 			}
-			
+				
 			if (empty($names)){
 				$this->Session->setFlash(__('All Names already existing.'));
 				if ($redirect !== false) return $this->redirect($redirect); // if called with POST data: return to index
 				return $ids;
 			}
-			
+				
 			$now=DboSource::expression('NOW()');
 			/* create a dataset per name */
 			foreach ($names as $name){
+				if (empty($name)) continue;
 				$entries[]=array(
 						'Name'=>array(
 								'name'=>$name,
 								'user_id'=>$this->Auth->user('id'),
 								'date'=>$now,
-								//'oldid'=>null
+								'oldid'=>''
 						)
 				);
 			}
-			
+
 			/* store the data sets */
 			$this->Name->create();
 			if ($this->Name->saveAll($entries)) {
@@ -111,7 +114,9 @@ class NamesController extends AppController {
 			}
 		}
 		$users = $this->Name->User->find('list');
-		$this->set(compact('users'));
+		$this->set(compact('users')); 
+	
+
 	}
 
 /**

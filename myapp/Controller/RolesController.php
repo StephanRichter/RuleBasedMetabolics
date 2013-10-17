@@ -52,7 +52,6 @@ class RolesController extends AppController {
                 }
         }
 
-
 /**
  * view method
  *

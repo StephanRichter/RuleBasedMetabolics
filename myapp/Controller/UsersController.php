@@ -21,6 +21,18 @@ class UsersController extends AppController {
                 }
 	} 
 
+        private function setPrivileges($username){
+          $user=$this->User->find('first',array('conditions'=>array('username'=>$username)));
+          $roles=$user['Role'];
+          $previleges=array('view'=>false,'ins'=>false,'edit'=>false,'del'=>false,'recover'=>false,'user_management'=>false);
+          foreach ($roles as $role){
+            foreach ($previleges as $key => $value){
+              if ($role[$key]==1) $previleges[$key]=true;
+            }
+          }
+          return $previleges;
+        }
+
 	public function login() {
 
                 $numberOfUsers=$this->User->find('count');
@@ -35,6 +47,9 @@ class UsersController extends AppController {
 
                 if ($this->request->is('post')) {
                   if ($this->Auth->login()) {
+                    $this->setPrivileges($this->request->data['User']['username']);
+
+                     $this->Session->setFlash(__('Successfully logged in.'));
 		    return $this->redirect($this->Auth->redirect());
 		  }
 		  $this->Session->setFlash(__('Invalid username or password, try again'));

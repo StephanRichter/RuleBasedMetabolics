@@ -28,20 +28,19 @@ class AppController extends Controller {
 	public $components = array(
 			'Session',
 			'Auth' => array(
-					'loginRedirect' => array('controller' => 'posts', 'action' => 'index'),
-					'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'home'),
+					'loginRedirect' => array('controller' => 'substances', 'action' => 'index'),
+					'logoutRedirect' => array('controller' => 'substances', 'action' => 'display', 'home'),
 					'authorize' => array('Controller') // Added this line
 			)
 	);
 
 	public function isAuthorized($user) {
-
 		// Default deny
 		return false;
 	}
 
+  public function beforeFilter() {
 
-	public function beforeFilter() {
-//		$this->Auth->allow('index', 'view');
-	}
+  }
+
 }

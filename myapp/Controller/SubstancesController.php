@@ -2,7 +2,6 @@
 App::uses('AppController', 'Controller');
 App::import('Controller', 'Names');
 App::import('Controller', 'Formulas');
-
 /**
  * Substances Controller
  *
@@ -18,7 +17,6 @@ class SubstancesController extends AppController {
  */
 	public $components = array('Paginator');
 	
-
 /**
  * index method
  *

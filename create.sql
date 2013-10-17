@@ -176,7 +176,7 @@ CREATE TABLE IF NOT EXISTS names (nid INT AUTO_INCREMENT PRIMARY KEY,
 CREATE TABLE IF NOT EXISTS ids (id INT AUTO_INCREMENT PRIMARY KEY,
                                 type INT NOT NULL REFERENCES names(nid));
                                 
-CREATE TABLE IF NOT EXISTS id_namess (id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS id_names (id INT AUTO_INCREMENT PRIMARY KEY,
                                       id_id INT NOT NULL REFERENCES ids(id),
                                       name_nid INT NOT NULL REFERENCES names(nid),
                                       user_id INT NOT NULL REFERENCES users(id),

@@ -5,6 +5,7 @@ App::uses('AppModel', 'Model');
  *
  * @property OldFormula $History
  * @property User $User
+ * @property Substance $Substance
  */
 class Formula extends AppModel {
 
@@ -29,8 +30,8 @@ class Formula extends AppModel {
  */
 	public $validate = array(
 		'fid' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
+			'naturalNumber' => array(
+				'rule' => array('naturalNumber'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -91,4 +92,26 @@ class Formula extends AppModel {
 			'order' => ''
 		)
 	);
+
+/**
+ * hasMany associations
+ *
+ * @var array
+ */
+	public $hasMany = array(
+		'Substance' => array(
+			'className' => 'Substance',
+			'foreignKey' => 'formula_fid',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
+
 }

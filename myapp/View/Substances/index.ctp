@@ -1,18 +1,25 @@
-<?php $this->extend('/Common/view');	
-	$this->assign('exclude','items');
-?>
 <div class="substances index">
 	<h2><?php echo __('Substances'); ?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-			<th><?php echo $this->Paginator->sort('formula_id'); ?></th>
+			<th><?php echo $this->Paginator->sort('id'); ?></th>
+			<th><?php echo $this->Paginator->sort('formula_fid'); ?></th>
+			<th><?php echo $this->Paginator->sort('user_id'); ?></th>
+			<th><?php echo $this->Paginator->sort('date'); ?></th>
+			<th><?php echo $this->Paginator->sort('oldid'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php foreach ($substances as $substance): ?>
 	<tr>
+		<td><?php echo h($substance['Substance']['id']); ?>&nbsp;</td>
 		<td>
-			<?php echo $this->Html->link($substance['Name'][0]['name'], array('controller' => 'formulas', 'action' => 'view', $substance['Formula']['id'])); ?>
+			<?php echo $this->Html->link($substance['Formula']['formula'], array('controller' => 'formulas', 'action' => 'view', $substance['Formula']['fid'])); ?>
 		</td>
+		<td>
+			<?php echo $this->Html->link($substance['User']['name'], array('controller' => 'users', 'action' => 'view', $substance['User']['id'])); ?>
+		</td>
+		<td><?php echo h($substance['Substance']['date']); ?>&nbsp;</td>
+		<td><?php echo h($substance['Substance']['oldid']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $substance['Substance']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $substance['Substance']['id'])); ?>
@@ -34,4 +41,20 @@
 		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
 	?>
 	</div>
+</div>
+<div class="actions">
+	<h3><?php echo __('Actions'); ?></h3>
+	<ul>
+		<li><?php echo $this->Html->link(__('New Substance'), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Formulas'), array('controller' => 'formulas', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Formula'), array('controller' => 'formulas', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Old Substances'), array('controller' => 'old_substances', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New History'), array('controller' => 'old_substances', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Names'), array('controller' => 'names', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Name'), array('controller' => 'names', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Reactions'), array('controller' => 'reactions', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New L H S'), array('controller' => 'reactions', 'action' => 'add')); ?> </li>
+	</ul>
 </div>

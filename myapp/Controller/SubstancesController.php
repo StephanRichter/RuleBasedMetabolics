@@ -56,10 +56,9 @@ class SubstancesController extends AppController {
  * @return void
  */
 	public function add() {
-		
 		if ($this->request->is('post')) {
 			$formula=$this->request->data['Substance']['Formula'];
-			$names=explode("\n",$this->request->data['Substance']['Name']);
+			$names=explode("\n",$this->request->data['Name']['Name']);
 			$names=array_map('trim', $names);			
 			$Names = new NamesController();			
 			$Formulas = new FormulasController();			
@@ -71,13 +70,14 @@ class SubstancesController extends AppController {
 			$fid=$Formulas->add($formula);
 			
 			$substance=array(
-					'Substance' => array('formula_id' => $fid),
+					'Substance' => array(
+							'formula_fid' => $fid,
+							'user_id' => $this->Auth->user('id'),
+							'date' => DboSource::expression('NOW()')
+					),
 					'Name' => array('Name'=>$nids),
-					'Parameter' => array('Parameter'=>'')
 			);
 			
-			print_r($substance); die();
-		
 			if ($this->Substance->save($substance)) {
 				$this->Session->setFlash(__('The substance has been saved.'));
 				return $this->redirect(array('action' => 'index'));
@@ -85,6 +85,12 @@ class SubstancesController extends AppController {
 				$this->Session->setFlash(__('The substance could not be saved. Please, try again.'));
 			}
 		}
+		$users = $this->Substance->User->find('list');
+		$formulas = $this->Substance->Formula->find('list');
+		$names = $this->Substance->Name->find('list');
+		$lHSs = $this->Substance->LHS->find('list');
+		$rHSs = $this->Substance->RHS->find('list');
+		$this->set(compact('users', 'formulas', 'names', 'lHSs', 'rHSs'));
 	}
 
 /**
@@ -109,10 +115,12 @@ class SubstancesController extends AppController {
 			$options = array('conditions' => array('Substance.' . $this->Substance->primaryKey => $id));
 			$this->request->data = $this->Substance->find('first', $options);
 		}
+		$users = $this->Substance->User->find('list');
 		$formulas = $this->Substance->Formula->find('list');
 		$names = $this->Substance->Name->find('list');
-		$parameters = $this->Substance->Parameter->find('list');
-		$this->set(compact('formulas', 'names', 'parameters'));
+		$lHSs = $this->Substance->LH->find('list');
+		$rHSs = $this->Substance->RH->find('list');
+		$this->set(compact('users', 'formulas', 'names', 'lHSs', 'rHSs'));
 	}
 
 /**

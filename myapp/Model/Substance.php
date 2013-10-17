@@ -36,16 +36,6 @@ class Substance extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'date' => array(
-			'datetime' => array(
-				'rule' => array('datetime'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -64,7 +54,7 @@ class Substance extends AppModel {
 			'order' => ''
 		)
 	);
-
+	
 /**
  * belongsTo associations
  *
@@ -77,6 +67,13 @@ class Substance extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
+		),
+		'Formula' => array(
+			'className' => 'Formula',
+			'foreignKey' => 'formula_fid',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
 		)
 	);
 
@@ -86,7 +83,20 @@ class Substance extends AppModel {
  * @var array
  */
 	public $hasAndBelongsToMany = array(
-		'LHS' => array(
+		'Name' => array(
+			'className' => 'Name',
+			'joinTable' => 'id_names',
+			'foreignKey' => 'id_id',
+			'associationForeignKey' => 'name_nid',
+			'unique' => 'keepExisting',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => '',
+		),
+			'LHS' => array(
 			'className' => 'Reaction',
 			'joinTable' => 'lhs',
 			'foreignKey' => 'reaction_id',

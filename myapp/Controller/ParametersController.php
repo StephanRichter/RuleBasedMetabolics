@@ -15,6 +15,14 @@ class ParametersController extends AppController {
  */
 	public $components = array('Paginator');
 
+	public function beforeFilter(){
+		$privileges=$this->Session->read('Privileges');
+		$privileges=$privileges['parameters'];
+		foreach ($privileges as $action => $allowed){
+			if ($allowed) $this->Auth->allow($action);
+		}
+	}
+	
 /**
  * index method
  *

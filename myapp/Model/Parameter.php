@@ -114,7 +114,7 @@ class Parameter extends AppModel {
  * @var array
  */
 	public $hasAndBelongsToMany = array(
-		'SubstanceParameters' => array(
+		'Substance' => array(
 			'className' => 'Substance',
 			'joinTable' => 'parameters_use',
 			'foreignKey' => 'parameter_pid',
@@ -127,7 +127,7 @@ class Parameter extends AppModel {
 			'offset' => '',
 			'finderQuery' => '',
 		),
-		'OldSubstanceParameters' => array(
+		'OldSubstance' => array(
 			'className' => 'Substance',
 			'joinTable' => 'old_parameters_use',
 			'foreignKey' => 'parameter_pid',
@@ -140,7 +140,7 @@ class Parameter extends AppModel {
 			'offset' => '',
 			'finderQuery' => '',
 		),
-		'ReferredSubstances' => array(
+		'ReferredSubstance' => array(
 			'className' => 'Substance',
 			'joinTable' => 'parameters_use',
 			'foreignKey' => 'parameter_pid',
@@ -153,7 +153,7 @@ class Parameter extends AppModel {
 			'offset' => '',
 			'finderQuery' => '',
 		),
-		'OldReferredSubstances' => array(
+		'OldReferredSubstance' => array(
 			'className' => 'Substance',
 			'joinTable' => 'old_parameters_use',
 			'foreignKey' => 'parameter_pid',
@@ -166,7 +166,7 @@ class Parameter extends AppModel {
 			'offset' => '',
 			'finderQuery' => '',
 		),
-		'ReactionParameters' => array(
+		'Reaction' => array(
 			'className' => 'Reaction',
 			'joinTable' => 'parameters_use',
 			'foreignKey' => 'parameter_pid',
@@ -179,7 +179,7 @@ class Parameter extends AppModel {
 			'offset' => '',
 			'finderQuery' => '',
 		),
-		'OldReactionParameters' => array(
+		'OldReaction' => array(
 			'className' => 'Reaction',
 			'joinTable' => 'old_parameters_use',
 			'foreignKey' => 'parameter_pid',

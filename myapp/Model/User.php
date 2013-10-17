@@ -10,17 +10,22 @@ class User extends AppModel {
 							'message' => 'A username is required'
 					)
 			),
+			'name' => array(
+					'required' => array(
+							'rule' => array('notEmpty'),
+							'message' => 'The real name of the user is required'
+					)
+			),
+			'email' => array(
+					'required' => array(
+							'rule' => array('email'),
+							'message' => 'A valid email is required'
+					)
+			),
 			'password' => array(
 					'required' => array(
 							'rule' => array('notEmpty'),
 							'message' => 'A password is required'
-					)
-			),
-			'role' => array(
-					'valid' => array(
-							'rule' => array('inList', array('admin', 'author')),
-							'message' => 'Please enter a valid role',
-							'allowEmpty' => false
 					)
 			)
 	);

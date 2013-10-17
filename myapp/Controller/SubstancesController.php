@@ -66,13 +66,17 @@ class SubstancesController extends AppController {
 			$Names->Session=$this->Session; // needed for use in Names->add
 			$Names->Auth=$this->Auth;
 			$Formulas->Session=$this->Session; // needed for use in Names->add
+			$Formulas->Auth=$this->Auth;
 			$nids=$Names->add($names);
 			$fid=$Formulas->add($formula);
 			
 			$substance=array(
 					'Substance' => array('formula_id' => $fid),
 					'Name' => array('Name'=>$nids),
-					'Parameter' => array('Parameter'=>''));
+					'Parameter' => array('Parameter'=>'')
+			);
+			
+			print_r($substance); die();
 		
 			if ($this->Substance->save($substance)) {
 				$this->Session->setFlash(__('The substance has been saved.'));

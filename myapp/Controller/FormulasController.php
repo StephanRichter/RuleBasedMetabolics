@@ -70,15 +70,17 @@ class FormulasController extends AppController {
 		/* we got formulas to store! */
 		if ($formula != null){			
 			$entries=array();
-			
-			$conditions=$formula['Formula'];
-			$entry = $this->Formula->find('first',array('conditions'=>$conditions));
-			
+		
+			$entry = $this->Formula->find('first',array('conditions'=>array('Formula.formula'=>$formula['Formula']['formula'])));
+				
 			if (!empty($entry)){
 				$this->Session->setFlash('Formula already in database.');
 				if ($redirect !== false) return $this->redirect($redirect); // if called with POST data: return to index
-				return $entry['Formula']['id'];
+				return $entry['Formula']['fid'];
 			}
+
+			$formula['Formula']['user_id']=$this->Auth->user('id');
+			$formula['Formula']['date']=DboSource::expression('NOW()');
 			
 			/* store the data sets */
 			$this->Formula->create();
@@ -90,11 +92,13 @@ class FormulasController extends AppController {
 			} else {				
 				if ($this->Formula->error==null){
 					$this->Session->setFlash(__('The formulas could not be saved. Please, try again.'));
-				} else {
+			} else {
 					$this->Session->setFlash($this->Formula->error);
 				}
 			}
 		}
+		$users = $this->Formula->User->find('list');
+		$this->set(compact('users'));
 	}
 
 /**
@@ -119,6 +123,8 @@ class FormulasController extends AppController {
 			$options = array('conditions' => array('Formula.' . $this->Formula->primaryKey => $id));
 			$this->request->data = $this->Formula->find('first', $options);
 		}
+		$users = $this->Formula->User->find('list');
+		$this->set(compact('users'));
 	}
 
 /**

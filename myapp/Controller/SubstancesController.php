@@ -59,7 +59,7 @@ class SubstancesController extends AppController {
 		
 		if ($this->request->is('post')) {
 			$formula=$this->request->data['Substance']['Formula'];
-			$names=explode("\n",$this->request->data['Name']['Name']);
+			$names=explode("\n",$this->request->data['Substance']['Name']);
 			$names=array_map('trim', $names);			
 			$Names = new NamesController();			
 			$Formulas = new FormulasController();			
@@ -80,10 +80,6 @@ class SubstancesController extends AppController {
 				$this->Session->setFlash(__('The substance could not be saved. Please, try again.'));
 			}
 		}
-		$formulas = $this->Substance->Formula->find('list');
-		$names = $this->Substance->Name->find('list');
-		$parameters = $this->Substance->Parameter->find('list');
-		$this->set(compact('formulas', 'names', 'parameters'));
 	}
 
 /**

@@ -1,9 +1,14 @@
 <?php
+
+App::uses('AppController', 'Controller');
+
 class UsersController extends AppController {
 	
-/*	public function beforeFilter() {
-		$this->Auth->allow('add');
-	} */
+	public function beforeFilter() {
+                if ($this->User->find('count') == 0){
+                  $this->Auth->allow('addfirst');
+                }
+	} 
 
 	public function login() {
 
@@ -13,8 +18,10 @@ class UsersController extends AppController {
                   $numberOfRoles=$this->User->Role->find('count');
 
                   if ($numberOfRoles == 0){
-                    $this->redirect(array('controller'=>'roles','action'=>'createadmin'));
+                    return $this->redirect(array('controller'=>'roles','action'=>'createadmin'));
                   }
+
+                  return $this->redirect(array('action'=>'addfirst'));
 
                 }
 		if ($this->request->is('post')) {
@@ -41,6 +48,19 @@ class UsersController extends AppController {
 		}
 		$this->set('user', $this->User->read(null, $id));
 	}
+
+        public function addfirst(){
+                if ($this->request->is('post')){
+                  print_r($this->request->data);
+                  die();
+                  $this->User->create();
+                  if ($this->User->save($this->request->data)){
+                    $this->Session->setFlash(__('The first user has been created'));
+                    return $this->redirect(array('action' => 'index'));
+                  }
+                  $this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+                }
+        }
 
 	public function add() {
 		if ($this->request->is('post')) {

@@ -1,22 +1,27 @@
-<?php $this->extend('/Common/view');	
-	$this->assign('exclude','items');
-?>
 <div class="parameters index">
 	<h2><?php echo __('Parameters'); ?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-			<th><?php echo $this->Paginator->sort('id'); ?></th>
+			<th><?php echo $this->Paginator->sort('pid'); ?></th>
 			<th><?php echo $this->Paginator->sort('description'); ?></th>
+			<th><?php echo $this->Paginator->sort('user_id'); ?></th>
+			<th><?php echo $this->Paginator->sort('date'); ?></th>
+			<th><?php echo $this->Paginator->sort('oldid'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php foreach ($parameters as $parameter): ?>
 	<tr>
-		<td><?php echo h($parameter['Parameter']['id']); ?>&nbsp;</td>
+		<td><?php echo h($parameter['Parameter']['pid']); ?>&nbsp;</td>
 		<td><?php echo h($parameter['Parameter']['description']); ?>&nbsp;</td>
+		<td>
+			<?php echo $this->Html->link($parameter['User']['name'], array('controller' => 'users', 'action' => 'view', $parameter['User']['id'])); ?>
+		</td>
+		<td><?php echo h($parameter['Parameter']['date']); ?>&nbsp;</td>
+		<td><?php echo h($parameter['Parameter']['oldid']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $parameter['Parameter']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $parameter['Parameter']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $parameter['Parameter']['id']), null, __('Are you sure you want to delete # %s?', $parameter['Parameter']['id'])); ?>
+			<?php echo $this->Html->link(__('View'), array('action' => 'view', $parameter['Parameter']['pid'])); ?>
+			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $parameter['Parameter']['pid'])); ?>
+			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $parameter['Parameter']['pid']), null, __('Are you sure you want to delete # %s?', $parameter['Parameter']['pid'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -34,4 +39,18 @@
 		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
 	?>
 	</div>
+</div>
+<div class="actions">
+	<h3><?php echo __('Actions'); ?></h3>
+	<ul>
+		<li><?php echo $this->Html->link(__('New Parameter'), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Old Parameters'), array('controller' => 'old_parameters', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New History'), array('controller' => 'old_parameters', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Substances'), array('controller' => 'substances', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Substance'), array('controller' => 'substances', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Reactions'), array('controller' => 'reactions', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Reaction'), array('controller' => 'reactions', 'action' => 'add')); ?> </li>
+	</ul>
 </div>

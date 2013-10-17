@@ -55,6 +55,9 @@ class ParametersController extends AppController {
  */
 	public function add() {
 		if ($this->request->is('post')) {
+			$db = ConnectionManager::getDataSource('default');
+			$this->request->data['Parameter']['user_id']=$this->Auth->user('id');
+			$this->request->data['Parameter']['date']=$db->expression('NOW()');
 			$this->Parameter->create();
 			if ($this->Parameter->save($this->request->data)) {
 				$this->Session->setFlash(__('The parameter has been saved.'));
@@ -63,8 +66,14 @@ class ParametersController extends AppController {
 				$this->Session->setFlash(__('The parameter could not be saved. Please, try again.'));
 			}
 		}
+		$users = $this->Parameter->User->find('list');
 		$substances = $this->Parameter->Substance->find('list');
-		$this->set(compact('substances'));
+		$oldSubstances = $this->Parameter->OldSubstance->find('list');
+		$referredSubstances = $this->Parameter->ReferredSubstance->find('list');
+		$oldReferredSubstances = $this->Parameter->OldReferredSubstance->find('list');
+		$reactions = $this->Parameter->Reaction->find('list');
+		$oldReactions = $this->Parameter->OldReaction->find('list');
+		$this->set(compact('users', 'substances', 'oldSubstances', 'referredSubstances', 'oldReferredSubstances', 'reactions', 'oldReactions'));
 	}
 
 /**
@@ -89,8 +98,14 @@ class ParametersController extends AppController {
 			$options = array('conditions' => array('Parameter.' . $this->Parameter->primaryKey => $id));
 			$this->request->data = $this->Parameter->find('first', $options);
 		}
+		$users = $this->Parameter->User->find('list');
 		$substances = $this->Parameter->Substance->find('list');
-		$this->set(compact('substances'));
+		$oldSubstances = $this->Parameter->OldSubstance->find('list');
+		$referredSubstances = $this->Parameter->ReferredSubstance->find('list');
+		$oldReferredSubstances = $this->Parameter->OldReferredSubstance->find('list');
+		$reactions = $this->Parameter->Reaction->find('list');
+		$oldReactions = $this->Parameter->OldReaction->find('list');
+		$this->set(compact('users', 'substances', 'oldSubstances', 'referredSubstances', 'oldReferredSubstances', 'reactions', 'oldReactions'));
 	}
 
 /**

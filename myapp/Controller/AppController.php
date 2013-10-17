@@ -13,7 +13,7 @@
  */
 
 App::uses('Controller', 'Controller');
-
+App::uses('ConnectionManager', 'Model');
 /**
  * Application Controller
  *

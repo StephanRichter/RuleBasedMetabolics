@@ -24,8 +24,8 @@ CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY,
                                   name TEXT NOT NULL,
                                   email VARCHAR(200) NOT NULL UNIQUE,
                                   password TEXT NOT NULL,
-                                  created DATETIME,
-                                  modified DATETIME DEFAULT NULL);
+                                  created DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                  modified DATETIME DEFAULT CURRENT_TIMESTAMP);
                                   
 CREATE TABLE IF NOT EXISTS roles (id INT AUTO_INCREMENT PRIMARY KEY,
                                   role VARCHAR(100) NOT NULL UNIQUE,
@@ -34,16 +34,20 @@ CREATE TABLE IF NOT EXISTS roles (id INT AUTO_INCREMENT PRIMARY KEY,
                                   ins BOOLEAN DEFAULT 0,
                                   edit BOOLEAN DEFAULT 0,
                                   del BOOLEAN DEFAULT 0,
-                                  recover BOOLEAN DEFAULT 0);
+                                  recover BOOLEAN DEFAULT 0,
+                                  user_management BOOLEAND DEFAULT 0);
                                   
 CREATE TABLE IF NOT EXISTS users_roles (id INT AUTO_INCREMENT PRIMARY KEY,
                                         role_id INT NOT NULL REFERENCES roles(id),
                                         user_id INT NOT NULL REFERENCES users(id),
+                                        date DATETIME NOT NULL,
                                         UNIQUE INDEX (role_id, user_id));
                                         
 CREATE TABLE IF NOT EXISTS names (nid INT AUTO_INCREMENT PRIMARY KEY,
                                   name TEXT NOT NULL,
-                                  user_id INT NOT NULL REFERENCES users(id));
+                                  user_id INT NOT NULL REFERENCES users(id),
+                                  date DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                  oldid INT DEFAULT NULL);
                                   
 CREATE TABLE IF NOT EXISTS ids (id INT AUTO_INCREMENT PRIMARY KEY,
                                 type INT NOT NULL REFERENCES names(nid));
@@ -51,36 +55,63 @@ CREATE TABLE IF NOT EXISTS ids (id INT AUTO_INCREMENT PRIMARY KEY,
 CREATE TABLE IF NOT EXISTS id_namess (id INT AUTO_INCREMENT PRIMARY KEY,
                                       id_id INT NOT NULL REFERENCES ids(id),
                                       name_nid INT NOT NULL REFERENCES names(nid),
+                                      user_id INT NOT NULL REFERENCES users(id),
+                                      date DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                      oldid INT DEFAULT NULL,                                      
                                       UNIQUE INDEX (id_id,name_nid));
             
 CREATE TABLE IF NOT EXISTS abbrevations (id INT AUTO_INCREMENT PRIMARY KEY,
-                                         abbrevation TEXT NOT NULL);
+                                         abbrevation TEXT NOT NULL,
+                                      	  user_id INT NOT NULL REFERENCES users(id),
+                                      	  date DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                      	  oldid INT DEFAULT NULL);
                                          
 CREATE TABLE IF NOT EXISTS urns (uid INT AUTO_INCREMENT PRIMARY KEY,
                                  id_id INT NOT NULL REFERENCES ids(id),
-                                 urn TEXT NOT NULL);                                         
+                                 urn TEXT NOT NULL,
+                                 user_id INT NOT NULL REFERENCES users(id),
+                                 date DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                 oldid INT DEFAULT NULL);                                         
                                       
 CREATE TABLE IF NOT EXISTS formulas (fid INT AUTO_INCREMENT PRIMARY KEY,
-                                     formula TEXT NOT NULL);
+                                     formula TEXT NOT NULL,
+                                 	 user_id INT NOT NULL REFERENCES users(id),
+                                 	 date DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                 	 oldid INT DEFAULT NULL);
                                      
 CREATE TABLE IF NOT EXISTS substances (id INT AUTO_INCREMENT PRIMARY KEY,
-                                       formula_fid INT REFERENCES formula(id));
+                                       formula_fid INT REFERENCES formula(id),
+                                 		user_id INT NOT NULL REFERENCES users(id),
+                                 		date DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                 		oldid INT DEFAULT NULL);
                                        
 CREATE TABLE IF NOT EXISTS reactions (id INT AUTO_INCREMENT PRIMARY KEY,
-                                      spontan BOOLEAN DEFAULT 0);
+                                      spontan BOOLEAN DEFAULT 0,
+                                 	  user_id INT NOT NULL REFERENCES users(id),
+                                      date DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                      oldid INT DEFAULT NULL);
 
 CREATE TABLE IF NOT EXISTS rhs (id INT AUTO_INCREMENT PRIMARY KEY,
                                 reaction_id INT NOT NULL REFERENCES reactions(id),
                                 substance_id INT NOT NULL REFERENCES substances(id),
+                                user_id INT NOT NULL REFERENCES users(id),
+                                date DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                oldid INT DEFAULT NULL,
                                 UNIQUE INDEX (reaction_id, substance_id));
                                   
 CREATE TABLE IF NOT EXISTS lhs (id INT AUTO_INCREMENT PRIMARY KEY,
                                 reaction_id INT NOT NULL REFERENCES reactions(id),
                                 substance_id INT NOT NULL REFERENCES substances(id),
+                                user_id INT NOT NULL REFERENCES users(id),
+                                date DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                oldid INT DEFAULT NULL,
                                 UNIQUE INDEX (reaction_id, substance_id));
                                 
 CREATE TABLE IF NOT EXISTS parameters (pid INT AUTO_INCREMENT PRIMARY KEY,
-                                       description TEXT NOT NULL);
+                                       description TEXT NOT NULL,
+                                 		user_id INT NOT NULL REFERENCES users(id),
+                                 		date DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                 		oldid INT DEFAULT NULL);
                                   
 CREATE TABLE IF NOT EXISTS parameters_use (id INT AUTO_INCREMENT PRIMARY KEY,
                                            parameter_pid INT NOT NULL REFERENCES parameters(pid),
@@ -89,27 +120,45 @@ CREATE TABLE IF NOT EXISTS parameters_use (id INT AUTO_INCREMENT PRIMARY KEY,
                                            specification TEXT,
                                            selector VARCHAR(10),
                                            ref_substance_id INT REFERENCES substances(id),
+                                 			 user_id INT NOT NULL REFERENCES users(id),
+                                           date DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                           oldid INT DEFAULT NULL,
                                            UNIQUE INDEX (parameter_pid, id_id));
                                            
 CREATE TABLE IF NOT EXISTS enzymes (id INT AUTO_INCREMENT PRIMARY KEY,
-                                    ecnumber TEXT);
+                                    ecnumber TEXT,
+                                 	user_id INT NOT NULL REFERENCES users(id),
+                                 	date DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                 	oldid INT DEFAULT NULL);
                                            
 CREATE TABLE IF NOT EXISTS enzymes_reactions (id INT AUTO_INCREMENT PRIMARY KEY,
                                               enzyme_id INT NOT NULL REFERENCES enzymes(id),
                                               reaction_id INT NOT NULL REFERENCES reactions(id),
+                                 				 user_id INT NOT NULL REFERENCES users(id),
+                                              date DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                              oldid INT DEFAULT NULL,
                                               UNIQUE INDEX (enzyme_id, reaction_id));
                                            
 CREATE TABLE IF NOT EXISTS compartments (id INT AUTO_INCREMENT PRIMARY KEY,
-                                         comment TEXT);
+                                         comment TEXT,
+                                 		  user_id INT NOT NULL REFERENCES users(id),
+                                         date DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                         oldid INT DEFAULT NULL);
                                            
 CREATE TABLE IF NOT EXISTS compartments_enzymes (id INT AUTO_INCREMENT PRIMARY KEY,
                                                  compartment_id INT NOT NULL REFERENCES compartments(id),
                                                  enzyme_id INT NOT NULL REFERENCES enzymes(id),
+                                                 user_id INT NOT NULL REFERENCES users(id),
+                                                 date DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                                 oldid INT DEFAULT NULL,
                                                  UNIQUE INDEX (compartment_id, enzyme_id));
 
 CREATE TABLE IF NOT EXISTS containments (id INT AUTO_INCREMENT PRIMARY KEY,
                                          compartment_id INT NOT NULL REFERENCES compartments(id),
                                          container_id INT NOT NULL REFERENCES compartments(id),
+                                         user_id INT NOT NULL REFERENCES users(id),
+                                         date DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                         oldid INT DEFAULT NULL,
                                          UNIQUE INDEX (compartment_id, container_id));
 SHOW WARNINGS;
 SHOW TABLES;

@@ -1,14 +1,18 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Substance Model
+ * Reaction Model
  *
- * @property OldSubstance $History
+ * @property Reaction $History
  * @property User $User
- * @property Reaction $LHS
- * @property Reaction $RHS
+ * @property Enzyme $Enzyme
+ * @property OldEnzyme $OldEnzyme
+ * @property Substance $LHS
+ * @property Substance $RHS
+ * @property Reaction $OldLHS
+ * @property Substance $OldRHS
  */
-class Substance extends AppModel {
+class Reaction extends AppModel {
 
 /**
  * Validation rules
@@ -19,6 +23,16 @@ class Substance extends AppModel {
 		'id' => array(
 			'naturalNumber' => array(
 				'rule' => array('naturalNumber'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'spontan' => array(
+			'boolean' => array(
+				'rule' => array('boolean'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -57,7 +71,7 @@ class Substance extends AppModel {
  */
 	public $hasOne = array(
 		'History' => array(
-			'className' => 'OldSubstance',
+			'className' => 'Reaction',
 			'foreignKey' => 'oldid',
 			'conditions' => '',
 			'fields' => '',
@@ -86,11 +100,37 @@ class Substance extends AppModel {
  * @var array
  */
 	public $hasAndBelongsToMany = array(
-		'LHS' => array(
-			'className' => 'Reaction',
-			'joinTable' => 'lhs',
+		'Enzyme' => array(
+			'className' => 'Enzyme',
+			'joinTable' => 'enzymes_reactions',
 			'foreignKey' => 'reaction_id',
-			'associationForeignKey' => 'substance_id',
+			'associationForeignKey' => 'enzyme_id',
+			'unique' => 'keepExisting',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => '',
+		),
+		'OldEnzyme' => array(
+			'className' => 'OldEnzyme',
+			'joinTable' => 'old_enzymes_reactions',
+			'foreignKey' => 'reaction_id',
+			'associationForeignKey' => 'old_enzyme_id',
+			'unique' => 'keepExisting',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => '',
+		),
+		'LHS' => array(
+			'className' => 'Substance',
+			'joinTable' => 'lhs',
+			'foreignKey' => 'substance_id',
+			'associationForeignKey' => 'reaction_id',
 			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',
@@ -100,10 +140,36 @@ class Substance extends AppModel {
 			'finderQuery' => '',
 		),
 		'RHS' => array(
-			'className' => 'Reaction',
+			'className' => 'Substance',
 			'joinTable' => 'rhs',
-			'foreignKey' => 'reaction_id',
-			'associationForeignKey' => 'substance_id',
+			'foreignKey' => 'substance_id',
+			'associationForeignKey' => 'reaction_id',
+			'unique' => 'keepExisting',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => '',
+		),
+		'OldLHS' => array(
+			'className' => 'Substance',
+			'joinTable' => 'old_lhs',
+			'foreignKey' => 'substance_id',
+			'associationForeignKey' => 'reaction_id',
+			'unique' => 'keepExisting',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => '',
+		),
+		'OldRHS' => array(
+			'className' => 'Substance',
+			'joinTable' => 'old_rhs',
+			'foreignKey' => 'substance_id',
+			'associationForeignKey' => 'reaction_id',
 			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',

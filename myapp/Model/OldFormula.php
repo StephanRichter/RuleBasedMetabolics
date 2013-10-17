@@ -1,26 +1,26 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Name Model
+ * OldFormula Model
  *
- * @property OldName $History
+ * @property OldFormula $History
  * @property User $User
  */
-class Name extends AppModel {
+class OldFormula extends AppModel {
 
 /**
  * Primary key field
  *
  * @var string
  */
-	public $primaryKey = 'nid';
+	public $primaryKey = 'oid';
 
 /**
  * Display field
  *
  * @var string
  */
-	public $displayField = 'name';
+	public $displayField = 'formula';
 
 /**
  * Validation rules
@@ -28,7 +28,7 @@ class Name extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'nid' => array(
+		'oid' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -38,7 +38,17 @@ class Name extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'name' => array(
+		'fid' => array(
+			'naturalNumber' => array(
+				'rule' => array('naturalNumber'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'formula' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -79,7 +89,7 @@ class Name extends AppModel {
  */
 	public $hasOne = array(
 		'History' => array(
-			'className' => 'OldName',
+			'className' => 'OldFormula',
 			'foreignKey' => 'oldid',
 			'conditions' => '',
 			'fields' => '',

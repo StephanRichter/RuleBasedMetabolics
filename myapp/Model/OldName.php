@@ -1,19 +1,19 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Name Model
+ * OldName Model
  *
  * @property OldName $History
  * @property User $User
  */
-class Name extends AppModel {
+class OldName extends AppModel {
 
 /**
  * Primary key field
  *
  * @var string
  */
-	public $primaryKey = 'nid';
+	public $primaryKey = 'oid';
 
 /**
  * Display field
@@ -28,9 +28,19 @@ class Name extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'nid' => array(
+		'oid' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'nid' => array(
+			'naturalNumber' => array(
+				'rule' => array('naturalNumber'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,

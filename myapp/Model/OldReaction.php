@@ -1,26 +1,14 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Name Model
+ * OldReaction Model
  *
- * @property OldName $History
+ * @property OldReaction $History
  * @property User $User
+ * @property Substance $LHS
+ * @property Substance $RHS
  */
-class Name extends AppModel {
-
-/**
- * Primary key field
- *
- * @var string
- */
-	public $primaryKey = 'nid';
-
-/**
- * Display field
- *
- * @var string
- */
-	public $displayField = 'name';
+class OldReaction extends AppModel {
 
 /**
  * Validation rules
@@ -28,9 +16,9 @@ class Name extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'nid' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
+		'oid' => array(
+			'naturalNumber' => array(
+				'rule' => array('naturalNumber'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -38,9 +26,19 @@ class Name extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'name' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+		'id' => array(
+			'naturalNumber' => array(
+				'rule' => array('naturalNumber'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'spontan' => array(
+			'boolean' => array(
+				'rule' => array('boolean'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -79,7 +77,7 @@ class Name extends AppModel {
  */
 	public $hasOne = array(
 		'History' => array(
-			'className' => 'OldName',
+			'className' => 'OldReaction',
 			'foreignKey' => 'oldid',
 			'conditions' => '',
 			'fields' => '',
@@ -101,4 +99,39 @@ class Name extends AppModel {
 			'order' => ''
 		)
 	);
+
+/**
+ * hasAndBelongsToMany associations
+ *
+ * @var array
+ */
+	public $hasAndBelongsToMany = array(
+		'LHS' => array(
+			'className' => 'Substance',
+			'joinTable' => 'lhs',
+			'foreignKey' => 'substance_id',
+			'associationForeignKey' => 'reaction_id',
+			'unique' => 'keepExisting',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => '',
+		),
+		'RHS' => array(
+			'className' => 'Substance',
+			'joinTable' => 'rhs',
+			'foreignKey' => 'substance_id',
+			'associationForeignKey' => 'reaction_id',
+			'unique' => 'keepExisting',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => '',
+		)
+	);
+
 }

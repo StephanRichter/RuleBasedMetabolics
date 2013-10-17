@@ -307,19 +307,19 @@ class User extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		'OldIdNamess' => array(
-			'className' => 'OldIdNamess',
-			'foreignKey' => 'user_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
+//		'OldIdNamess' => array(
+//			'className' => 'OldIdNamess',
+//			'foreignKey' => 'user_id',
+//			'dependent' => false,
+//			'conditions' => '',
+//			'fields' => '',
+//			'order' => '',
+//			'limit' => '',
+//			'offset' => '',
+//			'exclusive' => '',
+//			'finderQuery' => '',
+//			'counterQuery' => ''
+//		),
 		'OldLh' => array(
 			'className' => 'OldLh',
 			'foreignKey' => 'user_id',
@@ -359,19 +359,19 @@ class User extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		'OldParametersUse' => array(
-			'className' => 'OldParametersUse',
-			'foreignKey' => 'user_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
+//		'OldParametersUse' => array(
+//			'className' => 'OldParametersUse',
+//			'foreignKey' => 'user_id',
+//			'dependent' => false,
+//			'conditions' => '',
+//			'fields' => '',
+//			'order' => '',
+//			'limit' => '',
+//			'offset' => '',
+//			'exclusive' => '',
+//			'finderQuery' => '',
+//			'counterQuery' => ''
+//		),
 		'OldReaction' => array(
 			'className' => 'OldReaction',
 			'foreignKey' => 'user_id',
@@ -437,19 +437,19 @@ class User extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		'ParametersUse' => array(
-			'className' => 'ParametersUse',
-			'foreignKey' => 'user_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
+//		'ParametersUse' => array(
+//			'className' => 'ParametersUse',
+//			'foreignKey' => 'user_id',
+//			'dependent' => false,
+//			'conditions' => '',
+//			'fields' => '',
+//			'order' => '',
+//			'limit' => '',
+//			'offset' => '',
+//			'exclusive' => '',
+//			'finderQuery' => '',
+//			'counterQuery' => ''
+//		),
 		'Reaction' => array(
 			'className' => 'Reaction',
 			'foreignKey' => 'user_id',

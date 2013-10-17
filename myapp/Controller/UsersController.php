@@ -6,6 +6,17 @@ class UsersController extends AppController {
 	} */
 
 	public function login() {
+
+                $numberOfUsers=$this->User->find('count');
+                
+                if ($numberOfUsers == 0){
+                  $numberOfRoles=$this->User->Role->find('count');
+
+                  if ($numberOfRoles == 0){
+                    $this->redirect(array('controller'=>'roles','action'=>'createadmin'));
+                  }
+
+                }
 		if ($this->request->is('post')) {
 			if ($this->Auth->login()) {
 				return $this->redirect($this->Auth->redirect());

@@ -7,7 +7,6 @@
 		echo $this->Form->input('name',array('label' => __('Real Name'),'type'=>'string'));
 		echo $this->Form->input('email');
 		echo $this->Form->input('password');
-		echo $this->Form->input('Role');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

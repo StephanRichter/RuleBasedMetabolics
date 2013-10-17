@@ -23,21 +23,27 @@ class UsersController extends AppController {
 	} 
 
         private function setPrivileges($username){
-          $previleges=array('view'=>false,'ins'=>false,'edit'=>false,'del'=>false,'recover'=>false,'user_management'=>false);
+          $privileges=array('view'=>false,'ins'=>false,'edit'=>false,'del'=>false,'recover'=>false,'user_management'=>false);
           if ($username != null){
             $user=$this->User->find('first',array('conditions'=>array('username'=>$username)));
             $roles=$user['Role'];
             foreach ($roles as $role){
-              foreach ($previleges as $key => $value){
-                if ($role[$key]==1) $previleges[$key]=true;
+              foreach ($privileges as $key => $value){
+                if ($role[$key]==1) $privileges[$key]=true;
               }
             }
           }
           
           $priv=array(
             'substances' => array(
-              'index'=> $previleges['view'],
-              'view' => $previleges['view']
+              'index'=> $privileges['view'],
+              'view' => $privileges['view']
+            ),
+            'roles' => array(
+              'index' => $privileges['view'],
+              'view' => $privileges['user_management'],
+              'add' => $privileges['user_management'],
+              'delete' => $privileges['user_management']
             )
           );
 
@@ -60,8 +66,7 @@ class UsersController extends AppController {
                 if ($this->request->is('post')) {
                   if ($this->Auth->login()) {
                     $this->setPrivileges($this->request->data['User']['username']);
-
-                     $this->Session->setFlash(__('Successfully logged in.'));
+                    $this->Session->setFlash(__('Successfully logged in.'));
 		    return $this->redirect($this->Auth->redirect());
 		  }
 		  $this->Session->setFlash(__('Invalid username or password, try again'));

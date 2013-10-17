@@ -15,10 +15,17 @@ class RolesController extends AppController {
  */
 	public $components = array('Paginator');
 
-      public function beforeFilter() {
-        if ($this->Role->find('count') == 0) $this->Auth->allow('createadmin');
-      } 
-
+        public function beforeFilter(){
+          if ($this->Role->find('count') == 0) {
+            $this->Auth->allow('createadmin');
+            return;
+          }
+          $privileges=$this->Session->read('Privileges');
+          $privileges=$privileges['roles'];
+          foreach ($privileges as $action => $allowed){
+            if ($allowed) $this->Auth->allow($action);
+          }
+        }
 /**
  * index method
  *
@@ -74,8 +81,6 @@ class RolesController extends AppController {
  */
 	public function add() {
 		if ($this->request->is('post')) {
-                        print_r($this->request->data);
-                        die();
 			$this->Role->create();
 			if ($this->Role->save($this->request->data)) {
 				$this->Session->setFlash(__('The role has been saved.'));

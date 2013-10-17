@@ -1,6 +1,7 @@
 USE rulebased;
 
 DROP TABLE IF EXISTS abbrevations;
+DROP TABLE IF EXISTS containments;
 DROP TABLE IF EXISTS formulas;
 DROP TABLE IF EXISTS ids;
 DROP TABLE IF EXISTS id_names;
@@ -108,5 +109,5 @@ CREATE TABLE IF NOT EXISTS containments (id INT AUTO_INCREMENT PRIMARY KEY,
                                          compartment_id INT NOT NULL REFERENCES compartments(id),
                                          container_id INT NOT NULL REFERENCES compartments(id),
                                          UNIQUE INDEX (compartment_id, container_id));
-
+SHOW WARNINGS;
 SHOW TABLES;

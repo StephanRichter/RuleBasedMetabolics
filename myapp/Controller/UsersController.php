@@ -16,21 +16,33 @@ class UsersController extends AppController {
 	public $components = array('Paginator');
 
 	public function beforeFilter() {
+                $this->Auth->allow('logout');
                 if ($this->User->find('count') == 0){
                   $this->Auth->allow('addfirst');
                 }
 	} 
 
         private function setPrivileges($username){
-          $user=$this->User->find('first',array('conditions'=>array('username'=>$username)));
-          $roles=$user['Role'];
           $previleges=array('view'=>false,'ins'=>false,'edit'=>false,'del'=>false,'recover'=>false,'user_management'=>false);
-          foreach ($roles as $role){
-            foreach ($previleges as $key => $value){
-              if ($role[$key]==1) $previleges[$key]=true;
+          if ($username != null){
+            $user=$this->User->find('first',array('conditions'=>array('username'=>$username)));
+            $roles=$user['Role'];
+            foreach ($roles as $role){
+              foreach ($previleges as $key => $value){
+                if ($role[$key]==1) $previleges[$key]=true;
+              }
             }
           }
-          return $previleges;
+          
+          $priv=array(
+            'substances' => array(
+              'index'=> $previleges['view'],
+              'view' => $previleges['view']
+            )
+          );
+
+          $this->Session->write('Privileges',$priv);
+
         }
 
 	public function login() {
@@ -57,6 +69,7 @@ class UsersController extends AppController {
 	}
 	
 	public function logout() {
+                $this->setPrivileges(null);
 		return $this->redirect($this->Auth->logout());
 	}
 /**

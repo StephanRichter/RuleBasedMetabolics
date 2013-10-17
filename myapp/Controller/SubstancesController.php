@@ -16,7 +16,17 @@ class SubstancesController extends AppController {
  * @var array
  */
 	public $components = array('Paginator');
-	
+
+        public function beforeFilter(){
+          $privileges=$this->Session->read('Privileges');
+//          print_r($privileges);
+//          die();
+          $privileges=$privileges['substances'];
+          foreach ($privileges as $action => $allowed){       
+            if ($allowed) $this->Auth->allow($action);
+          }
+        }
+
 /**
  * index method
  *

@@ -29,7 +29,7 @@ class AppController extends Controller {
 			'Session',
 			'Auth' => array(
 					'loginRedirect' => array('controller' => 'substances', 'action' => 'index'),
-					'logoutRedirect' => array('controller' => 'substances', 'action' => 'display', 'home'),
+					'logoutRedirect' => array('controller' => 'substances', 'action' => 'index'),
 					'authorize' => array('Controller') // Added this line
 			)
 	);
@@ -38,9 +38,5 @@ class AppController extends Controller {
 		// Default deny
 		return false;
 	}
-
-  public function beforeFilter() {
-
-  }
 
 }

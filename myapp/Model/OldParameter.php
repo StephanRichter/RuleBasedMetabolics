@@ -1,25 +1,23 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Parameter Model
+ * OldParameter Model
  *
  * @property OldParameter $History
  * @property User $User
  * @property Substance $SubstanceParameters
  * @property Substance $OldSubstanceParameters
- * @property Substance $ReferredSubstances
- * @property Substance $OldReferredSubstances
- * @property Reaction $ReactionParameters
- * @property Reaction $OldReactionParameters
+ * @property Substance $ReferredSubstance
+ * @property Substance $OldReferredSubstance
  */
-class Parameter extends AppModel {
+class OldParameter extends AppModel {
 
 /**
  * Primary key field
  *
  * @var string
  */
-	public $primaryKey = 'pid';
+	public $primaryKey = 'oid';
 
 /**
  * Display field
@@ -34,6 +32,16 @@ class Parameter extends AppModel {
  * @var array
  */
 	public $validate = array(
+		'oid' => array(
+			'naturalNumber' => array(
+				'rule' => array('naturalNumber'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
 		'pid' => array(
 			'naturalNumber' => array(
 				'rule' => array('naturalNumber'),
@@ -140,7 +148,7 @@ class Parameter extends AppModel {
 			'offset' => '',
 			'finderQuery' => '',
 		),
-		'ReferredSubstances' => array(
+		'ReferredSubstance' => array(
 			'className' => 'Substance',
 			'joinTable' => 'parameters_use',
 			'foreignKey' => 'parameter_pid',
@@ -153,7 +161,7 @@ class Parameter extends AppModel {
 			'offset' => '',
 			'finderQuery' => '',
 		),
-		'OldReferredSubstances' => array(
+		'OldReferredSubstance' => array(
 			'className' => 'Substance',
 			'joinTable' => 'old_parameters_use',
 			'foreignKey' => 'parameter_pid',
@@ -166,32 +174,32 @@ class Parameter extends AppModel {
 			'offset' => '',
 			'finderQuery' => '',
 		),
-		'ReactionParameters' => array(
-			'className' => 'Reaction',
-			'joinTable' => 'parameters_use',
-			'foreignKey' => 'parameter_pid',
-			'associationForeignKey' => 'id_id',
-			'unique' => 'keepExisting',
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-		),
-		'OldReactionParameters' => array(
-			'className' => 'Reaction',
-			'joinTable' => 'old_parameters_use',
-			'foreignKey' => 'parameter_pid',
-			'associationForeignKey' => 'id_id',
-			'unique' => 'keepExisting',
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-		)
-	);
+                'ReactionParameters' => array(
+                        'className' => 'Reaction',
+                        'joinTable' => 'parameters_use',
+                        'foreignKey' => 'parameter_pid',
+                        'associationForeignKey' => 'id_id',
+                        'unique' => 'keepExisting',
+                        'conditions' => '',
+                        'fields' => '',
+                        'order' => '',
+                        'limit' => '',
+                        'offset' => '',
+                        'finderQuery' => '',
+                ),
+                'OldReactionParameters' => array(
+                        'className' => 'Reaction',
+                        'joinTable' => 'old_parameters_use',
+                        'foreignKey' => 'parameter_pid',
+                        'associationForeignKey' => 'id_id',
+                        'unique' => 'keepExisting',
+                        'conditions' => '',
+                        'fields' => '',
+                        'order' => '',
+                        'limit' => '',
+                        'offset' => '',
+                        'finderQuery' => '',
+                )
+        );
 
 }

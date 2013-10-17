@@ -20,6 +20,12 @@ class UsersController extends AppController {
                 if ($this->User->find('count') == 0){
                   $this->Auth->allow('addfirst');
                 }
+                
+                $privileges=$this->Session->read('Privileges');
+                $privileges=$privileges['users'];
+                foreach ($privileges as $action => $allowed){
+                  if ($allowed) $this->Auth->allow($action);
+                }
 	} 
 
         private function setPrivileges($username){
@@ -35,6 +41,12 @@ class UsersController extends AppController {
           }
           
           $priv=array(
+            'users' => array(
+              'view' => $username,
+              'add' => $privileges['user_management'],
+              'delete' => $privileges['user_management'],
+              'index' => $privileges['user_management']
+            ),
             'substances' => array(
               'index'=> $privileges['view'],
               'view' => $privileges['view']

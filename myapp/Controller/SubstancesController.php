@@ -94,7 +94,7 @@ class SubstancesController extends AppController {
 			  if (isset($open_parameters)) {
 			  	$open_parameters['substance_id']=$this->Substance->getInsertID();
 				  $this->Session->write('openparameters',$open_parameters);
-			  	return $this->redirect(array('controller'=>'param','action'=>'assign'));
+			  	return $this->redirect(array('controller'=>'parameters_uses','action'=>'add'));
 				}
 				
 				return $this->redirect(array('action' => 'index'));

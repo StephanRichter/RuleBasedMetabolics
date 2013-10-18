@@ -60,12 +60,13 @@ class Formula extends AppModel {
 	}
 	
 	public function getParameters($code){
-		print $code."<br/>";
+		print "getParameters( '$code' )<br/>";
 		$formula=$this->parseFormula($code);
 		return $formula['parameters'];
 	}
 	
 	public function parseFormula($code){
+		print "parseFormula( '$code' )<br/>";
 		$formula=$this->parseWeightedGroup($code);		
 		if ($formula===false){
 			$formula=$this->parseGroup($code);
@@ -80,12 +81,16 @@ class Formula extends AppModel {
 	}
 	
 	function parseWeightedGroup($code){
-		if (strpos($code, '(')===false) return false;		
+		print "parseWeightedGroup( '$code' )<br/>";
+		$code=trim($code);
+		if ($code{0}!='(') return false;		
 		print("Formula->parseWeightedGroup not implemented."); die();
 		// TODO implement rest of code
 	}
 	
-	function parseGroup($code){				
+	function parseGroup($code){
+		print "parseGroup( '$code' )<br/>";
+		$code=trim($code);
 		$weightedAtom=$this->parseWeightedAtom($code);
 		$group=array();
 		if ($weightedAtom===false) return false;
@@ -103,6 +108,8 @@ class Formula extends AppModel {
 	}
 	
 	function parseWeightedAtom(&$code){
+		print "parseWeightedAtom( '$code' )<br/>";
+		$code=trim($code);
 		$atom=$this->parseAtom($code);
 		if ($atom===false) return false;
 		
@@ -111,14 +118,30 @@ class Formula extends AppModel {
 		return array('atom'=>$atom,'weight'=>$weight);
 	}
 	
-	
+	function parseBracketTerm(&$code){
+		print "parseBracketTerm( '$code' )<br/>";
+		$code=trim($code);
+		
+		if (strlen($code)<3) return false;
+		if ($code{0}!='(') return false;
+		$code=trim(substr($code, 1));
+		$count=$this->parseCount($code);
+		if ($count===false) return false;
+		$code=trim($code);
+		if (strlen($code)==0) return false;
+		if ($code{0}!=')') return false;
+		$code=substr($code, 1);
+		return $count;	
+		
+	}
 	
 	function parseCount(&$code){
-		print "parseCount($code)<br>";
+		print "parseCount( '$code' )<br/>";
+		$code=trim($code);
 		$ops=array('+','-','*','/');
 		$dummy=false;
 		if ($code{0}=='(') {
-			$dummy=parseBracketTerm($code);
+			$dummy=$this->parseBracketTerm($code);
 		} elseif ($code{0}=='$'){
 			$dummy=$this->parseVariable($code);			
 		} else {
@@ -137,20 +160,25 @@ class Formula extends AppModel {
 			$dummy=$this->parseCount($code);
 			if ($dummy===false) return false;
 			$count[]=$op;
-			$count[]=$dummy;
-									
+			$count[]=$dummy;									
 		}
-		
-		print "<pre>return ";
-		print_r($count);
-		print "</pre>";
-		
+				
 		return $count;
 	}
 	
-	
+	function parseVariable(&$code){
+		print "parseVariable( '$code' )<br/>";
+		$code=trim($code);
+		if (strlen($code)<2) return false;		
+		if ($code{0}!='$') return false;
+		$var=$code{1};
+		$code=substr($code, 2);
+		return $var;		
+	}
 	
 	function parseNumber(&$code){
+		print "parseNumber( '$code' )<br/>";
+		$code=trim($code);		
 		if (!ctype_digit($code{0})) return false;
 		$num='';
 		while (ctype_digit($code{0})){
@@ -161,6 +189,7 @@ class Formula extends AppModel {
 	}
 
 	function parseAtom(&$code){
+		print "parseAtom( '$code' )<br/>";
 		$code=trim($code);
 		if (strlen($code)==0) return false;
 		if (!ctype_upper($code{0})) return false;

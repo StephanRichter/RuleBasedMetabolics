@@ -112,7 +112,8 @@ class SubstancesController extends AppController {
 	}
 	
 	public function search(){
-		$substance=$this->request->data;
+		$name=$this->request->data['name'];
+		$substance=$name;
 		$this->set(compact('substance'));
 	}
 

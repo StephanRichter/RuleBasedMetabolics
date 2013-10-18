@@ -28,7 +28,7 @@ $options=array(
 'async' => true,
 'method' => 'post',
 'dataExpression'=>true,
-'data' => '$(query).val()'
+'data' => "'name='+$(query).val()"
 );
 
 $this->Js->get('#query')->event('keyup', $this->Js->request($controller,$options));

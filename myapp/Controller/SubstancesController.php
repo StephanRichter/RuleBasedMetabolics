@@ -68,12 +68,16 @@ class SubstancesController extends AppController {
 			$Formulas->Auth=$this->Auth;
 			$nids=$Names->add($names);
 			$fid=$Formulas->add($formula);
+
 			
+				
 			$parameters=$this->Substance->Formula->getParameters($formula);
 			if (!empty($parameters)){
-				print_r($parameters);
-			  die();
+				$open_parameters=array();
+				$open_parameters['formula']=$formula;
+				$open_parameters['parameters']=$parameters;												
 			}
+			
 				
 			$substance=array(
 					'Substance' => array(
@@ -86,6 +90,13 @@ class SubstancesController extends AppController {
 			
 			if ($this->Substance->save($substance)) {
 				$this->Session->setFlash(__('The substance has been saved.'));
+				
+			  if (isset($open_parameters)) {
+			  	$open_parameters['substance_id']=$this->Substance->getInsertID();
+				  $this->Session->write('openparameters',$open_parameters);
+			  	return $this->redirect(array('controller'=>'param','action'=>'assign'));
+				}
+				
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The substance could not be saved. Please, try again.'));

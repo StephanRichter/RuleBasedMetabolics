@@ -109,6 +109,11 @@ class SubstancesController extends AppController {
 		$rHSs = $this->Substance->RHS->find('list');
 		$this->set(compact('users', 'formulas', 'names', 'lHSs', 'rHSs'));
 	}
+	
+	public function search(){
+		$substance=$this->Substance->find('all');
+		$this->set($substance);
+	}
 
 /**
  * edit method

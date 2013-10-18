@@ -16,11 +16,27 @@
 		echo $this->Form->input('Parameter');		
 		echo $this->Form->input('specification');
 		echo $this->Form->input('selector');
-		echo $this->Form->input('DefiningSubstance');
-		echo $this->Form->input('Substance',array('label'=>false,'default'=>$substance['Substance']['id'],'hidden'=>true));
+		echo $this->Form->input('DefiningSubstance');				
 	?>
+		<input id="query" maxlength="2147483647" name="query" size="20" type="text" />
 	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
+<?php 
+
+$controller=array('controller' => 'substances', 'action' => 'search');
+$options=array(
+'update' => '#view',
+'async' => true,
+'dataExpression' => true,
+'method' => 'post',
+'data' => $this->Js->serializeForm(array('isForm' => false, 'inline' => true))
+);
+
+$this->Js->get('#query')->event('change', $this->Js->request($controller,$options));
+
+echo $this->Form->end(__('Submit')); ?>
+<div id="view" class="auto_complete">
+    <!-- Results will load here -->
+</div>
 </div>
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>

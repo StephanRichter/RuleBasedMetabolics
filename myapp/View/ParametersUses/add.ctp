@@ -28,7 +28,7 @@ $options=array(
 'async' => true,
 'dataExpression' => true,
 'method' => 'post',
-'data' => $this->Js->serializeForm(array('isForm' => false, 'inline' => true))
+//'data' => $this->Js->serializeForm(array('isForm' => false, 'inline' => true))
 );
 
 $this->Js->get('#query')->event('change', $this->Js->request($controller,$options));

@@ -14,7 +14,7 @@ class ParametersUsesController extends AppController {
  * @var array
  */
 	public $components = array('Paginator');
-	var $helpers = array('Html', 'Js');
+	var $helpers = array('Html', 'Js'=>array('Jquery'));
 	
 	public function beforeFilter(){
 		$privileges=$this->Session->read('Privileges');

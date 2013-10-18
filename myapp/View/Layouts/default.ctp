@@ -20,7 +20,8 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 	</title>
 	<?php
 		echo $this->Html->meta('icon');
-
+		echo $this->Html->script('jquery'); // Include jQuery library
+		
 		echo $this->Html->css('cake.generic');
 
 		echo $this->fetch('meta');
@@ -48,6 +49,8 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 			?>
 		</div>
 	</div>
-	<?php echo $this->element('sql_dump'); ?>
+	<?php echo $this->element('sql_dump'); 
+	echo $this->Js->writeBuffer();
+	?>
 </body>
 </html>

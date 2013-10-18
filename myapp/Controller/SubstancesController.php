@@ -23,6 +23,7 @@ class SubstancesController extends AppController {
           foreach ($privileges as $action => $allowed){       
             if ($allowed) $this->Auth->allow($action);
           }
+          //$this->Auth->allow('search');
         }
 
 /**
@@ -112,7 +113,7 @@ class SubstancesController extends AppController {
 	
 	public function search(){
 		$substance=$this->Substance->find('all');
-		$this->set($substance);
+		$this->set(compact('substance'));
 	}
 
 /**

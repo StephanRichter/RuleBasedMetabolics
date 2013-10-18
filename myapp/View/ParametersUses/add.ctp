@@ -26,12 +26,12 @@ $controller=array('controller' => 'substances', 'action' => 'search');
 $options=array(
 'update' => '#view',
 'async' => true,
-'dataExpression' => true,
 'method' => 'post',
-//'data' => $this->Js->serializeForm(array('isForm' => false, 'inline' => true))
+'dataExpression'=>true,
+'data' => '$(query).val()'
 );
 
-$this->Js->get('#query')->event('change', $this->Js->request($controller,$options));
+$this->Js->get('#query')->event('keyup', $this->Js->request($controller,$options));
 
 echo $this->Form->end(__('Submit')); ?>
 <div id="view" class="auto_complete">

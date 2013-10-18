@@ -56,7 +56,7 @@ class Formula extends AppModel {
 	);
 	
 	public function checkFormula($formula){
-		return (parseFormula($formula)!==false);
+		return ($this->parseFormula($formula['formula'])!==false);
 	}
 	
 	public function getParameters($code){

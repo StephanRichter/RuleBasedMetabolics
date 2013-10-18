@@ -69,6 +69,12 @@ class SubstancesController extends AppController {
 			$nids=$Names->add($names);
 			$fid=$Formulas->add($formula);
 			
+			$parameters=$this->Substance->Formula->getParameters($formula);
+			if (!empty($parameters)){
+				print_r($parameters);
+			  die();
+			}
+				
 			$substance=array(
 					'Substance' => array(
 							'formula_fid' => $fid,

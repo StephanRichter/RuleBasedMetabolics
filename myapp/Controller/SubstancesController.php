@@ -113,7 +113,7 @@ class SubstancesController extends AppController {
 	
 	public function search(){
 		$name=$this->request->data['name'];
-		$substance=$name;
+		$substance=$this->Substance->find('all',array('conditions'=>array('name LIKE' => '%Substance%')));
 		$this->set(compact('substance'));
 	}
 

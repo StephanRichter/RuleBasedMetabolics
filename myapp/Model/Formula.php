@@ -56,41 +56,72 @@ class Formula extends AppModel {
 	);
 	
 	public function checkFormula($formula){
-		return true;
+		return (parseFormula($formula)!==false);
 	}
 	
 	public function getParameters($code){
-		print "getParameters( '$code' )<br/>";
 		$formula=$this->parseFormula($code);
-		return $formula['parameters'];
+		$parameters=array();
+		$this->extractParameters($parameters,$formula);		
+		return array_unique($parameters);
 	}
 	
-	public function parseFormula($code){
-		print "parseFormula( '$code' )<br/>";
-		$formula=$this->parseWeightedGroup($code);		
-		if ($formula===false){
-			$formula=$this->parseGroup($code);
+	public function extractParameters(&$param,$formula){
+		if (is_array($formula)){
+			foreach ($formula as $part){				
+				$this->extractParameters($param, $part);
+			}
+		} else {
+			if (ctype_alpha($formula)){
+				$param[]=$formula;
+			}
 		}
-
-		if ($formula===false) print("this is not a formula");
-		print "<pre>";
-		print_r($formula);
-		print "</pre>";
-		die();
+	}
+	
+	public function parseFormula(&$code){
+		//print "parseFormula( '$code' )<br/>";
+		$part=$this->parseWeightedGroup($code);		
+		if ($part===false){
+			$part=$this->parseGroup($code);
+		}
+		if ($part===false) return false;
+		$formula=array();		
+		while ($part!==false){
+			$formula[]=$part;
+			$part=$this->parseWeightedGroup($code);
+			if ($part===false){
+				$part=$this->parseGroup($code);
+			}				
+		}
 		return $formula;
 	}
 	
-	function parseWeightedGroup($code){
-		print "parseWeightedGroup( '$code' )<br/>";
+	function parseWeightedGroup(&$code){
+		//print "parseWeightedGroup( '$code' )<br/>";
 		$code=trim($code);
-		if ($code{0}!='(') return false;		
-		print("Formula->parseWeightedGroup not implemented."); die();
-		// TODO implement rest of code
+		if (strlen($code)<3) return false;
+		if ($code{0}!='(') return false;
+		
+		$code=trim(substr($code, 1));
+		
+		$formula=$this->parseFormula($code);
+		$code=trim($code);
+		if (strlen($code)==0) return false;
+		if ($code{0}!=')') return false;
+		$code=substr($code, 1);
+		
+		$count=$this->parseCount($code);
+		if ($count===false){
+			return $formula;
+		}
+		
+		return array($count,'*',$formula);
 	}
 	
-	function parseGroup($code){
-		print "parseGroup( '$code' )<br/>";
+	function parseGroup(&$code){
+		//print "parseGroup( '$code' )<br/>";
 		$code=trim($code);
+		if (strlen($code)==0) return false;
 		$weightedAtom=$this->parseWeightedAtom($code);
 		$group=array();
 		if ($weightedAtom===false) return false;
@@ -108,7 +139,7 @@ class Formula extends AppModel {
 	}
 	
 	function parseWeightedAtom(&$code){
-		print "parseWeightedAtom( '$code' )<br/>";
+		//print "parseWeightedAtom( '$code' )<br/>";
 		$code=trim($code);
 		$atom=$this->parseAtom($code);
 		if ($atom===false) return false;
@@ -119,7 +150,7 @@ class Formula extends AppModel {
 	}
 	
 	function parseBracketTerm(&$code){
-		print "parseBracketTerm( '$code' )<br/>";
+		//print "parseBracketTerm( '$code' )<br/>";
 		$code=trim($code);
 		
 		if (strlen($code)<3) return false;
@@ -136,8 +167,9 @@ class Formula extends AppModel {
 	}
 	
 	function parseCount(&$code){
-		print "parseCount( '$code' )<br/>";
+		//print "parseCount( '$code' )<br/>";
 		$code=trim($code);
+		if (strlen($code)==0) return false;
 		$ops=array('+','-','*','/');
 		$dummy=false;
 		if ($code{0}=='(') {
@@ -167,7 +199,7 @@ class Formula extends AppModel {
 	}
 	
 	function parseVariable(&$code){
-		print "parseVariable( '$code' )<br/>";
+		//print "parseVariable( '$code' )<br/>";
 		$code=trim($code);
 		if (strlen($code)<2) return false;		
 		if ($code{0}!='$') return false;
@@ -177,7 +209,7 @@ class Formula extends AppModel {
 	}
 	
 	function parseNumber(&$code){
-		print "parseNumber( '$code' )<br/>";
+		//print "parseNumber( '$code' )<br/>";
 		$code=trim($code);		
 		if (!ctype_digit($code{0})) return false;
 		$num='';
@@ -189,7 +221,7 @@ class Formula extends AppModel {
 	}
 
 	function parseAtom(&$code){
-		print "parseAtom( '$code' )<br/>";
+		//print "parseAtom( '$code' )<br/>";
 		$code=trim($code);
 		if (strlen($code)==0) return false;
 		if (!ctype_upper($code{0})) return false;

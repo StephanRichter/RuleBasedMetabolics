@@ -60,6 +60,7 @@ class Formula extends AppModel {
 	}
 	
 	public function getParameters($code){
+		print $code."<br/>";
 		$formula=$this->parseFormula($code);
 		return $formula['parameters'];
 	}
@@ -76,30 +77,38 @@ class Formula extends AppModel {
 	}
 	
 	function parseWeightedGroup($code){
-		if (strpos($code, '(')===false) return false;
-		
+		if (strpos($code, '(')===false) return false;		
 		print("Formula->parseWeightedGroup not implemented."); die();
 		// TODO implement rest of code
 	}
 	
 	function parseGroup($code){				
 		$weightedAtom=$this->parseWeightedAtom($code);
+		$group=array();
 		if ($weightedAtom===false) return false;
-		print_r($weightedAtom);
-		print "Formula->parseGroup not implemented";		
-		die();
+		while ($weightedAtom!==false){
+			$atom=$weightedAtom['atom'];
+			$weight=$weightedAtom['weight'];
+			if (isset($group[$atom])){
+				$group[$atom]+=$weight;
+			} else {
+				$group[$atom]=$weight;
+			}
+			$weightedAtom=$this->parseWeightedAtom($code);
+		}
+		return $group;
 	}
 	
-	function parseWeightedAtom($code){
-		$atom=$this->parseAtom(&$code);
+	function parseWeightedAtom(&$code){
+		$atom=$this->parseAtom($code);
 		if ($atom===false) return false;
 		
-		$weight=$this->parseCount(&$code);
+		$weight=$this->parseCount($code);
 		if ($weight===false) $weight=1;
 		return array('atom'=>$atom,'weight'=>$weight);
 	}
 	
-	function parseCount($code){
+	function parseCount(&$code){
 		if (!ctype_digit($code{0})) return false;
 		$num='';
 		while (ctype_digit($code{0})){
@@ -109,7 +118,7 @@ class Formula extends AppModel {
 		return $num;
 	}
 
-	function parseAtom($code){
+	function parseAtom(&$code){
 		if (!ctype_upper($code{0})) return false;
 		$atom=$code{0};
 		$code=substr($code, 1);

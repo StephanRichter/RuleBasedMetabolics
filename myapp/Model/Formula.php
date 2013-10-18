@@ -72,7 +72,10 @@ class Formula extends AppModel {
 		}
 
 		if ($formula===false) print("this is not a formula");
-		
+		print "<pre>";
+		print_r($formula);
+		print "</pre>";
+		die();
 		return $formula;
 	}
 	
@@ -108,7 +111,46 @@ class Formula extends AppModel {
 		return array('atom'=>$atom,'weight'=>$weight);
 	}
 	
+	
+	
 	function parseCount(&$code){
+		print "parseCount($code)<br>";
+		$ops=array('+','-','*','/');
+		$dummy=false;
+		if ($code{0}=='(') {
+			$dummy=parseBracketTerm($code);
+		} elseif ($code{0}=='$'){
+			$dummy=$this->parseVariable($code);			
+		} else {
+			$dummy=$this->parseNumber($code);
+		}
+		if ($dummy===false) return false;		
+		$count=$dummy;		
+		$code=trim($code);
+		if (strlen($code)==0) return $count;
+		$op=$code{0};
+		
+		if (in_array($op, $ops)) {
+			$count=array();
+			$count[]=$dummy;
+			$code=trim(substr($code, 1));
+			$dummy=$this->parseCount($code);
+			if ($dummy===false) return false;
+			$count[]=$op;
+			$count[]=$dummy;
+									
+		}
+		
+		print "<pre>return ";
+		print_r($count);
+		print "</pre>";
+		
+		return $count;
+	}
+	
+	
+	
+	function parseNumber(&$code){
 		if (!ctype_digit($code{0})) return false;
 		$num='';
 		while (ctype_digit($code{0})){
@@ -119,6 +161,8 @@ class Formula extends AppModel {
 	}
 
 	function parseAtom(&$code){
+		$code=trim($code);
+		if (strlen($code)==0) return false;
 		if (!ctype_upper($code{0})) return false;
 		$atom=$code{0};
 		$code=substr($code, 1);

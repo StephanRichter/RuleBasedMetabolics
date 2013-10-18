@@ -16,7 +16,7 @@
 		echo $this->Form->input('Parameter');		
 		echo $this->Form->input('specification');
 		echo $this->Form->input('selector');
-		echo $this->Form->input('RefSubstance');
+		echo $this->Form->input('DefiningSubstance');
 		echo $this->Form->input('Substance',array('label'=>false,'default'=>$substance['Substance']['id'],'hidden'=>true));
 	?>
 	</fieldset>

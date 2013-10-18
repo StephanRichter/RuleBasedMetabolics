@@ -68,14 +68,13 @@ class ParametersUsesController extends AppController {
 		$abbrevation = reset($open_parameters['parameters']);
 		$formula=$open_parameters['formula'];
 		$sid=$open_parameters['substance_id'];
-		//$substances=$this->ParametersUse->Substance->recursive=0;
 		$substance=$this->ParametersUse->Substance->find('first',array('conditions'=>array('Substance.id'=>$sid)));
 		//$substances = array($open_parameters['substance_id']);		
 		$parameters = $this->ParametersUse->Parameter->find('list');
 		$definingSubstances = $this->ParametersUse->DefiningSubstance->find('list');
-		$ref_substances=$this->ParametersUse->Substance->find('all');
+		$substances=$this->ParametersUse->Substance->find('list');
 		
-		$this->set(compact('parameters', 'substance', 'definingSubstances','abbrevation','formula','ref_substance'));		
+		$this->set(compact('parameters', 'substance', 'definingSubstances','abbrevation','formula','substances'));		
 	}
 
 /**

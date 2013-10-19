@@ -19,11 +19,11 @@
 		?>
 		<div class="input select">
 			<label for="ParametersUseDefiningSubstance">Defining Substance</label>
-			<input id="query" maxlength="2000" name="query" size="10" type="text" />
 			<select id="ParametersUseDefiningSubstance" name="data[ParametersUse][DefiningSubstance]">
-			<option value=""><?php echo __("Enter a part of a substance name in the text field, to get substances here.")?>
+			<option value=""><?php echo __("Enter a part of a substance name in the text field below to get substances here."); ?></option>
 			</select>
-		</div>		
+			<input id="query" maxlength="2000" name="query" size="10" type="text" value="Substance name here"/>
+			</div>		
 	</fieldset>
 <?php 
 

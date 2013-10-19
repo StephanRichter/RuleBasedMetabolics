@@ -113,26 +113,31 @@ class SubstancesController extends AppController {
 	
 	public function search(){
 		$name=$this->request->data['name'];
-		$this->Substance->Name->contain('Substance');
-		$names=$this->Substance->Name->find('all',array('conditions'=>array('Name.name LIKE' => '%'.$name.'%')));
-		$substances=array();		
-		foreach ($names as $name_key => $name_entry){
-			$name=$name_entry['Name']['name'];
+		foreach ($this->request->data as $field => $searchstring){
 			
-			foreach ($name_entry['Substance'] as $substance_key => $substance_entry){
-				$sid=$substance_entry['id'];
-				if (!isset($substances[$sid])){
-					$substances[$sid]=$substance_entry;
-				}
-				if (!isset($substances[$sid]['Name'])){
-					$substances[$sid]['Name']=array();
-				}
-				$substances[$sid]['Name'][]=$name;
-				
+			$substances=array();			
+			if ($field=='name'){	
+		    $this->Substance->Name->contain('Substance');
+		    $names=$this->Substance->Name->find('all',array('conditions'=>array('name LIKE' => '%'.$name.'%')));
+		    foreach ($names as $name_key => $name_entry){
+			    $name=$name_entry['Name']['name'];
+			
+			    foreach ($name_entry['Substance'] as $substance_key => $substance_entry){
+						$sid=$substance_entry['id'];
+						if (!isset($substances[$sid])){
+							$substances[$sid]=$substance_entry;
+						}
+						if (!isset($substances[$sid]['Name'])){
+							$substances[$sid]['Name']=array();
+						}
+						$substances[$sid]['Name'][]=$name;				
+					}
+				}		
+			} else {
+				$substances=array('unknown search field '.$field);
 			}
+			$this->set(compact('substances'));				
 		}
-		
-		$this->set(compact('substances'));
 	}
 
 /**

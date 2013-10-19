@@ -113,10 +113,26 @@ class SubstancesController extends AppController {
 	
 	public function search(){
 		$name=$this->request->data['name'];
-		$this->Substance->Name->Behaviors->load('Containable');
 		$this->Substance->Name->contain('Substance');
-		$substance=$this->Substance->Name->find('all',array('conditions'=>array('Name.name LIKE' => '%'.$name.'%')));
-		$this->set(compact('substance'));
+		$names=$this->Substance->Name->find('all',array('conditions'=>array('Name.name LIKE' => '%'.$name.'%')));
+		$substances=array();		
+		foreach ($names as $name_key => $name_entry){
+			$name=$name_entry['Name']['name'];
+			
+			foreach ($name_entry['Substance'] as $substance_key => $substance_entry){
+				$sid=$substance_entry['id'];
+				if (!isset($substances[$sid])){
+					$substances[$sid]=$substance_entry;
+				}
+				if (!isset($substances[$sid]['Name'])){
+					$substances[$sid]['Name']=array();
+				}
+				$substances[$sid]['Name'][]=$name;
+				
+			}
+		}
+		
+		$this->set(compact('substances'));
 	}
 
 /**

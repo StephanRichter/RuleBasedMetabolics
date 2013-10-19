@@ -1,5 +1,5 @@
 <pre>
 <?php 
-print_r($substance);
+print_r($substances);
 ?>
 </pre>

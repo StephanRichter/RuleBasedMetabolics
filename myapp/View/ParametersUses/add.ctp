@@ -16,15 +16,20 @@
 		echo $this->Form->input('Parameter');		
 		echo $this->Form->input('specification');
 		echo $this->Form->input('selector');
-		echo $this->Form->input('DefiningSubstance');				
-	?>
-		<input id="query" maxlength="2147483647" name="query" size="20" type="text" />
+		//echo $this->Form->input('DefiningSubstance');
+		?>
+		<div class="input select">
+			<label for="ParametersUseDefiningSubstance">Defining Substance</label>
+			<input id="query" maxlength="2147483647" name="query" size="20" type="text" />
+			<select id="ParametersUseDefiningSubstance" name="data[ParametersUse][DefiningSubstance]">
+			</select>
+		</div>		
 	</fieldset>
 <?php 
 
 $controller=array('controller' => 'substances', 'action' => 'search');
 $options=array(
-'update' => '#view',
+'update' => '#ParametersUseDefiningSubstance',
 'async' => true,
 'method' => 'post',
 'dataExpression'=>true,
@@ -34,9 +39,6 @@ $options=array(
 $this->Js->get('#query')->event('keyup', $this->Js->request($controller,$options));
 
 echo $this->Form->end(__('Submit')); ?>
-<div id="view" class="auto_complete">
-    <!-- Results will load here -->
-</div>
 </div>
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>

@@ -1,5 +1,7 @@
-<pre>
 <?php 
-print_r($substances);
+foreach ($substances as $sid => $names){
+	foreach ($names as $name){
+		echo '<option value="'.$sid.'">'.$name.'</option>';
+	}
+}
 ?>
-</pre>

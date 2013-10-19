@@ -125,17 +125,15 @@ class SubstancesController extends AppController {
 			    foreach ($name_entry['Substance'] as $substance_key => $substance_entry){
 						$sid=$substance_entry['id'];
 						if (!isset($substances[$sid])){
-							$substances[$sid]=$substance_entry;
+							$substances[$sid]=array();
 						}
-						if (!isset($substances[$sid]['Name'])){
-							$substances[$sid]['Name']=array();
-						}
-						$substances[$sid]['Name'][]=$name;				
+						$substances[$sid][]=$name;				
 					}
 				}		
 			} else {
 				$substances=array('unknown search field '.$field);
 			}
+			$this->layout='ajax';
 			$this->set(compact('substances'));				
 		}
 	}

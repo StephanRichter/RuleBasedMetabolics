@@ -16,12 +16,12 @@
 		echo $this->Form->input('Parameter');		
 		echo $this->Form->input('specification');
 		echo $this->Form->input('selector');
-		//echo $this->Form->input('DefiningSubstance');
 		?>
 		<div class="input select">
 			<label for="ParametersUseDefiningSubstance">Defining Substance</label>
-			<input id="query" maxlength="2147483647" name="query" size="20" type="text" />
+			<input id="query" maxlength="2000" name="query" size="10" type="text" />
 			<select id="ParametersUseDefiningSubstance" name="data[ParametersUse][DefiningSubstance]">
+			<option value=""><?php echo __("Enter a part of a substance name in the text field, to get substances here.")?>
 			</select>
 		</div>		
 	</fieldset>

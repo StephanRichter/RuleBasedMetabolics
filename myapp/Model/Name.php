@@ -91,4 +91,27 @@ class Name extends AppModel {
 			'order' => ''
 		)
 	);
+
+
+/**
+ * hasAndBelongsToMany associations
+ *
+ * @var array
+ */
+public $hasAndBelongsToMany = array(
+		'Substance' => array(
+				'className' => 'Substance',
+				'joinTable' => 'id_names',
+				'foreignKey' => 'name_nid',
+				'associationForeignKey' => 'id_id',
+				'unique' => 'true',
+				'conditions' => '',
+				'fields' => '',
+				'order' => '',
+				'limit' => '',
+				'offset' => '',
+				'finderQuery' => '',
+		)
+);
+
 }

@@ -114,7 +114,7 @@ class Substance extends AppModel {
 			'joinTable' => 'rhs',
 			'foreignKey' => 'reaction_id',
 			'associationForeignKey' => 'substance_id',
-			'unique' => 'keepExisting',
+			'unique' => 'true',
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',

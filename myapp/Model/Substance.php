@@ -9,7 +9,8 @@ App::uses('AppModel', 'Model');
  * @property Reaction $RHS
  */
 class Substance extends AppModel {
-
+	public $actsAs = array('Containable');
+	
 /**
  * Validation rules
  *

@@ -113,7 +113,9 @@ class SubstancesController extends AppController {
 	
 	public function search(){
 		$name=$this->request->data['name'];
-		$substance=$this->Substance->Name->find('all',array('recursive'=>1,'fields'=>array('id'),'conditions'=>array('Name.name LIKE' => '%'.$name.'%')));
+		$this->Substance->Name->Behaviors->load('Containable');
+		$this->Substance->Name->contain('Substance');
+		$substance=$this->Substance->Name->find('all',array('conditions'=>array('Name.name LIKE' => '%'.$name.'%')));
 		$this->set(compact('substance'));
 	}
 

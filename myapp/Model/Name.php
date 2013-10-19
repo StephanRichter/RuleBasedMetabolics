@@ -7,7 +7,8 @@ App::uses('AppModel', 'Model');
  * @property User $User
  */
 class Name extends AppModel {
-
+	public $actsAs = array('Containable');
+	
 /**
  * Primary key field
  *

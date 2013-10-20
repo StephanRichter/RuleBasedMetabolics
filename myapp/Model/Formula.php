@@ -3,7 +3,6 @@ App::uses('AppModel', 'Model');
 /**
  * Formula Model
  *
- * @property OldFormula $History
  * @property User $User
  * @property Substance $Substance
  */
@@ -366,20 +365,6 @@ class Formula extends AppModel {
 	}
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * hasOne associations
- *
- * @var array
- */
-	public $hasOne = array(
-		'History' => array(
-			'className' => 'OldFormula',
-			'foreignKey' => 'oldid',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
 
 /**
  * belongsTo associations

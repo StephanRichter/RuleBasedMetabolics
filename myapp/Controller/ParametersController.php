@@ -74,11 +74,8 @@ class ParametersController extends AppController {
 		}
 		$users = $this->Parameter->User->find('list');
 		$substances = $this->Parameter->Substance->find('list');
-		$oldSubstances = $this->Parameter->OldSubstance->find('list');
 		$referredSubstances = $this->Parameter->ReferredSubstance->find('list');
-		$oldReferredSubstances = $this->Parameter->OldReferredSubstance->find('list');
 		$reactions = $this->Parameter->Reaction->find('list');
-		$oldReactions = $this->Parameter->OldReaction->find('list');
 		$this->set(compact('users', 'substances', 'oldSubstances', 'referredSubstances', 'oldReferredSubstances', 'reactions', 'oldReactions'));
 	}
 

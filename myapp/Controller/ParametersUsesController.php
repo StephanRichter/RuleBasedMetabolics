@@ -15,7 +15,7 @@ class ParametersUsesController extends AppController {
  */
 	public $components = array('Paginator');
 	var $helpers = array('Html', 'Js'=>array('Jquery'));
-	
+
 	public function beforeFilter(){
 		$privileges=$this->Session->read('Privileges');
 		$privileges=$privileges['parameters'];
@@ -71,7 +71,7 @@ class ParametersUsesController extends AppController {
 				$open_parameters['parameters']=$dummy;
 				if (empty($open_parameters['parameters'])) {
 					$this->Session->delete('openparameters');
-					return $this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'index'));
 				}
 				$this->Session->write('openparameters',$open_parameters);				
 				$this->redirect('add');
@@ -79,7 +79,7 @@ class ParametersUsesController extends AppController {
 				$this->Session->setFlash(__('The parameters use could not be saved. Please, try again.'));
 			}
 		}
-		
+		$users = $this->ParametersUse->User->find('list');
 		$parameters = $this->ParametersUse->Parameter->find('list');
 		if (empty($parameters)){
 			$this->Session->setFlash(__('The formula you just submitted contained a parameter, but there is not a singel parameter defined, yet. Please define at least one parameter!'));
@@ -91,11 +91,8 @@ class ParametersUsesController extends AppController {
 		$substance=$this->ParametersUse->Substance->find('first',array('conditions'=>array('Substance.id'=>$sid)));
 		//$substances = array($open_parameters['substance_id']);		
 		
-		
-		$definingSubstances = $this->ParametersUse->DefiningSubstance->find('list');
-		$substances=$this->ParametersUse->Substance->find('list');
-		
-		$this->set(compact('parameters', 'substance', 'definingSubstances','abbrevation','formula','substances'));		
+		$substances = $this->ParametersUse->Substance->find('list');
+		$this->set(compact('users', 'parameters', 'substance','abbrevation','formula'));
 	}
 
 /**
@@ -123,8 +120,7 @@ class ParametersUsesController extends AppController {
 		$users = $this->ParametersUse->User->find('list');
 		$parameters = $this->ParametersUse->Parameter->find('list');
 		$substances = $this->ParametersUse->Substance->find('list');
-		$definingSubstances = $this->ParametersUse->DefiningSubstance->find('list');
-		$this->set(compact('users', 'parameters', 'substances', 'definingSubstances'));
+		$this->set(compact('users', 'parameters', 'substances'));
 	}
 
 /**

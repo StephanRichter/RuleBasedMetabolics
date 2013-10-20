@@ -3,14 +3,15 @@ App::uses('AppModel', 'Model');
 /**
  * Substance Model
  *
- * @property OldSubstance $History
+ * @property Formula $Formula
  * @property User $User
+ * @property Name $Name
  * @property Reaction $LHS
  * @property Reaction $RHS
  */
 class Substance extends AppModel {
 	public $actsAs = array('Containable');
-	
+
 /**
  * Validation rules
  *
@@ -18,6 +19,16 @@ class Substance extends AppModel {
  */
 	public $validate = array(
 		'id' => array(
+			'naturalNumber' => array(
+				'rule' => array('naturalNumber'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'formula_fid' => array(
 			'naturalNumber' => array(
 				'rule' => array('naturalNumber'),
 				//'message' => 'Your custom message here',
@@ -47,15 +58,15 @@ class Substance extends AppModel {
  * @var array
  */
 	public $hasOne = array(
-		'History' => array(
-			'className' => 'OldSubstance',
-			'foreignKey' => 'oldid',
+		'Formula' => array(
+			'className' => 'Formula',
+			'foreignKey' => 'fid',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		)
 	);
-	
+
 /**
  * belongsTo associations
  *
@@ -65,13 +76,6 @@ class Substance extends AppModel {
 		'User' => array(
 			'className' => 'User',
 			'foreignKey' => 'user_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Formula' => array(
-			'className' => 'Formula',
-			'foreignKey' => 'formula_fid',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
@@ -87,8 +91,8 @@ class Substance extends AppModel {
 		'Name' => array(
 			'className' => 'Name',
 			'joinTable' => 'id_names',
-			'foreignKey' => 'id_id',
-			'associationForeignKey' => 'name_nid',
+			'foreignKey' => 'name_nid',
+			'associationForeignKey' => 'id_id',
 			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',
@@ -97,7 +101,7 @@ class Substance extends AppModel {
 			'offset' => '',
 			'finderQuery' => '',
 		),
-			'LHS' => array(
+		'LHS' => array(
 			'className' => 'Reaction',
 			'joinTable' => 'lhs',
 			'foreignKey' => 'reaction_id',
@@ -115,7 +119,7 @@ class Substance extends AppModel {
 			'joinTable' => 'rhs',
 			'foreignKey' => 'reaction_id',
 			'associationForeignKey' => 'substance_id',
-			'unique' => 'true',
+			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',

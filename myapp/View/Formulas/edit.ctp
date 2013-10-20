@@ -7,7 +7,6 @@
 		echo $this->Form->input('formula');
 		echo $this->Form->input('user_id');
 		echo $this->Form->input('date');
-		echo $this->Form->input('oldid');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
@@ -20,7 +19,5 @@
 		<li><?php echo $this->Html->link(__('List Formulas'), array('action' => 'index')); ?></li>
 		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Old Formulas'), array('controller' => 'old_formulas', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New History'), array('controller' => 'old_formulas', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

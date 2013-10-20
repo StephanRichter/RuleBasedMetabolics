@@ -91,9 +91,9 @@ class FormulasController extends AppController {
 				if ($redirect !== false) return $this->redirect($redirect); // if called with POST data: return to index				
 				
 				return $this->Formula->getInsertID(); // return ids
-			} else {				
+			} else {
 				if ($this->Formula->error==null){
-					$this->Session->setFlash(__('The formula could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The formula could not be saved. Please, try again.'));
 				} else {
 					$this->Session->setFlash($this->Formula->error);
 				}

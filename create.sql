@@ -1,10 +1,15 @@
 USE rulebased;
 
 DROP TABLE IF EXISTS abbrevations;
+DROP TABLE IF exists compartments;
+DROP TABLE IF exists compartments_enzymes;
 DROP TABLE IF EXISTS containments;
+DROP TABLE IF EXISTS enzymes;
+DROP TABLE IF EXISTS enzymes_reactions;
 DROP TABLE IF EXISTS formulas;
 DROP TABLE IF EXISTS ids;
 DROP TABLE IF EXISTS id_names;
+DROP TABLE IF EXISTS id_namess;
 DROP TABLE IF EXISTS lhs;
 DROP TABLE IF EXISTS names;
 DROP TABLE IF EXISTS names_substances;
@@ -18,6 +23,30 @@ DROP TABLE IF EXISTS substances;
 DROP TABLE IF EXISTS urns;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS users_roles;
+
+DROP TABLE IF EXISTS old_abbrevations;
+DROP TABLE IF EXISTS old_compartments;
+DROP TABLE IF EXISTS old_compartments_enzymes;
+DROP TABLE IF EXISTS old_containments;
+DROP TABLE IF EXISTS old_enzymes;
+DROP TABLE IF EXISTS old_enzymes_reactions;
+DROP TABLE IF EXISTS old_formulas;
+DROP TABLE IF EXISTS old_ids;
+DROP TABLE IF EXISTS old_id_names;
+DROP TABLE IF EXISTS old_id_namess;
+DROP TABLE IF EXISTS old_lhs;
+DROP TABLE IF EXISTS old_names;
+DROP TABLE IF EXISTS old_names_substances;
+DROP TABLE IF EXISTS old_parameters;
+DROP TABLE IF EXISTS old_parameters_substances;
+DROP TABLE IF EXISTS old_parameters_use;
+DROP TABLE IF EXISTS old_reactions;
+DROP TABLE IF EXISTS old_rhs;
+DROP TABLE IF EXISTS old_roles;
+DROP TABLE IF EXISTS old_substances;
+DROP TABLE IF EXISTS old_urns;
+DROP TABLE IF EXISTS old_users;
+DROP TABLE IF EXISTS old_users_roles;
 
 CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY,
                                   username VARCHAR(100) NOT NULL UNIQUE,
@@ -123,13 +152,13 @@ CREATE TABLE IF NOT EXISTS parameters_use (puid INT AUTO_INCREMENT PRIMARY KEY,
                                            UNIQUE INDEX (parameter_pid, id_id));
                                            
 CREATE TABLE IF NOT EXISTS parameters_reference (id INT AUTO_INCREMENT PRIMARY KEY,
-                                           p_u_id INT NOT NULL REFERENCES parameters(pid),
+                                           pu_id INT NOT NULL REFERENCES parameters(pid),
                                            selector VARCHAR(10),
                                            substance_id INT REFERENCES substances(id),
                                            user_id INT NOT NULL REFERENCES users(id),
                                            date DATETIME DEFAULT 0,
                                            oldid INT DEFAULT NULL REFERENCES old_parameters_use(oid),
-                                           UNIQUE INDEX (parameter_pid, id_id));
+                                           UNIQUE INDEX (pu_id, substance_id));
                                            
 CREATE TABLE IF NOT EXISTS enzymes (id INT AUTO_INCREMENT PRIMARY KEY,
                                     ecnumber TEXT,

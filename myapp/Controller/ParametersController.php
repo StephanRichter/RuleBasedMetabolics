@@ -61,7 +61,13 @@ class ParametersController extends AppController {
 			$this->Parameter->create();
 			if ($this->Parameter->save($this->request->data)) {
 				$this->Session->setFlash(__('The parameter has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				
+				
+				if ($dummy=$this->Session->check('openparameters')){
+					return $this->redirect(array('controller'=>'parameters_uses','action'=>'add'));
+				} else {
+					return $this->redirect(array('action' => 'index'));
+				}
 			} else {
 				$this->Session->setFlash(__('The parameter could not be saved. Please, try again.'));
 			}

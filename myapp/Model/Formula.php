@@ -55,11 +55,13 @@ class Formula extends AppModel {
 		),
 	);
 	
-	public function checkFormula($formula){
-		return ($this->parseFormula($formula['formula'])!==false);
+	public function checkFormula($arg){
+		$code=$arg['formula'];
+		return ($this->parseFormula($code)!==false);
 	}
 	
 	public function getParameters($code){
+		if ($code=='derived') return array('param');
 		$formula=$this->parseFormula($code);
 		$parameters=array();
 		$this->extractParameters($parameters,$formula);		

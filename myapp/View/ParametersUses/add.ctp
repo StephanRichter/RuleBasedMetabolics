@@ -3,8 +3,7 @@
 	<fieldset>
 		<legend><?php echo __('Parameter Settings for ').$formula; ?></legend>
 		This parameter is applied to the formula "<?php print $formula ?>" of 
-	<?php
-		
+	<?php		
 		$names=array();
 		foreach ($substance['Name'] as $name){
 			$names[]='"'.$name['name'].'"';
@@ -12,17 +11,18 @@
 		$names=implode(' / ', $names);
 		print $names;
 				
-		echo $this->Form->input('abbrevation',array('default'=>$abbrevation,'disabled'=>'true'));		
-		echo $this->Form->input('Parameter');		
+		print '<input type="hidden" name="data[ParametersUse][id_id]" value="'.$substance['Substance']['id'].'">';
+		echo $this->Form->input('abbrevation',array('default'=>$abbrevation,'readonly'=>'true'));		
+		echo $this->Form->input('Parameter',array('name'=>'data[ParametersUse][parameter_pid]'));		
 		echo $this->Form->input('specification');
 		echo $this->Form->input('selector');
-		?>
+	?>
 		<div class="input select">
 			<label for="ParametersUseDefiningSubstance">Defining Substance</label>
-			<select id="ParametersUseDefiningSubstance" name="data[ParametersUse][DefiningSubstance]">
+			<select id="ParametersUseDefiningSubstance" name="data[ParametersUse][ref_substance_id]">
 			<option value=""><?php echo __("Enter a part of a substance name in the text field below to get substances here."); ?></option>
 			</select>
-			<input id="query" maxlength="2000" name="query" size="10" type="text" value="Substance name here"/>
+			<input id="query" maxlength="2000" size="10" type="text" value="Substance name here"/>
 			</div>		
 	</fieldset>
 <?php 

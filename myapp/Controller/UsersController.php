@@ -86,7 +86,7 @@ class UsersController extends AppController {
 	}
 
 	public function login() {
-
+		
 		$numberOfUsers=$this->User->find('count');
 
 		if ($numberOfUsers == 0){
@@ -96,7 +96,7 @@ class UsersController extends AppController {
 			}
 			return $this->redirect(array('action'=>'addfirst'));
 		}
-
+		$this->Session->destroy();		
 		if ($this->request->is('post')) {
 			if ($this->Auth->login()) {
 				$this->setPrivileges($this->request->data['User']['username']);
@@ -108,6 +108,7 @@ class UsersController extends AppController {
 	}
 
 	public function logout() {
+		$this->Session->destroy();		
 		$this->setPrivileges(null);
 		return $this->redirect($this->Auth->logout());
 	}

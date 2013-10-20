@@ -57,14 +57,14 @@ class Formula extends AppModel {
 	
 	public function checkFormula($arg){
 		$code=$arg['formula'];
-		////print "<pre>";
+		//print "<pre>";
 		$res=$this->parseFormula($code);
-		////print_r($res);
+		//print_r($res);
 		if ($res===false){
-			////print "false"; die();
+			//print "false"; die();
 			return false;
 		}
-		////print "true"; die();
+		//print "true"; die();
 		return true;
 	}
 	
@@ -112,10 +112,11 @@ class Formula extends AppModel {
 		if ($code{0}!='~') return false;
 		$binding=$code{0};
 		$code=substr($code, 1);
-		if (ctype_alpha($code{0} && ctype_upper($code{1}))){
+		if (ctype_lower($code{0}) && $code{1}=='~'){
 			$binding.=$code{0}.$code{1};
 			$code=substr($code, 2);
 		}
+		//print "binding=$binding\n";
 		return $binding;
 	}
 	
@@ -138,7 +139,7 @@ class Formula extends AppModel {
 			$code=substr($code, 1);
 		}
 		if (strlen($id)<1) return false;
-		////print "id=$id\n";
+		//print "id=$id\n";
 		$params=$this->parseParams($code);
 		$reference=array('substance'=>$id);
 		if ($params!==false){
@@ -171,12 +172,13 @@ class Formula extends AppModel {
 		$code=trim(substr($code, 4));
 		$var=$this->parseVariable($code);
 		if ($var===false)	return false;
-		////print "var=$var\n";
+		//print "var=$var\n";
 		if ($code{0}!='?') return false;
 		$code=trim(substr($code, 1));
+		if ($code{0}=='$')$code=trim(substr($code, 1));
 		if (ctype_alpha($code{0})){
 			$index=$code{0};
-			////print "index=$index\n";
+			//print "index=$index\n";
 		} else return false;
 		$code=trim(substr($code, 1));
 		if ($code{0}!=':') return false;

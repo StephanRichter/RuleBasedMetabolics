@@ -69,7 +69,9 @@ class SubstancesController extends AppController {
 			$Formulas->Auth=$this->Auth;
 			$nids=$Names->add($names);
 			$fid=$Formulas->add($formula);
-
+			if ($fid==-1){
+				return;
+			}
 			
 				
 			$parameters=$this->Substance->Formula->getParameters($formula);

@@ -58,30 +58,35 @@ class SubstancesController extends AppController {
  */
 	public function add() {
 		if ($this->request->is('post')) {
-			$formula=$this->request->data['Substance']['Formula'];
+				
+			/* create names */
 			$names=explode("\n",$this->request->data['Name']['Name']);
 			$names=array_map('trim', $names);			
 			$Names = new NamesController();			
-			$Formulas = new FormulasController();			
 			$Names->Session=$this->Session; // needed for use in Names->add
-			$Names->Auth=$this->Auth;
+			$Names->Auth=$this->Auth;			
+			$nids=$Names->add($names);
+			
+			/* create formula */
+			$formula=$this->request->data['Substance']['Formula'];
+			$Formulas = new FormulasController();
 			$Formulas->Session=$this->Session; // needed for use in Names->add
 			$Formulas->Auth=$this->Auth;
-			$nids=$Names->add($names);
+			
 			$fid=$Formulas->add($formula);
 			if ($fid==-1){
 				return;
 			}
-			
-				
+
+			/* if formula has parameters: push on request stack */
 			$parameters=$this->Substance->Formula->getParameters($formula);
 			if (!empty($parameters)){
 				$open_parameters=array();
 				$open_parameters['formula']=$formula;
 				$open_parameters['parameters']=$parameters;												
-			}
-			
+			}			
 				
+			/* create substance data object */
 			$substance=array(
 					'Substance' => array(
 							'formula_fid' => $fid,
@@ -91,9 +96,11 @@ class SubstancesController extends AppController {
 					'Name' => array('Name'=>$nids),
 			);
 			
+			/* actually store substance */
 			if ($this->Substance->save($substance)) {
 				$this->Session->setFlash(__('The substance has been saved.'));
 				
+				/* if we have parameters which have not been assigned: switch to assignment page */
 			  if (isset($open_parameters)) {
 			  	$open_parameters['substance_id']=$this->Substance->getInsertID();
 				  $this->Session->write('openparameters',$open_parameters);

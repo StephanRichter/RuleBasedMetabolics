@@ -1,0 +1,34 @@
++----+------------------------+------------------------+------+-----------------------+--------------+----------+--------+---------+
+| id | name                   | formula                | para | descr                 | spec         | selector | ref_id | inherit |
++----+------------------------+------------------------+------+-----------------------+--------------+----------+--------+---------+
+|  1 | Water                  | H2O                    | NULL | NULL                  | NULL         | NULL     |   NULL |    NULL |
+|  1 | Aqua                   | H2O                    | NULL | NULL                  | NULL         | NULL     |   NULL |    NULL |
+|  2 | HPO3-                  | HPO3                   | NULL | NULL                  | NULL         | NULL     |   NULL |    NULL |
+|  3 | Cytosine               | C4H5N3O                | NULL | NULL                  | NULL         | NULL     |   NULL |    NULL |
+|  4 | Uracil                 | C4H4N2O2               | NULL | NULL                  | NULL         | NULL     |   NULL |    NULL |
+|  5 | Adenine                | C5H5N5                 | NULL | NULL                  | NULL         | NULL     |   NULL |    NULL |
+|  6 | Guanine                | C5H5N5O                | NULL | NULL                  | NULL         | NULL     |   NULL |    NULL |
+|  7 | Thymine                | C5H6N2O2               | NULL | NULL                  | NULL         | NULL     |   NULL |    NULL |
+|  8 | Pyrimidine             | derived                | c    | base type             | define       | C        |      3 |    NULL |
+|  8 | Pyrimidine             | derived                | c    | base type             | define       | T        |      7 |    NULL |
+|  8 | Pyrimidine             | derived                | c    | base type             | define       | U        |      4 |    NULL |
+|  9 | Purine                 | derived                | c    | base type             | define       | A        |      5 |    NULL |
+|  9 | Purine                 | derived                | c    | base type             | define       | G        |      6 |    NULL |
+| 10 | Base                   | derived                | c    | base type             | inherited    | NULL     |   NULL |       8 |
+| 10 | Base                   | derived                | c    | base type             | inherited    | NULL     |   NULL |       9 |
+| 11 | Ribose                 | C5H10O5                | NULL | NULL                  | NULL         | NULL     |   NULL |    NULL |
+| 12 | dRibose                | C5H10O4                | NULL | NULL                  | NULL         | NULL     |   NULL |    NULL |
+| 12 | Deoxyribose            | C5H10O4                | NULL | NULL                  | NULL         | NULL     |   NULL |    NULL |
+| 13 | Nucleic Acid Sugar     | derived                | o    | oxidiation level      | define       | -1       |     12 |    NULL |
+| 13 | Nucleic Acid Sugar     | derived                | o    | oxidiation level      | define       | 0        |     11 |    NULL |
+| 14 | Nucleoside             | #13[o]~g~#10[c]        | c    | base type             | inherited    | NULL     |   NULL |      10 |
+| 14 | Nucleoside             | #13[o]~g~#10[c]        | o    | oxidiation level      | inherited    | NULL     |   NULL |      13 |
+| 15 | Nucleotide             | #14[c,o]~g~(HPO3)$p    | c    | base type             | inherited    | NULL     |   NULL |      14 |
+| 15 | Nucleotide             | #14[c,o]~g~(HPO3)$p    | o    | oxidiation level      | inherited    | NULL     |   NULL |      14 |
+| 15 | Nucleotide             | #14[c,o]~g~(HPO3)$p    | p    | phosphorylation level | {0,1,2,3}    | NULL     |   NULL |    NULL |
+| 16 | Nucleic Acid           | OH~seq(s?c:#15[c,o,1]) | o    | oxidiation level      | inherited    | NULL     |   NULL |      15 |
+| 16 | Nucleic Acid           | OH~seq(s?c:#15[c,o,1]) | s    | Base Sequence         | {A,C,G,T,U}* | NULL     |   NULL |    NULL |
+| 17 | DNA                    | #16[-1,s]              | s    | Base Sequence         | {A,C,G,T}*   | NULL     |   NULL |      16 |
+| 17 | Desoxyribonucleic acid | #16[-1,s]              | s    | Base Sequence         | {A,C,G,T}*   | NULL     |   NULL |      16 |
+| 18 | RNA                    | #16[0,s]               | s    | Base Sequence         | {A,C,G,U}*   | NULL     |   NULL |      16 |
++----+------------------------+------------------------+------+-----------------------+--------------+----------+--------+---------+

@@ -72,18 +72,24 @@ class SubstancesController extends AppController {
 			$Formulas = new FormulasController();
 			$Formulas->Session=$this->Session; // needed for use in Names->add
 			$Formulas->Auth=$this->Auth;
-			
 			$fid=$Formulas->add($formula);
 			if ($fid==-1){
 				return;
 			}
 
+			$redirect=array('action' => 'index');
+			if ($formula == 'derived'){
+				
+			} else {
+			
 			/* if formula has parameters: push on request stack */
-			$parameters=$this->Substance->Formula->getParameters($formula);
-			if (!empty($parameters)){
-				$open_parameters=array();
-				$open_parameters['formula']=$formula;
-				$open_parameters['parameters']=$parameters;												
+				$parameters=$this->Substance->Formula->getParameters($formula);
+				if (!empty($parameters)){
+					$open_parameters=array();
+					$open_parameters['formula']=$formula;
+					$open_parameters['parameters']=$parameters;												
+				}
+				$redirect=array('controller'=>'parameters_uses','action'=>'add');
 			}			
 				
 			/* create substance data object */
@@ -104,10 +110,8 @@ class SubstancesController extends AppController {
 			  if (isset($open_parameters)) {
 			  	$open_parameters['substance_id']=$this->Substance->getInsertID();
 				  $this->Session->write('openparameters',$open_parameters);
-			  	return $this->redirect(array('controller'=>'parameters_uses','action'=>'add'));
 				}
-				
-				return $this->redirect(array('action' => 'index'));
+				return $this->redirect($redirect);
 			} else {
 				$this->Session->setFlash(__('The substance could not be saved. Please, try again.'));
 			}

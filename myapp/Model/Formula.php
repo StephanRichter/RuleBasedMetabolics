@@ -87,7 +87,7 @@ class Formula extends AppModel {
 	}
 	
 	public function parseFormula(&$code){
-		if ($code=='=derived') return $code;
+		if ($code=='derived') return $code;
 		
 		//print "parseFormula($code)\n";
 	  $part=$this->parsePart($code);

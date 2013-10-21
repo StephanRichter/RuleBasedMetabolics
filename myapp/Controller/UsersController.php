@@ -87,8 +87,8 @@ class UsersController extends AppController {
 
 	public function login() {
 		
+		/* check if we have any users */
 		$numberOfUsers=$this->User->find('count');
-
 		if ($numberOfUsers == 0){
 			$numberOfRoles=$this->User->Role->find('count');
 			if ($numberOfRoles == 0){
@@ -96,11 +96,17 @@ class UsersController extends AppController {
 			}
 			return $this->redirect(array('action'=>'addfirst'));
 		}
-		$this->Session->destroy();		
+		
+		/* we have users */
+
+		/* start new session */
+		$this->Session->destroy();	// create new session		
 		if ($this->request->is('post')) {
 			if ($this->Auth->login()) {
 				$this->setPrivileges($this->request->data['User']['username']);
 				$this->Session->setFlash(__('Successfully logged in.'));
+				$sessionstack=array();
+				$this->Session->write('actionstack',$sessionstack);
 				return $this->redirect($this->Auth->redirect());
 			}
 			$this->Session->setFlash(__('Invalid username or password, try again'));

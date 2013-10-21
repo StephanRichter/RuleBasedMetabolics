@@ -56,9 +56,21 @@ class SubstancesController extends AppController {
  *
  * @return void
  */
-	public function add() {
+	public function add() {		
 		if ($this->request->is('post')) {
-			$formula=$this->request->data['Substance']['Formula'];
+			$data=$this->request->data;
+			
+			$formula=$data['Substance']['Formula'];
+			
+			if ($formula=='derived'){			
+				$action=array('controller'=>'substances','action'=>'add');
+				$this->pushToStack(array('action'=>$action,'data'=>$data));
+				
+				return $this->redirect(array('controller'=>'parameters_uses','action'=>'add'));
+			}
+			
+			/*
+			
 			$names=explode("\n",$this->request->data['Name']['Name']);
 			$names=array_map('trim', $names);			
 			$Names = new NamesController();			
@@ -101,7 +113,7 @@ class SubstancesController extends AppController {
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The substance could not be saved. Please, try again.'));
-			}
+			} */
 		}
 		$users = $this->Substance->User->find('list');
 		$formulas = $this->Substance->Formula->find('list');

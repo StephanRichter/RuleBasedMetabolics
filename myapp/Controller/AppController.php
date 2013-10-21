@@ -33,10 +33,39 @@ class AppController extends Controller {
 					'authorize' => array('Controller') // Added this line
 			)
 	);
+	
+	private $stack='sessionstack';		
+	
 
 	public function isAuthorized($user) {
 		// Default deny
 		return false;
 	}
-
+	
+	public function pushToStack($object){
+		if ($this->Session->check($this->stack)){
+			$sessionstack=$this->Session->read($this->stack);
+		} else {
+			$sessionstack=array();
+		}
+		array_push($sessionstack,$object);
+		$this->Session->write($this->stack,$sessionstack);		
+	}
+	
+	public function peekStack(){
+		if ($this->Session->check($this->stack)){
+			$sessionstack=$this->Session->read($this->stack);
+			return end($sessionstack);
+		}
+		return false;		
+	}
+	
+	public function popStack(){
+		if ($this->Session->check($this->stack)){
+			$sessionstack=$this->Session->read($this->stack);
+			if (empty($sessionstack)) return false;
+			return array_pop($sessionstack);
+		}
+		return false;		
+	}
 }

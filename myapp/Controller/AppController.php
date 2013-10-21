@@ -70,4 +70,10 @@ class AppController extends Controller {
 		}
 		return false;		
 	}
+	
+	public function printStack(){
+		print "<pre>";
+		print_r($this->Session->read($this->stack));
+		die();
+	}
 }

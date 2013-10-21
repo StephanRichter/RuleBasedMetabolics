@@ -57,12 +57,19 @@ class SubstancesController extends AppController {
  * @return void
  */
 	public function add() {		
-		if ($this->request->is('post')) {
+		//$this->printStack();
+		$stack=$this->peekStack();
+		$data=false;
+		if ($stack!==false && isset($stack['data']['Substance']['Formula'])){
+			//print "<pre>"; print_r($stack); die();
+			$data=$stack['data'];
+			$this->popStack();
+		} elseif ($this->request->is('post')) {
 			$data=$this->request->data;
-			
-			$formula=$data['Substance']['Formula'];
-			
-			if ($formula=='derived'){			
+		}
+		
+		if ($data!==false){		
+			if (isset($data['Substance']['derive']) && $data['Substance']['derive']){			
 				$action=array('controller'=>'substances','action'=>'add');
 				$this->pushToStack(array('action'=>$action,'data'=>$data));
 				
@@ -71,7 +78,8 @@ class SubstancesController extends AppController {
 
 			// the following code is old and needs rework
 			
-			$names=explode("\n",$this->request->data['Name']['Name']);
+			$formula=$data['Substance']['Formula'];				
+			$names=explode("\n",$data['Name']['Name']);
 			$names=array_map('trim', $names);			
 			$Names = new NamesController();			
 			$Formulas = new FormulasController();			

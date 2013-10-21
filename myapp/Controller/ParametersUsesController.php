@@ -57,7 +57,7 @@ class ParametersUsesController extends AppController {
 			return false;
 		}
 		
-		if (isset($object['data']['Substance']) && $object['data']['Substance']['Formula']=='derived'){ // if we were called during substance creation: go on
+		if (isset($object['data']['Substance']) && $object['data']['Substance']['derive']){ // if we were called during substance creation: go on
 			$names=explode("\n",$object['data']['Name']['Name']);
 			$names=array_map('trim', $names);
 			return '"'.implode('" / "', $names).'"';			
@@ -115,6 +115,12 @@ class ParametersUsesController extends AppController {
 				} else {
 					$stack=$this->peekStack();
 					if ($stack!==false){
+						if (isset($stack['data']['Substance']['derive'])){
+							$stack['data']['Substance']['Formula']='derived';
+							unset($stack['data']['Substance']['derive']);
+							$this->popStack();
+							$this->pushToStack($stack);
+						}
 						return $this->redirect($stack['action']);
 					} 
 					return $this->redirect(array('action'=>'index'));					

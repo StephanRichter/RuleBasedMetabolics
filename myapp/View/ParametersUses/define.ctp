@@ -3,9 +3,14 @@
 	<fieldset>
 		<legend><?php echo __('Add parameter definition for ').$names; ?></legend>
 	<?php
-		echo $this->Form->input('abbrevation');
-		echo $this->Form->input('parameter',array('label'=>__('Select existing parameter here')));
-		echo $this->Form->input('new_parameter',array('label'=>__('or enter new parameter description here')));
+		if ($abbrevation===false){
+			echo $this->Form->input('abbrevation');
+			echo $this->Form->input('parameter',array('label'=>__('Select existing parameter type here')));
+			echo $this->Form->input('new_parameter',array('label'=>__('or enter description of new parameter type here')));
+		} else {
+			echo $this->Form->input('abbrevation',array('default'=>$abbrevation,'readonly'=>true));
+			echo $this->Form->input('parameter',array('label'=>__('Parameter type set by previous definition')));
+		}
 		echo $this->Form->input('selector'); ?>
 		<div class="input select">
 			<label for="Substance">Defining Substance</label>
@@ -14,7 +19,9 @@
 			</select>
 			<input id="specification" maxlength="2000" size="10" type="hidden" name="data[ParametersUse][spcification]" value="define"/>
 			<input id="query" maxlength="2000" size="10" type="text" value="Substance name here"/>
-		</div>	
+		</div><?php 
+		echo $this->Form->input('repeat',array('type'=>'checkbox','label'=>__('add more definitions afterwards')));
+		?>			
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
 </div>

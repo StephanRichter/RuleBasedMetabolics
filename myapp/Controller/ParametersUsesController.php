@@ -85,49 +85,54 @@ class ParametersUsesController extends AppController {
  * @return void
  */
 	public function define() {
-		
 		$stack=$this->peekStack();
+		$abbrevation=false;
+		$repeat=false;		
+		$data=false;
 		if ($stack!==false && isset($stack['data']['ParametersUse']['parameter'])){
-			$this->ParametersUse->create();
-			if ($this->ParametersUse->save($this->request->data)) {				
-				$this->Session->setFlash(__('The parameter use has been saved.'));
-
-				
-				
-			} else {
-				$this->Session->setFlash(__('The parameters use could not be saved. Please, try again.'));
-			}			
-		} elseif ($this->request->is('post')) {
-			
+			$data=$stack['data'];
+			$this->popStack();
+		} elseif ($this->request->is('post')) {						
 			$data=$this->request->data;
+		}
 			
-			if (isset($data['ParametersUse']['new_parameter'])){
+		if ($data!==false){
+			if (isset($data['ParametersUse']['new_parameter']) && !empty($data['ParametersUse']['new_parameter'])){
 				$action=array('controller'=>'parameters_uses','action'=>'define');
-				$this->pushToStack(array('action'=>$action,'data'=>$data));
-				
+				$this->pushToStack(array('action'=>$action,'data'=>$data));				
 				return $this->redirect(array('controller'=>'parameters','action'=>'add'));
 			}
 			
-			print "<pre>";
-			print_r($data);
-			die();
-			
-			
 			$this->ParametersUse->create();
-			if ($this->ParametersUse->save($this->request->data)) {
+			if ($this->ParametersUse->save($data)) {
 				$this->Session->setFlash(__('The parameters use has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				
+				if ($data['ParametersUse']['repeat']){
+					//print "<pre>"; print_r($data); die();
+					$pid=$data['ParametersUse']['parameter'];
+					$repeat=true;
+					$abbrevation=$data['ParametersUse']['abbrevation'];
+				} else {
+					print "<pre>"; print_r($data); die();
+					print "no repeat"; die();
+				}				
+				
 			} else {
 				$this->Session->setFlash(__('The parameters use could not be saved. Please, try again.'));
 			}
 		}
 		
-		$names=$this->checkSubstance();
 		
+		$names=$this->checkSubstance();		
 		$users = $this->ParametersUse->User->find('list');
-		$parameters = $this->ParametersUse->Parameter->find('list');
+		
+		if (isset($pid)){
+			$parameters = $this->ParametersUse->Parameter->find('list',array('conditions'=>array('pid'=>$pid)));
+		} else {
+			$parameters = $this->ParametersUse->Parameter->find('list');
+		}
 		$substances = $this->ParametersUse->Substance->find('list');
-		$this->set(compact('users', 'parameters', 'substances','names'));
+		$this->set(compact('users', 'parameters', 'substances','names','abbrevation','repeat'));
 	}
 
 /**

@@ -55,8 +55,10 @@ class UsersController extends AppController {
 				),
 				'parameters' => array(
 						'add' => $privileges['ins'],
+						'define' => $privileges['edit'],
 						'edit' => $privileges['edit'],
 						'index'=> $privileges['view'],
+						'inherit' => $privileges['edit'],
 						'view' => $privileges['view'],
 				),
 				'roles' => array(

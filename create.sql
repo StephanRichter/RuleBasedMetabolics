@@ -151,8 +151,7 @@ CREATE TABLE IF NOT EXISTS parameters_use (id INT AUTO_INCREMENT PRIMARY KEY,
                                            ref_substance_id INT REFERENCES substances(id),
                                            user_id INT NOT NULL REFERENCES users(id),
                                            date DATETIME DEFAULT 0,
-                                           oldid INT DEFAULT NULL REFERENCES old_parameters_use(oid),
-                                           UNIQUE INDEX (parameter_pid, id_id));
+                                           oldid INT DEFAULT NULL REFERENCES old_parameters_use(oid));
                                            
 CREATE TABLE IF NOT EXISTS enzymes (id INT AUTO_INCREMENT PRIMARY KEY,
                                     ecnumber TEXT,

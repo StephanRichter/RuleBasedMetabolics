@@ -68,8 +68,8 @@ class SubstancesController extends AppController {
 				
 				return $this->redirect(array('controller'=>'parameters_uses','action'=>'add'));
 			}
-			
-			/*
+
+			// the following code is old and needs rework
 			
 			$names=explode("\n",$this->request->data['Name']['Name']);
 			$names=array_map('trim', $names);			
@@ -113,7 +113,7 @@ class SubstancesController extends AppController {
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The substance could not be saved. Please, try again.'));
-			} */
+			} //*/
 		}
 		$users = $this->Substance->User->find('list');
 		$formulas = $this->Substance->Formula->find('list');

@@ -64,7 +64,9 @@ class AppController extends Controller {
 		if ($this->Session->check($this->stack)){
 			$sessionstack=$this->Session->read($this->stack);
 			if (empty($sessionstack)) return false;
-			return array_pop($sessionstack);
+			$res=array_pop($sessionstack);
+			$this->Session->write($this->stack,$sessionstack);
+			return $res;
 		}
 		return false;		
 	}

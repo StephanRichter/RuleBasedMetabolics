@@ -54,12 +54,34 @@ class ParametersController extends AppController {
  * @return void
  */
 	public function add() {
+		$stack=$this->peekStack();
+		if ($stack!==false && isset($stack['data']['ParametersUse']['new_parameter'])){
+			$db = ConnectionManager::getDataSource('default');
+			$param=array(
+					'user_id' => $this->Auth->user('id'),
+					'date'    => $db->expression('NOW()'),
+					'description' => $stack['data']['ParametersUse']['new_parameter']
+			);
+			$this->Parameter->create();
+			if ($this->Parameter->save($param)) {
+				$this->Session->setFlash(__('The parameter has been saved.'));
+				
+				$this->popStack();
+				$stack['data']['ParametersUse']['parameter']=$this->Parameter->getInsertID();
+				unset($stack['data']['ParametersUse']['new_parameter']);
+				$this->pushToStack($stack);
+				return $this->redirect($stack['action']);				
+			}
+		}
+		
+		
+		
 		if ($this->request->is('post')) {
 			$db = ConnectionManager::getDataSource('default');
 			$this->request->data['Parameter']['user_id']=$this->Auth->user('id');
 			$this->request->data['Parameter']['date']=$db->expression('NOW()');
 			$this->Parameter->create();
-			if ($this->Parameter->save($this->request->data)) {
+			if ($this->Parameter->save($this->request->data)) {					
 				$this->Session->setFlash(__('The parameter has been saved.'));
 				
 				

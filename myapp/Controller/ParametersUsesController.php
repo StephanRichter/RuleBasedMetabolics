@@ -105,7 +105,7 @@ class ParametersUsesController extends AppController {
 			
 			$this->ParametersUse->create();
 			if ($this->ParametersUse->save($data)) {
-				$this->Session->setFlash(__('The parameters use has been saved.'));
+				$this->Session->setFlash(__('The parameter definition for "%s" has been saved.',$data['ParametersUse']['selector']));
 				
 				if ($data['ParametersUse']['repeat']){
 					//print "<pre>"; print_r($data); die();
@@ -113,10 +113,12 @@ class ParametersUsesController extends AppController {
 					$repeat=true;
 					$abbrevation=$data['ParametersUse']['abbrevation'];
 				} else {
-					print "<pre>"; print_r($data); die();
-					print "no repeat"; die();
+					$stack=$this->peekStack();
+					if ($stack!==false){
+						return $this->redirect($stack['action']);
+					} 
+					return $this->redirect(array('action'=>'index'));					
 				}				
-				
 			} else {
 				$this->Session->setFlash(__('The parameters use could not be saved. Please, try again.'));
 			}

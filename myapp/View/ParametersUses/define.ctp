@@ -11,7 +11,7 @@
 			echo $this->Form->input('abbrevation',array('default'=>$abbrevation,'readonly'=>true));
 			echo $this->Form->input('parameter',array('label'=>__('Parameter type set by previous definition')));
 		}
-		echo $this->Form->input('selector'); ?>
+		echo $this->Form->input('selector',array('default'=>'')); ?>
 		<div class="input select">
 			<label for="Substance">Defining Substance</label>
 			<select id="Substance" name="data[ParametersUse][ref_substance_id]">

@@ -6,7 +6,6 @@
 			<th><?php echo $this->Paginator->sort('formula_fid'); ?></th>
 			<th><?php echo $this->Paginator->sort('user_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('date'); ?></th>
-			<th><?php echo $this->Paginator->sort('oldid'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php foreach ($substances as $substance): ?>
@@ -19,7 +18,6 @@
 			<?php echo $this->Html->link($substance['User']['name'], array('controller' => 'users', 'action' => 'view', $substance['User']['id'])); ?>
 		</td>
 		<td><?php echo h($substance['Substance']['date']); ?>&nbsp;</td>
-		<td><?php echo h($substance['Substance']['oldid']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $substance['Substance']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $substance['Substance']['id'])); ?>
@@ -50,8 +48,6 @@
 		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Formulas'), array('controller' => 'formulas', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Formula'), array('controller' => 'formulas', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Old Substances'), array('controller' => 'old_substances', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New History'), array('controller' => 'old_substances', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Names'), array('controller' => 'names', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Name'), array('controller' => 'names', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Reactions'), array('controller' => 'reactions', 'action' => 'index')); ?> </li>

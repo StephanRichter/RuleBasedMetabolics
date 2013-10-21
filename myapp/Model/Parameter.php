@@ -3,14 +3,10 @@ App::uses('AppModel', 'Model');
 /**
  * Parameter Model
  *
- * @property OldParameter $History
  * @property User $User
  * @property Substance $SubstanceParameters
- * @property Substance $OldSubstanceParameters
  * @property Substance $ReferredSubstances
- * @property Substance $OldReferredSubstances
  * @property Reaction $ReactionParameters
- * @property Reaction $OldReactionParameters
  */
 class Parameter extends AppModel {
 
@@ -69,21 +65,6 @@ class Parameter extends AppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 /**
- * hasOne associations
- *
- * @var array
- */
-	public $hasOne = array(
-		'History' => array(
-			'className' => 'OldParameter',
-			'foreignKey' => 'oldid',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
-
-/**
  * belongsTo associations
  *
  * @var array
@@ -117,19 +98,6 @@ class Parameter extends AppModel {
 			'offset' => '',
 			'finderQuery' => '',
 		),
-		'OldSubstance' => array(
-			'className' => 'Substance',
-			'joinTable' => 'old_parameters_use',
-			'foreignKey' => 'parameter_pid',
-			'associationForeignKey' => 'id_id',
-			'unique' => 'keepExisting',
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-		),
 		'ReferredSubstance' => array(
 			'className' => 'Substance',
 			'joinTable' => 'parameters_use',
@@ -143,35 +111,9 @@ class Parameter extends AppModel {
 			'offset' => '',
 			'finderQuery' => '',
 		),
-		'OldReferredSubstance' => array(
-			'className' => 'Substance',
-			'joinTable' => 'old_parameters_use',
-			'foreignKey' => 'parameter_pid',
-			'associationForeignKey' => 'ref_substance_id',
-			'unique' => 'keepExisting',
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-		),
 		'Reaction' => array(
 			'className' => 'Reaction',
 			'joinTable' => 'parameters_use',
-			'foreignKey' => 'parameter_pid',
-			'associationForeignKey' => 'id_id',
-			'unique' => 'keepExisting',
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-		),
-		'OldReaction' => array(
-			'className' => 'Reaction',
-			'joinTable' => 'old_parameters_use',
 			'foreignKey' => 'parameter_pid',
 			'associationForeignKey' => 'id_id',
 			'unique' => 'keepExisting',

@@ -3,8 +3,9 @@ App::uses('AppModel', 'Model');
 /**
  * Substance Model
  *
- * @property OldSubstance $History
+ * @property Formula $Formula
  * @property User $User
+ * @property Name $Name
  * @property Reaction $LHS
  * @property Reaction $RHS
  */
@@ -47,9 +48,9 @@ class Substance extends AppModel {
  * @var array
  */
 	public $hasOne = array(
-		'History' => array(
-			'className' => 'OldSubstance',
-			'foreignKey' => 'oldid',
+		'Formula' => array(
+			'className' => 'Formula',
+			'foreignKey' => 'fid',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
@@ -65,13 +66,6 @@ class Substance extends AppModel {
 		'User' => array(
 			'className' => 'User',
 			'foreignKey' => 'user_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Formula' => array(
-			'className' => 'Formula',
-			'foreignKey' => 'formula_fid',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
@@ -115,7 +109,7 @@ class Substance extends AppModel {
 			'joinTable' => 'rhs',
 			'foreignKey' => 'reaction_id',
 			'associationForeignKey' => 'substance_id',
-			'unique' => 'true',
+			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',

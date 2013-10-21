@@ -21,11 +21,6 @@
 			<?php echo h($substance['Substance']['date']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Oldid'); ?></dt>
-		<dd>
-			<?php echo h($substance['Substance']['oldid']); ?>
-			&nbsp;
-		</dd>
 	</dl>
 </div>
 <div class="actions">
@@ -39,50 +34,12 @@
 		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Formulas'), array('controller' => 'formulas', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Formula'), array('controller' => 'formulas', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Old Substances'), array('controller' => 'old_substances', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New History'), array('controller' => 'old_substances', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Names'), array('controller' => 'names', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Name'), array('controller' => 'names', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Reactions'), array('controller' => 'reactions', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New L H S'), array('controller' => 'reactions', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
-	<div class="related">
-		<h3><?php echo __('Related Old Substances'); ?></h3>
-	<?php if (!empty($substance['History'])): ?>
-		<dl>
-			<dt><?php echo __('Oid'); ?></dt>
-		<dd>
-	<?php echo $substance['History']['oid']; ?>
-&nbsp;</dd>
-		<dt><?php echo __('Id'); ?></dt>
-		<dd>
-	<?php echo $substance['History']['id']; ?>
-&nbsp;</dd>
-		<dt><?php echo __('Formula Fid'); ?></dt>
-		<dd>
-	<?php echo $substance['History']['formula_fid']; ?>
-&nbsp;</dd>
-		<dt><?php echo __('User Id'); ?></dt>
-		<dd>
-	<?php echo $substance['History']['user_id']; ?>
-&nbsp;</dd>
-		<dt><?php echo __('Date'); ?></dt>
-		<dd>
-	<?php echo $substance['History']['date']; ?>
-&nbsp;</dd>
-		<dt><?php echo __('Oldid'); ?></dt>
-		<dd>
-	<?php echo $substance['History']['oldid']; ?>
-&nbsp;</dd>
-		</dl>
-	<?php endif; ?>
-		<div class="actions">
-			<ul>
-				<li><?php echo $this->Html->link(__('Edit History'), array('controller' => 'old_substances', 'action' => 'edit', $substance['History']['id'])); ?></li>
-			</ul>
-		</div>
-	</div>
 	<div class="related">
 	<h3><?php echo __('Related Names'); ?></h3>
 	<?php if (!empty($substance['Name'])): ?>
@@ -92,7 +49,6 @@
 		<th><?php echo __('Name'); ?></th>
 		<th><?php echo __('User Id'); ?></th>
 		<th><?php echo __('Date'); ?></th>
-		<th><?php echo __('Oldid'); ?></th>
 		<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php foreach ($substance['Name'] as $name): ?>
@@ -101,7 +57,6 @@
 			<td><?php echo $name['name']; ?></td>
 			<td><?php echo $name['user_id']; ?></td>
 			<td><?php echo $name['date']; ?></td>
-			<td><?php echo $name['oldid']; ?></td>
 			<td class="actions">
 				<?php echo $this->Html->link(__('View'), array('controller' => 'names', 'action' => 'view', $name['nid'])); ?>
 				<?php echo $this->Html->link(__('Edit'), array('controller' => 'names', 'action' => 'edit', $name['nid'])); ?>
@@ -127,7 +82,6 @@
 		<th><?php echo __('Spontan'); ?></th>
 		<th><?php echo __('User Id'); ?></th>
 		<th><?php echo __('Date'); ?></th>
-		<th><?php echo __('Oldid'); ?></th>
 		<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php foreach ($substance['LHS'] as $lHS): ?>
@@ -136,7 +90,6 @@
 			<td><?php echo $lHS['spontan']; ?></td>
 			<td><?php echo $lHS['user_id']; ?></td>
 			<td><?php echo $lHS['date']; ?></td>
-			<td><?php echo $lHS['oldid']; ?></td>
 			<td class="actions">
 				<?php echo $this->Html->link(__('View'), array('controller' => 'reactions', 'action' => 'view', $lHS['id'])); ?>
 				<?php echo $this->Html->link(__('Edit'), array('controller' => 'reactions', 'action' => 'edit', $lHS['id'])); ?>
@@ -162,7 +115,6 @@
 		<th><?php echo __('Spontan'); ?></th>
 		<th><?php echo __('User Id'); ?></th>
 		<th><?php echo __('Date'); ?></th>
-		<th><?php echo __('Oldid'); ?></th>
 		<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php foreach ($substance['RHS'] as $rHS): ?>
@@ -171,7 +123,6 @@
 			<td><?php echo $rHS['spontan']; ?></td>
 			<td><?php echo $rHS['user_id']; ?></td>
 			<td><?php echo $rHS['date']; ?></td>
-			<td><?php echo $rHS['oldid']; ?></td>
 			<td class="actions">
 				<?php echo $this->Html->link(__('View'), array('controller' => 'reactions', 'action' => 'view', $rHS['id'])); ?>
 				<?php echo $this->Html->link(__('Edit'), array('controller' => 'reactions', 'action' => 'edit', $rHS['id'])); ?>

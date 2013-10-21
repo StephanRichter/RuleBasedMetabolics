@@ -66,64 +66,6 @@
 		<li><?php echo $this->Html->link(__('New Parameter'), array('controller' => 'parameters', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Substances'), array('controller' => 'substances', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Substance'), array('controller' => 'substances', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Old Parameters Uses'), array('controller' => 'old_parameters_uses', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New History'), array('controller' => 'old_parameters_uses', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
-	<div class="related">
-		<h3><?php echo __('Related Old Parameters Uses'); ?></h3>
-	<?php if (!empty($parametersUse['History'])): ?>
-		<dl>
-			<dt><?php echo __('Oid'); ?></dt>
-		<dd>
-	<?php echo $parametersUse['History']['oid']; ?>
-&nbsp;</dd>
-		<dt><?php echo __('Id'); ?></dt>
-		<dd>
-	<?php echo $parametersUse['History']['id']; ?>
-&nbsp;</dd>
-		<dt><?php echo __('Parameter Pid'); ?></dt>
-		<dd>
-	<?php echo $parametersUse['History']['parameter_pid']; ?>
-&nbsp;</dd>
-		<dt><?php echo __('Id Id'); ?></dt>
-		<dd>
-	<?php echo $parametersUse['History']['id_id']; ?>
-&nbsp;</dd>
-		<dt><?php echo __('Abbrevation'); ?></dt>
-		<dd>
-	<?php echo $parametersUse['History']['abbrevation']; ?>
-&nbsp;</dd>
-		<dt><?php echo __('Specification'); ?></dt>
-		<dd>
-	<?php echo $parametersUse['History']['specification']; ?>
-&nbsp;</dd>
-		<dt><?php echo __('Selector'); ?></dt>
-		<dd>
-	<?php echo $parametersUse['History']['selector']; ?>
-&nbsp;</dd>
-		<dt><?php echo __('Ref Substance Id'); ?></dt>
-		<dd>
-	<?php echo $parametersUse['History']['ref_substance_id']; ?>
-&nbsp;</dd>
-		<dt><?php echo __('User Id'); ?></dt>
-		<dd>
-	<?php echo $parametersUse['History']['user_id']; ?>
-&nbsp;</dd>
-		<dt><?php echo __('Date'); ?></dt>
-		<dd>
-	<?php echo $parametersUse['History']['date']; ?>
-&nbsp;</dd>
-		<dt><?php echo __('Oldid'); ?></dt>
-		<dd>
-	<?php echo $parametersUse['History']['oldid']; ?>
-&nbsp;</dd>
-		</dl>
-	<?php endif; ?>
-		<div class="actions">
-			<ul>
-				<li><?php echo $this->Html->link(__('Edit History'), array('controller' => 'old_parameters_uses', 'action' => 'edit', $parametersUse['History']['id'])); ?></li>
-			</ul>
-		</div>
-	</div>
 	

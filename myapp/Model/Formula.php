@@ -3,7 +3,6 @@ App::uses('AppModel', 'Model');
 /**
  * Formula Model
  *
- * @property OldFormula $History
  * @property User $User
  * @property Substance $Substance
  */
@@ -57,11 +56,18 @@ class Formula extends AppModel {
 	
 	public function checkFormula($arg){
 		$code=$arg['formula'];
-		return ($this->parseFormula($code)!==false);
+		//print "<pre>";
+		$res=$this->parseFormula($code);
+		//print_r($res);
+		if ($res===false){
+			//print "false"; die();
+			return false;
+		}
+		//print "true"; die();
+		return true;
 	}
 	
 	public function getParameters($code){
-		if ($code=='derived') return array('param');
 		$formula=$this->parseFormula($code);
 		$parameters=array();
 		$this->extractParameters($parameters,$formula);		
@@ -81,7 +87,129 @@ class Formula extends AppModel {
 	}
 	
 	public function parseFormula(&$code){
-		//print "parseFormula( '$code' )<br/>";
+		if ($code=='derived') return $code;
+		
+		//print "parseFormula($code)\n";
+	  $part=$this->parsePart($code);
+	  if ($part===false) return false;	  
+	  $formula=array($part);	  	   
+	  while (strlen($code)>0){
+	  	//print "code='$code'\n";
+	  	$binding=$this->parseBinding($code);
+	  	if ($binding===false) return false;	  	
+	  	//print "code='$code'\n";
+	  	
+	  	$part=$this->parsePart($code);
+	  	if ($part===false) return false;
+	  	$formula[]=$binding;
+	  	$formula[]=$part;	  	
+	  }
+	  return $formula;
+	} 	
+	
+	public function parseBinding(&$code){
+		//print "\nparseBinding($code)\n\n";
+		if ($code{0}!='~') return false;
+		$binding=$code{0};
+		$code=substr($code, 1);
+		if (ctype_lower($code{0}) && $code{1}=='~'){
+			$binding.=$code{0}.$code{1};
+			$code=substr($code, 2);
+		}
+		//print "binding=$binding\n";
+		return $binding;
+	}
+	
+	public function parsePart(&$code){
+		//print "parsePart($code)\n";
+		$reference=$this->parseReference($code);
+		if ($reference!==false) return $reference;
+		$fg=$this->parseFormulaGroup($code);
+		if ($fg!==false) return $fg;		
+		return $this->parseSequence($code);
+	}
+	
+	public function parseReference(&$code){
+		//print "parseReference($code)\n";
+		if ($code{0}!='#') return false;
+		$code=trim(substr($code, 1));
+		$id='';
+		while (ctype_digit($code{0})){
+			$id.=$code{0};
+			$code=substr($code, 1);
+		}
+		if (strlen($id)<1) return false;
+		//print "id=$id\n";
+		$params=$this->parseParams($code);
+		$reference=array('substance'=>$id);
+		if ($params!==false){
+			$reference['params']=$params;
+		}
+		return $reference;
+	}
+	
+	public function parseParams(&$code){
+		//print "parseParams($code)\n";
+		if ($code{0}!='[') return false;
+		$code=trim(substr($code,1));
+		$count=$this->parseCount($code);
+		if ($count===false) return false;
+		$params=array($count);
+		while ($code{0}==','){			
+			$code=trim(substr($code,1));
+			$count=$this->parseCount($code);
+			if ($count==false) return false;
+			$params[]=$count;
+		}
+		if ($code{0}!=']') return false;
+		$code=trim(substr($code,1));
+		return $params;
+	}
+	
+	public function parseSequence(&$code){
+		//print "parseSequence($code)\n";
+		if ($code{0}.$code{1}.$code{2}.$code{3}!='seq(') return false;
+		$code=trim(substr($code, 4));
+		$var=$this->parseVariable($code);
+		if ($var===false)	return false;
+		//print "var=$var\n";
+		if ($code{0}!='?') return false;
+		$code=trim(substr($code, 1));
+		if ($code{0}=='$')$code=trim(substr($code, 1));
+		if (ctype_alpha($code{0})){
+			$index=$code{0};
+			//print "index=$index\n";
+		} else return false;
+		$code=trim(substr($code, 1));
+		if ($code{0}!=':') return false;
+		$code=trim(substr($code, 1));
+		$part=$this->parsePart($code);
+		if ($part===false) return false;
+		if ($code{0}!=')') return false;
+		$code=trim(substr($code, 1));
+		$seq=array();
+		$seq['var']=$var;
+		$seq['index']='$'.$index;
+		$part=$this->bindParameter($index,$part);
+		$seq['part']=$part;
+		return array('sequence'=>$seq);
+	}
+	
+	function bindParameter($param,$data){
+		if (!is_array($data)) return $data;
+		foreach ($data as $key => $val){
+			if (is_array($val)) {
+				$val=$this->bindParameter($param, $val);
+				$data[$key]=$val;
+			} elseif ($val==$param) {
+				$data[$key]='$'.$param;
+			}		
+		}
+		return $data;
+	}
+	
+	public function parseFormulaGroup(&$code){
+		//print "parseFormulaGroup( '$code' )<br/>";
 		$part=$this->parseWeightedGroup($code);		
 		if ($part===false){
 			$part=$this->parseGroup($code);
@@ -95,6 +223,7 @@ class Formula extends AppModel {
 				$part=$this->parseGroup($code);
 			}				
 		}
+		if (count($formula)==1) $formula=$formula[0];
 		return $formula;
 	}
 	
@@ -201,7 +330,7 @@ class Formula extends AppModel {
 	}
 	
 	function parseVariable(&$code){
-		//print "parseVariable( '$code' )<br/>";
+		//print "parseVariable($code)<br/>";
 		$code=trim($code);
 		if (strlen($code)<2) return false;		
 		if ($code{0}!='$') return false;
@@ -211,7 +340,7 @@ class Formula extends AppModel {
 	}
 	
 	function parseNumber(&$code){
-		//print "parseNumber( '$code' )<br/>";
+		//print "parseNumber($code)<br/>";
 		$code=trim($code);		
 		if (!ctype_digit($code{0})) return false;
 		$num='';
@@ -237,20 +366,6 @@ class Formula extends AppModel {
 	}
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * hasOne associations
- *
- * @var array
- */
-	public $hasOne = array(
-		'History' => array(
-			'className' => 'OldFormula',
-			'foreignKey' => 'oldid',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
 
 /**
  * belongsTo associations

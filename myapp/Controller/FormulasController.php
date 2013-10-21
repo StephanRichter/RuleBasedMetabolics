@@ -93,10 +93,11 @@ class FormulasController extends AppController {
 				return $this->Formula->getInsertID(); // return ids
 			} else {				
 				if ($this->Formula->error==null){
-					$this->Session->setFlash(__('The formulas could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The formula could not be saved. Please, try again.'));
 			} else {
 					$this->Session->setFlash($this->Formula->error);
 				}
+				return -1;
 			}
 		}
 		$users = $this->Formula->User->find('list');

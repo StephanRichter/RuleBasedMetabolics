@@ -6,9 +6,6 @@
 			<th><?php echo $this->Paginator->sort('parameter_pid'); ?></th>
 			<th><?php echo $this->Paginator->sort('id_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('abbrevation'); ?></th>
-			<th><?php echo $this->Paginator->sort('specification'); ?></th>
-			<th><?php echo $this->Paginator->sort('selector'); ?></th>
-			<th><?php echo $this->Paginator->sort('ref_substance_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('user_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('date'); ?></th>
 			<th><?php echo $this->Paginator->sort('oldid'); ?></th>
@@ -66,7 +63,5 @@
 		<li><?php echo $this->Html->link(__('New Parameter'), array('controller' => 'parameters', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Substances'), array('controller' => 'substances', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Substance'), array('controller' => 'substances', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Old Parameters Uses'), array('controller' => 'old_parameters_uses', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New History'), array('controller' => 'old_parameters_uses', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

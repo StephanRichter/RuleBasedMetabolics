@@ -138,10 +138,7 @@ class ParametersUsesController extends AppController {
 					$stack=$this->peekStack();
 					if ($stack!==false){
 						if (isset($stack['data']['Substance']['derive'])){
-							$stack['data']['Substance']['Formula']='derived';
-							unset($stack['data']['Substance']['derive']);
 							$this->popStack();
-							$this->pushToStack($stack);
 						}
 						return $this->redirect($stack['action']);
 					} 
@@ -154,7 +151,7 @@ class ParametersUsesController extends AppController {
 		
 		
 		$names=$this->checkSubstanceName();
-		$substance_id=1;//$this->checkSubstanceId();	// TODO: we don't have a sid here	
+		$substance_id=$this->checkSubstanceId();	// TODO: we don't have a sid here	
 		$users = $this->ParametersUse->User->find('list');
 		
 		if (isset($pid)){

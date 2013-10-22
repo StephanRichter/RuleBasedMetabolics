@@ -69,15 +69,10 @@ class SubstancesController extends AppController {
 		}
 		
 		if ($data!==false){		
-			if (isset($data['Substance']['derive']) && $data['Substance']['derive']){			
-				$action=array('controller'=>'substances','action'=>'add');
-				$this->pushToStack(array('action'=>$action,'data'=>$data));
-				
-				return $this->redirect(array('controller'=>'parameters_uses','action'=>'add'));
-			}
+			if (isset($data['Substance']['derive']) && $data['Substance']['derive']){
+				$data['Substance']['Formula']='derived';
+			}			
 
-			// if we are here, we have successfully passes parameter definition			
-			
 			$formula=$data['Substance']['Formula'];
 			$parameters=$this->Substance->Formula->getParameters($formula);
 			if (!empty($parameters)){
@@ -117,7 +112,17 @@ class SubstancesController extends AppController {
 			);
 			
 			if ($this->Substance->save($substance)) {
-				$this->Session->setFlash(__('The substance has been saved.'));
+				$this->Session->setFlash(__('The substance has been saved.'));				
+				
+				if (isset($data['Substance']['derive']) && $data['Substance']['derive']){
+					
+					$id=$this->Substance->getInsertID();
+					$data['Substance']['id']=$id;
+					$action=array('controller'=>'substances','action'=>'view',$id);
+					$this->pushToStack(array('action'=>$action,'data'=>$data));
+				
+					return $this->redirect(array('controller'=>'parameters_uses','action'=>'add'));
+				}				
 								
 				return $this->redirect(array('action' => 'index'));
 			} else {

@@ -76,29 +76,36 @@ class SubstancesController extends AppController {
 				return $this->redirect(array('controller'=>'parameters_uses','action'=>'add'));
 			}
 
-			// the following code is old and needs rework
+			// if we are here, we have successfully passes parameter definition			
 			
-			$formula=$data['Substance']['Formula'];				
-			$names=explode("\n",$data['Name']['Name']);
-			$names=array_map('trim', $names);			
-			$Names = new NamesController();			
-			$Formulas = new FormulasController();			
-			$Names->Session=$this->Session; // needed for use in Names->add
-			$Names->Auth=$this->Auth;
-			$Formulas->Session=$this->Session; // needed for use in Names->add
-			$Formulas->Auth=$this->Auth;
-			$nids=$Names->add($names);
-			$fid=$Formulas->add($formula);
-
-			
-				
+			$formula=$data['Substance']['Formula'];
 			$parameters=$this->Substance->Formula->getParameters($formula);
 			if (!empty($parameters)){
-				$open_parameters=array();
-				$open_parameters['formula']=$formula;
-				$open_parameters['parameters']=$parameters;												
+				
+				// TODO: implement parameter specification request
+				
 			}
 			
+			// go on and save formula
+				
+			$Formulas = new FormulasController();			
+			$Formulas->Session=$this->Session; // needed for use in Names->add
+			$Formulas->Auth=$this->Auth;
+			
+			$fid=$Formulas->add($formula);
+			
+				
+			// go on and save the names
+			
+			$Names = new NamesController();			
+			$Names->Session=$this->Session; // needed for use in Names->add
+			$Names->Auth=$this->Auth;
+			
+			$names=explode("\n",$data['Name']['Name']); // convert to array
+			$names=array_map('trim', $names); // remove whitespace
+			$nids=$Names->add($names); // save names			
+				
+			// formula and names saved, no create substance object
 				
 			$substance=array(
 					'Substance' => array(
@@ -111,13 +118,7 @@ class SubstancesController extends AppController {
 			
 			if ($this->Substance->save($substance)) {
 				$this->Session->setFlash(__('The substance has been saved.'));
-				
-			  if (isset($open_parameters)) {
-			  	$open_parameters['substance_id']=$this->Substance->getInsertID();
-				  $this->Session->write('openparameters',$open_parameters);
-			  	return $this->redirect(array('controller'=>'parameters_uses','action'=>'add'));
-				}
-				
+								
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The substance could not be saved. Please, try again.'));

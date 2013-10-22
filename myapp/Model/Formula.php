@@ -68,8 +68,9 @@ class Formula extends AppModel {
 	}
 	
 	public function getParameters($code){
-		$formula=$this->parseFormula($code);
 		$parameters=array();
+		if ($code=='derived') return $parameters;
+		$formula=$this->parseFormula($code);
 		$this->extractParameters($parameters,$formula);		
 		return array_unique($parameters);
 	}

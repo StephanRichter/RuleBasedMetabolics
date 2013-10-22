@@ -43,26 +43,18 @@ class Substance extends AppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 /**
- * hasOne associations
- *
- * @var array
- */
-	public $hasOne = array(
-		'Formula' => array(
-			'className' => 'Formula',
-			'foreignKey' => 'fid',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
-	
-/**
  * belongsTo associations
  *
  * @var array
  */
 	public $belongsTo = array(
+		'Formula' => array(
+			'className' => 'Formula',
+			'foreignKey' => 'formula_fid',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),			
 		'User' => array(
 			'className' => 'User',
 			'foreignKey' => 'user_id',

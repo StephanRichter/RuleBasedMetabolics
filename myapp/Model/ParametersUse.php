@@ -17,13 +17,6 @@ class ParametersUse extends AppModel {
 	public $useTable = 'parameters_use';
 
 /**
- * Primary key field
- *
- * @var string
- */
-	public $primaryKey = 'puid';
-
-/**
  * Display field
  *
  * @var string

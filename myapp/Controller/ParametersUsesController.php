@@ -49,7 +49,7 @@ class ParametersUsesController extends AppController {
 		$this->set('parametersUse', $this->ParametersUse->find('first', $options));
 	}
 	
-	public function checkSubstance(){
+	public function checkSubstanceName(){
 		$object=$this->peekStack();
 		if ($object===false){ // if there is nothing on the stack: go home
 			$this->Session->setFlash(__('parameters_uses/add called without data.'));
@@ -69,13 +69,31 @@ class ParametersUsesController extends AppController {
 		return false;		
 	}
 
+	public function checkSubstanceId(){
+		$object=$this->peekStack();
+		if ($object===false){ // if there is nothing on the stack: go home
+			$this->Session->setFlash(__('parameters_uses/add called without data.'));
+			$this->redirect('/');
+			return false;
+		}
+		
+		if (isset($object['data']['Substance']['id'])){ // if we were called during substance creation: go on
+			return $object['data']['Substance']['id'];
+		}
+	
+		// if the object on the stack is unknown: go home
+		$this->Session->setFlash(__('Oops! There is no substance id, yet.'));
+		$this->redirect('/');
+		return false;
+	}
+	
 /**
  * add method
  *
  * @return void
  */
 	public function add() {
-		$names=$this->checkSubstance();
+		$names=$this->checkSubstanceName();
 		$this->set('names',$names);
 	}
 	
@@ -102,13 +120,17 @@ class ParametersUsesController extends AppController {
 				$this->pushToStack(array('action'=>$action,'data'=>$data));				
 				return $this->redirect(array('controller'=>'parameters','action'=>'add'));
 			}
-			
+			$db = ConnectionManager::getDataSource('default');
+			$data['ParametersUse']['parameter_pid']=$data['ParametersUse']['parameter'];
+			$data['ParametersUse']['user_id'] = $this->Auth->user('id');
+			$data['ParametersUse']['date'] = DboSource::expression('NOW()');
 			$this->ParametersUse->create();
+			//print "<pre>"; print_r($data); die();
 			if ($this->ParametersUse->save($data)) {
 				$this->Session->setFlash(__('The parameter definition for "%s" has been saved.',$data['ParametersUse']['selector']));
 				
 				if ($data['ParametersUse']['repeat']){
-					//print "<pre>"; print_r($data); die();
+
 					$pid=$data['ParametersUse']['parameter'];
 					$repeat=true;
 					$abbrevation=$data['ParametersUse']['abbrevation'];
@@ -131,7 +153,8 @@ class ParametersUsesController extends AppController {
 		}
 		
 		
-		$names=$this->checkSubstance();		
+		$names=$this->checkSubstanceName();
+		$substance_id=1;//$this->checkSubstanceId();	// TODO: we don't have a sid here	
 		$users = $this->ParametersUse->User->find('list');
 		
 		if (isset($pid)){
@@ -140,7 +163,7 @@ class ParametersUsesController extends AppController {
 			$parameters = $this->ParametersUse->Parameter->find('list');
 		}
 		$substances = $this->ParametersUse->Substance->find('list');
-		$this->set(compact('users', 'parameters', 'substances','names','abbrevation','repeat'));
+		$this->set(compact('users', 'parameters', 'substances','names','abbrevation','repeat','substance_id'));
 	}
 
 /**

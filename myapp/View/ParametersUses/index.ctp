@@ -6,6 +6,9 @@
 			<th><?php echo $this->Paginator->sort('parameter_pid'); ?></th>
 			<th><?php echo $this->Paginator->sort('id_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('abbrevation'); ?></th>
+			<th><?php echo $this->Paginator->sort('specification'); ?></th>
+			<th><?php echo $this->Paginator->sort('selector'); ?></th>
+			<th><?php echo $this->Paginator->sort('ref_substance_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('user_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('date'); ?></th>
 			<th><?php echo $this->Paginator->sort('oldid'); ?></th>
@@ -23,9 +26,7 @@
 		<td><?php echo h($parametersUse['ParametersUse']['abbrevation']); ?>&nbsp;</td>
 		<td><?php echo h($parametersUse['ParametersUse']['specification']); ?>&nbsp;</td>
 		<td><?php echo h($parametersUse['ParametersUse']['selector']); ?>&nbsp;</td>
-		<td>
-			<?php echo $this->Html->link($parametersUse['DefiningSubstance']['id'], array('controller' => 'substances', 'action' => 'view', $parametersUse['DefiningSubstance']['id'])); ?>
-		</td>
+		<td><?php echo h($parametersUse['ParametersUse']['ref_substance_id']); ?>&nbsp;</td>
 		<td>
 			<?php echo $this->Html->link($parametersUse['User']['name'], array('controller' => 'users', 'action' => 'view', $parametersUse['User']['id'])); ?>
 		</td>

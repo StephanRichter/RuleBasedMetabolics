@@ -4,6 +4,7 @@ App::uses('AppModel', 'Model');
  * Substance Model
  *
  * @property Formula $Formula
+ * @property ParametersUse $ParametersUse
  * @property User $User
  * @property Name $Name
  * @property Reaction $LHS
@@ -62,6 +63,21 @@ class Substance extends AppModel {
 			'fields' => '',
 			'order' => ''
 		)
+	);
+	
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
+	public $hasMany = array(
+			'ParametersUse' => array(
+					'className' => 'ParametersUse',
+					'foreignKey' => 'id_id',
+					'conditions' => '',
+					'fields' => '',
+					'order' => ''
+			)
 	);
 
 /**

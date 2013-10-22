@@ -3,6 +3,8 @@
 	<fieldset>
 		<legend><?php echo __('Add parameter definition for ').$names; ?></legend>
 	<?php
+		echo $this->Form->input('specification',array('type'=>'hidden','default'=>'define'));
+		echo $this->Form->input('id_id',array('type'=>'hidden','default'=>$substance_id)); 
 		if ($abbrevation===false){
 			echo $this->Form->input('abbrevation');
 			echo $this->Form->input('parameter',array('label'=>__('Select existing parameter type here')));
@@ -17,7 +19,6 @@
 			<select id="Substance" name="data[ParametersUse][ref_substance_id]">
 				<option value=""><?php echo __("Enter a part of a substance name in the text field below to get substances here."); ?></option>
 			</select>
-			<input id="specification" maxlength="2000" size="10" type="hidden" name="data[ParametersUse][spcification]" value="define"/>
 			<input id="query" maxlength="2000" size="10" type="text" value="Substance name here"/>
 		</div><?php 
 		echo $this->Form->input('repeat',array('type'=>'checkbox','label'=>__('add more definitions afterwards')));

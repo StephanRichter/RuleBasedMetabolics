@@ -31,9 +31,9 @@
 			<?php echo h($parametersUse['ParametersUse']['selector']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Defining Substance'); ?></dt>
+		<dt><?php echo __('Ref Substance Id'); ?></dt>
 		<dd>
-			<?php echo $this->Html->link($parametersUse['DefiningSubstance']['id'], array('controller' => 'substances', 'action' => 'view', $parametersUse['DefiningSubstance']['id'])); ?>
+			<?php echo h($parametersUse['ParametersUse']['ref_substance_id']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('User'); ?></dt>
@@ -68,4 +68,3 @@
 		<li><?php echo $this->Html->link(__('New Substance'), array('controller' => 'substances', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
-	

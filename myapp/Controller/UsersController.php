@@ -72,6 +72,7 @@ class UsersController extends AppController {
 						'edit' => $privileges['edit'],
 						'index'=> $privileges['view'],
 						'search'=> $privileges['view'],
+						'search_inheritable'=> $privileges['view'],
 						'view' => $privileges['view'],
 				),
 				'users' => array(

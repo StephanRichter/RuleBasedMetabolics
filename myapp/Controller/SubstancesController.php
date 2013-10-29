@@ -50,6 +50,14 @@ class SubstancesController extends AppController {
 		$options = array('conditions' => array('Substance.' . $this->Substance->primaryKey => $id));
 		$this->set('substance', $this->Substance->find('first', $options));
 	}
+	
+	public function cleanName($name){
+		$rev=strrev(trim($name));
+		while ($rev{0}==' ' || $rev{0}==',' || $rev{0}==';'){
+			$rev=substr($rev, 1);			
+		}
+		return trim(strrev($rev));
+	}
 
 /**
  * add method
@@ -66,6 +74,10 @@ class SubstancesController extends AppController {
 			$this->popStack();
 		} elseif ($this->request->is('post')) {
 			$data=$this->request->data;
+			$names=explode("\n",$data['Name']['Name']); // convert to array
+			$names=array_filter(array_map(array($this,'cleanName'), $names)); // remove whitespace and empty entries
+			$data['Name']['Name']=implode("\n", $names); // put cleaned names back in data array					
+			//print "<pre>"; print_r($data); die();
 		}
 		
 		if ($data!==false){		
@@ -97,7 +109,6 @@ class SubstancesController extends AppController {
 			$Names->Auth=$this->Auth;
 			
 			$names=explode("\n",$data['Name']['Name']); // convert to array
-			$names=array_map('trim', $names); // remove whitespace
 			$nids=$Names->add($names); // save names			
 				
 			// formula and names saved, no create substance object
@@ -162,6 +173,44 @@ class SubstancesController extends AppController {
 			$this->layout='ajax';
 			$this->set(compact('substances'));				
 		}
+	}
+	
+	public function search_inheritable(){
+
+		$name=$this->request->data['name'];
+		foreach ($this->request->data as $field => $searchstring){				
+			$sids=array();
+			$substances=array();
+			if ($field=='name'){
+				$this->Substance->Name->contain('Substance');
+				$names=$this->Substance->Name->find('all',array('conditions'=>array('name LIKE' => '%'.$name.'%')));
+				foreach ($names as $name_key => $name_entry){
+					foreach ($name_entry['Substance'] as $substance_key => $substance_entry){
+						$sids[]=$substance_entry['id'];
+					}
+				}
+				$sids=array_unique($sids);
+				$this->Substance->contain('ParametersUse','Name');
+				$res=$this->Substance->find('all',array('conditions'=>array('Substance.id' => $sids)));
+				foreach ($res as $substance){
+					if ($substance['ParametersUse']){
+						$sid=$substance['Substance']['id'];
+						foreach ($substance['Name'] as $sname){
+							$name=$sname['name'];
+							if (!isset($substances[$sid])){
+								$substances[$sid]=array();
+							}
+							$substances[$sid][]=$name;			
+							
+						}
+					}
+				}				
+			} else {
+				$substances=array('unknown search field '.$field);
+			}
+			$this->layout='ajax';
+			$this->set(compact('substances'));
+		}		
 	}
 
 /**

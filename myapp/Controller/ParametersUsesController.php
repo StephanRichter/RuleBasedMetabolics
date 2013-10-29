@@ -52,7 +52,7 @@ class ParametersUsesController extends AppController {
 	public function checkSubstanceName(){
 		$object=$this->peekStack();
 		if ($object===false){ // if there is nothing on the stack: go home
-			$this->Session->setFlash(__('parameters_uses/add called without data.'));
+			$this->Session->setFlash(__('parameters_uses method called without data.'));
 			$this->redirect('/');
 			return false;
 		}
@@ -96,9 +96,24 @@ class ParametersUsesController extends AppController {
 		$names=$this->checkSubstanceName();
 		$this->set('names',$names);
 	}
+
+	
+	/**
+	 * inherit method
+	 *
+	 * @return void
+	 */
+	public function inherit() {
+		
+		// TODO: sae data
+		
+		$names=$this->checkSubstanceName();
+		$substance_id=$this->checkSubstanceId();	
+		$this->set(compact('names','substance_id'));
+	}
 	
 /**
- * inherit method
+ * define method
  *
  * @return void
  */
@@ -151,7 +166,7 @@ class ParametersUsesController extends AppController {
 		
 		
 		$names=$this->checkSubstanceName();
-		$substance_id=$this->checkSubstanceId();	// TODO: we don't have a sid here	
+		$substance_id=$this->checkSubstanceId();	
 		$users = $this->ParametersUse->User->find('list');
 		
 		if (isset($pid)){

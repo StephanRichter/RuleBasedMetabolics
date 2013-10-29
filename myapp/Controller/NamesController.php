@@ -66,13 +66,13 @@ class NamesController extends AppController {
 			$redirect=array('action' => 'index');
 		}
 
-
 		/* we got names to store! */
 		if ($names != null){
 			$entries=array();
 			$ids=array();
 				
-			$names=array_map('trim', $names);
+			$names=array_map('trim', $names); // remove spaces from names
+			$names=array_unique($names);
 			$conditions=array('Name.name'=>$names);
 			$existing = $this->Name->find('all',array('conditions'=>$conditions));
 				
@@ -80,7 +80,8 @@ class NamesController extends AppController {
 				$ids[]=$entry['Name']['nid'];
 				$key=array_search($entry['Name']['name'], $names);
 				unset($names[$key]);
-			}
+			}			
+			
 				
 			if (empty($names)){
 				$this->Session->setFlash(__('All Names already existing.'));
